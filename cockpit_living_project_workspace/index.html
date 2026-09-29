@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            canvas: "#F7F7F5",
+            surface: "#FFFFFF",
+            ink: "#18181B",
+            "muted-ink": "#71717A",
+            "quiet-line": "#E4E4E7",
+            "deep-line": "#D4D4D8",
+            "signal-blue": "#356AE6",
+            "signal-blue-hover": "#2553C7",
+            "signal-blue-subtle": "#EFF4FE",
+            "success-ink": "#15803D",
+            "success-subtle": "#F0FDF4",
+            "warn-ink": "#B45309",
+              "warn-subtle": "#FFFBEB",
+              "line": "#E4E4E7",
+              "ink-muted": "#71717A",
+              "ink-subtle": "#A1A1AA",
+              "valid": "#15803D",
+              "signal": "#356AE6"
+          },
+          fontFamily: {
+            sans: ["Geist", "sans-serif"],
+            mono: ["Geist Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen flex flex-col font-sans bg-canvas text-ink antialiased selection:bg-signal-blue selection:text-white">
+<!-- Top Chrome Navigation -->
+<header class="h-13 bg-surface border-b border-line px-6 flex items-center justify-between sticky top-0 z-40">
+<div class="flex items-center gap-6">
+<!-- Brand & Project Selector -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-ink flex items-center justify-center text-surface text-[12px] font-mono font-bold tracking-tight">W</div>
+<span class="font-semibold text-[14px] tracking-tight text-ink">WorkSimplified</span>
+</div>
+<span class="text-line text-[14px]">/</span>
+<div class="flex items-center gap-2 group cursor-pointer">
+<span class="text-[13px] font-medium text-ink">HR Transformation</span>
+<span class="text-[12px] text-ink-muted font-normal">(Frappe HR &amp; Payroll implementation)</span>
+<span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
+</div>
+</div>
+<!-- App Tabs -->
+<nav class="hidden md:flex items-center gap-1 text-[13px]">
+<a class="px-3 py-1.5 rounded font-semibold text-ink bg-canvas border border-line text-[13px]" href="index.html">Cockpit</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../discover_living_project_workspace/index.html">Discover</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../map_living_project_workspace/index.html">Map</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../state_living_project_workspace/index.html">State</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../outputs_living_project_workspace/index.html">Outputs</a>
+</nav>
+</div>
+<!-- Right utility status & avatar -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded border border-line bg-surface text-[12px] font-mono text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-valid"></span>
+<span class="text-ink font-medium">Live Project Model</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-valid">Synced</span>
+</div>
+<div class="flex items-center gap-2 pl-2 border-l border-line">
+<div class="w-7 h-7 rounded-full bg-ink text-surface flex items-center justify-center font-mono text-[11px] font-medium">LA</div>
+</div>
+</div>
+</header>
+<!-- Subheader / Context Strip -->
+<div class="bg-surface border-b border-line px-6 py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-[12px]">
+<span class="text-ink-muted">HR Transformation</span>
+<span class="text-ink-subtle">/</span>
+<span class="text-ink-muted">Frappe HR &amp; Payroll</span>
+<span class="text-ink-subtle">/</span>
+<span class="font-medium text-ink">Leave &amp; Attendance Domain</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-line bg-canvas text-[11px] font-mono uppercase tracking-wider text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-signal"></span>
+<span class="">Project Updated</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-ink font-medium">Just now</span>
+</div>
+</div>
+</div>
+<!-- Main Canvas -->
+<main class="w-full pt-14 pb-16 flex-1">
+<div class="max-w-[1440px] mx-auto px-6 pt-8 flex flex-col gap-8">
+<!-- 1. Project Header & Implementation Lifecycle Rail -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-quiet-line">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2">
+<span class="text-xs uppercase font-mono tracking-wider text-muted-ink font-medium">Project Orientation</span>
+<span class="text-quiet-line">•</span>
+<span class="text-xs text-muted-ink font-mono">Workspace: HR-TRANS-2025</span>
+</div>
+<h1 class="text-2xl font-semibold tracking-tight text-ink">Cockpit — Where are we?</h1>
+<p class="text-sm text-muted-ink">
+            Orientation &amp; continuity workspace for the Frappe HR &amp; Payroll migration. No analytics clutter, only real project state.
+          </p>
+</div>
+<!-- Implementation Lifecycle Rail -->
+<div class="bg-surface border border-quiet-line rounded-lg p-2 flex items-center gap-1 shrink-0 self-start md:self-auto shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<!-- Understand (ACTIVE) -->
+<div class="flex items-center gap-2 px-3 py-1.5 rounded bg-signal-blue-subtle text-signal-blue">
+<span class="w-2 h-2 rounded-full bg-signal-blue animate-pulse"></span>
+<span class="text-xs font-semibold">1. Understand</span>
+<span class="text-[10px] font-mono px-1 rounded bg-white/70 border border-signal-blue/20 uppercase font-medium">Active</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-deep-line">arrow_forward</span>
+<!-- Define -->
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded text-muted-ink">
+<span class="w-1.5 h-1.5 rounded-full bg-deep-line"></span>
+<span class="text-xs font-medium">2. Define</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-deep-line">arrow_forward</span>
+<!-- Validate -->
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded text-muted-ink">
+<span class="w-1.5 h-1.5 rounded-full bg-deep-line"></span>
+<span class="text-xs font-medium">3. Validate</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-deep-line">arrow_forward</span>
+<!-- Execute -->
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded text-muted-ink">
+<span class="w-1.5 h-1.5 rounded-full bg-deep-line"></span>
+<span class="text-xs font-medium">4. Execute</span>
+</div>
+</div>
+</section>
+<!-- 2. Main Orientation Grid (Asymmetric 60/40 deliberate spatial zones) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT ZONE (60% / 7 cols): Orientation & Living State -->
+<div class="lg:col-span-7 flex flex-col gap-8">
+<!-- Recent Changes (Evidence & Mutations) -->
+<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<div class="flex items-center justify-between border-b border-quiet-line pb-3.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-muted-ink text-[18px]">history_toggle_off</span>
+<h2 class="text-sm font-semibold tracking-tight text-ink">Recent Changes</h2>
+</div>
+<span class="font-mono text-xs text-muted-ink">Evidence &amp; State Mutations</span>
+</div>
+<div class="divide-y divide-quiet-line">
+<!-- Item 1: REQ-003 -->
+<div class="py-3.5 first:pt-0 last:pb-0 flex flex-col gap-1.5">
+<div class="flex items-center justify-between gap-3">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-[11px] font-semibold text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 rounded border border-signal-blue/20">REQ-003</span>
+<span class="text-sm font-medium text-ink">HR can override manager approval in specific cases</span>
+</div>
+<span class="text-xs text-muted-ink shrink-0 font-mono">12m ago</span>
+</div>
+<p class="text-xs text-muted-ink pl-0 leading-relaxed">
+                  Newly synthesized from active Discover session. Added exception condition to standard line-manager approval chain.
+                </p>
+</div>
+<!-- Item 2: Flow -->
+<div class="py-3.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between gap-3">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-[11px] font-semibold text-ink bg-canvas px-1.5 py-0.5 rounded border border-quiet-line">WORKFLOW</span>
+<span class="text-sm font-medium text-ink">Leave Approval Exception Path branched into Frappe HR</span>
+</div>
+<span class="text-xs text-muted-ink shrink-0 font-mono">24m ago</span>
+</div>
+<p class="text-xs text-muted-ink pl-0 leading-relaxed">
+                  Routing rule injected: if employee leave exceeds statutory allowance or manager inactive for &gt;48h, route directly to Central HR Guild.
+                </p>
+</div>
+<!-- Item 3: ADR-002 -->
+<div class="py-3.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between gap-3">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-[11px] font-semibold text-success-ink bg-success-subtle px-1.5 py-0.5 rounded border border-green-200">ADR-002</span>
+<span class="text-sm font-medium text-ink">Adopt Frappe Salary Slip auto-generation on biometric cutoff</span>
+</div>
+<span class="text-xs text-muted-ink shrink-0 font-mono">1h ago</span>
+</div>
+<p class="text-xs text-muted-ink pl-0 leading-relaxed">
+                  Marked <strong class="text-ink font-medium">Validated</strong>. Frappe standard scheduled payroll generation hook will run on 25th midnight without custom script override.
+                </p>
+</div>
+<!-- Item 4: Q-003 -->
+<div class="py-3.5 last:pb-0 flex flex-col gap-1.5">
+<div class="flex items-center justify-between gap-3">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-1.5 py-0.5 rounded border border-quiet-line">Q-003</span>
+<span class="text-sm font-medium text-ink">Who approves when manager is unavailable?</span>
+</div>
+<span class="text-xs text-success-ink font-mono shrink-0">Resolved</span>
+</div>
+<p class="text-xs text-muted-ink pl-0 leading-relaxed">
+                  Resolution documented: Settled via HR Override policy (referenced in REQ-003). Ambiguity closed.
+                </p>
+</div>
+</div>
+</section>
+<!-- Needs Attention (Restrained, focused list) -->
+<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<div class="flex items-center justify-between border-b border-quiet-line pb-3.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-warn-ink text-[18px]">priority_high</span>
+<h2 class="text-sm font-semibold tracking-tight text-ink">Needs Attention</h2>
+</div>
+<span class="text-xs font-mono text-muted-ink">3 Open Items</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Attention 1 -->
+<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Q-004</span>
+<span class="text-xs font-semibold text-ink">Multi-currency payroll handling for remote consultants in UAE &amp; India</span>
+</div>
+<span class="text-[11px] font-mono text-muted-ink shrink-0">Under Clarification</span>
+</div>
+<p class="text-xs text-muted-ink leading-relaxed">
+                  Frappe multi-currency payroll requires exchange rate revaluation at disbursement date. Assigned to <strong class="text-ink font-medium">Payroll Guild</strong> for statutory ruling.
+                </p>
+</div>
+<!-- Attention 2 -->
+<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-ink bg-white px-1.5 py-0.5 rounded border border-quiet-line">REQ-002</span>
+<span class="text-xs font-semibold text-ink">Shift rotation grace period definition</span>
+</div>
+<span class="text-[11px] font-mono text-muted-ink shrink-0">Evolving</span>
+</div>
+<p class="text-xs text-muted-ink leading-relaxed">
+                  Needs numerical threshold confirmation from Plant Operations Lead (15m vs 30m before marking half-day absence).
+                </p>
+</div>
+<!-- Attention 3 -->
+<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-ink bg-white px-1.5 py-0.5 rounded border border-quiet-line">DEPENDENCY</span>
+<span class="text-xs font-semibold text-ink">Frappe HR v15 custom doctype hooks verification</span>
+</div>
+<span class="text-[11px] font-mono text-muted-ink shrink-0">Engineering Check</span>
+</div>
+<p class="text-xs text-muted-ink leading-relaxed">
+                  Verify if migration will rely on core hooks or custom app overlay for Saudi &amp; UAE end-of-service gratuity calculations.
+                </p>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT ZONE (40% / 5 cols): Actionable Continuity -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- Continue with BA Agent -->
+<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<div class="flex items-center justify-between border-b border-quiet-line pb-3.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-signal-blue text-[18px]">smart_toy</span>
+<h2 class="text-sm font-semibold tracking-tight text-ink">Continue with BA Agent</h2>
+</div>
+<span class="text-[11px] font-mono text-signal-blue bg-signal-blue-subtle px-2 py-0.5 rounded border border-signal-blue/20">Session In Memory</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="text-xs uppercase font-mono tracking-wider text-muted-ink font-medium">Domain Active</div>
+<div class="text-sm font-semibold text-ink">
+                BA Agent ready in <span class="text-signal-blue">Leave &amp; Attendance Domain</span>
+</div>
+<div class="p-3 rounded bg-canvas border border-quiet-line mt-1">
+<div class="text-[11px] font-mono text-muted-ink mb-1">Last query context:</div>
+<p class="text-xs text-ink leading-relaxed">
+                  "Reviewing attendance deduction rules against statutory leave quotas and HR manager override exceptions."
+                </p>
+</div>
+</div>
+<!-- Action Button (42px tactile Signal Blue) -->
+<a class="h-[42px] px-4 rounded bg-signal-blue hover:bg-signal-blue-hover text-white text-xs font-medium tracking-tight flex items-center justify-center gap-2 transition-all shadow-sm" href="../discover_living_project_workspace/index.html">
+<span>Resume Discovery Session</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<!-- Quick prompt chips -->
+<div class="flex flex-col gap-2 pt-1 border-t border-quiet-line">
+<span class="text-[11px] font-mono text-muted-ink">Quick Inquiries to Dispatch:</span>
+<div class="flex flex-col gap-1.5">
+<button class="w-full text-left px-3 py-2 rounded bg-canvas hover:bg-white hover:border-deep-line border border-quiet-line text-xs text-ink transition-colors flex items-center justify-between group">
+<span class="truncate">Review Frappe Overtime Rules</span>
+<span class="material-symbols-outlined text-[14px] text-muted-ink group-hover:text-signal-blue group-hover:translate-x-0.5 transition-all">chevron_right</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded bg-canvas hover:bg-white hover:border-deep-line border border-quiet-line text-xs text-ink transition-colors flex items-center justify-between group">
+<span class="truncate">Verify Tax Slab Mapping (India &amp; UAE)</span>
+<span class="material-symbols-outlined text-[14px] text-muted-ink group-hover:text-signal-blue group-hover:translate-x-0.5 transition-all">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- System Orientation Note -->
+<div class="p-4 rounded-lg border border-quiet-line bg-canvas/60 text-xs text-muted-ink flex flex-col gap-1.5 leading-relaxed">
+<div class="flex items-center gap-1.5 text-ink font-medium">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>Living State Contract</span>
+</div>
+<p>
+              Changes made during Discover or Map discussions immediately mutate the node state graph and appear here. No manual dashboard updates required.
+            </p>
+</div>
+</div>
+</div>
+<!-- 3. Current Project Scope Snapshot (Frappe Modules under active discovery) -->
+<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-quiet-line pb-3.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-muted-ink text-[18px]">view_module</span>
+<h2 class="text-sm font-semibold tracking-tight text-ink">Frappe HR Module Scope</h2>
+</div>
+<span class="text-xs font-mono text-muted-ink">Target Version: Frappe HR v15 (Self-Hosted on Frappe Cloud)</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Module 1 -->
+<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-ink">Employee Lifecycle</span>
+<span class="font-mono text-[10px] text-success-ink bg-success-subtle px-1.5 py-0.5 rounded border border-green-200">Validated</span>
+</div>
+<p class="text-xs text-muted-ink mt-1">
+                Onboarding, staff designations, department branches &amp; exit handoffs.
+              </p>
+</div>
+<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">
+              Status: Baseline Locked
+            </div>
+</div>
+<!-- Module 2 -->
+<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-ink">Leave &amp; Attendance</span>
+<span class="font-mono text-[10px] text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 rounded border border-signal-blue/20">Evolving</span>
+</div>
+<p class="text-xs text-muted-ink mt-1">
+                Biometric punch capture, manager approval exception path &amp; compensatory off.
+              </p>
+</div>
+<div class="text-[11px] font-mono text-signal-blue border-t border-quiet-line pt-2 font-medium">
+              Active Discovery Session
+            </div>
+</div>
+<!-- Module 3 -->
+<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-ink">Payroll Processing</span>
+<span class="font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Understand</span>
+</div>
+<p class="text-xs text-muted-ink mt-1">
+                Salary structures, multi-currency consultant fees &amp; statutory tax deductions.
+              </p>
+</div>
+<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">
+              Status: Gathering Entities
+            </div>
+</div>
+<!-- Module 4 -->
+<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-ink">Performance &amp; Appraisal</span>
+<span class="font-mono text-[10px] text-muted-ink bg-white px-1.5 py-0.5 rounded border border-quiet-line">Queued</span>
+</div>
+<p class="text-xs text-muted-ink mt-1">
+                KRA definitions, 360-degree cycles &amp; manager rating matrices.
+              </p>
+</div>
+<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">
+              Status: Phase 2 Scope
+            </div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Calm Minimal Footer -->
+<footer class="w-full bg-surface border-t border-quiet-line py-4">
+<div class="max-w-[1440px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-ink font-mono">
+<span>WorkSimplified — Living Project Workspace</span>
+<div class="flex items-center gap-4">
+<span>Lifecycle: Understand</span>
+<span class="text-deep-line">|</span>
+<span>Graph Engine v2.4</span>
+</div>
+</div>
+</footer>
+</body></html>

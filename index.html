@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>WorkSimplified — Living Project Workspace</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          canvas: "#F7F7F5",
+          surface: "#FFFFFF",
+          ink: "#18181B",
+          "muted-ink": "#71717A",
+          "quiet-line": "#E4E4E7",
+          "deep-line": "#D4D4D8",
+          "signal-blue": "#356AE6",
+          "signal-blue-hover": "#2553C7",
+          "signal-blue-subtle": "#EEF3FF",
+          "valid": "#15803D",
+          "valid-bg": "#DCFCE7",
+          "evolving": "#B45309",
+          "evolving-bg": "#FEF3C7",
+          proposed: "#475569",
+          "proposed-bg": "#F1F5F9",
+          "line": "#E4E4E7",
+          "ink-muted": "#71717A",
+          "ink-subtle": "#A1A1AA",
+          "signal": "#356AE6"
+        },
+        fontFamily: {
+          sans: ["Geist", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
+          mono: ["Geist Mono", "ui-monospace", "SFMono-Regular", "monospace"]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  @layer base {
+    html, body { margin: 0; padding: 0; background-color: #F7F7F5; color: #18181B; }
+    body { overscroll-behavior: none; font-feature-settings: "cv02", "cv03", "cv04", "cv11"; -webkit-font-smoothing: antialiased; }
+  }
+  .dot-grid {
+    background-image: radial-gradient(#D4D4D8 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #E4E4E7; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #D4D4D8; }
+</style>
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+<!-- Top Chrome Navigation -->
+<header class="h-13 bg-surface border-b border-line px-6 flex items-center justify-between sticky top-0 z-40">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-ink flex items-center justify-center text-surface text-[12px] font-mono font-bold tracking-tight">W</div>
+<span class="font-semibold text-[14px] tracking-tight text-ink">WorkSimplified</span>
+</div>
+<span class="text-line text-[14px]">/</span>
+<div class="flex items-center gap-2 group cursor-pointer">
+<span class="text-[13px] font-medium text-ink">HR Transformation</span>
+<span class="text-[12px] text-ink-muted font-normal">(Frappe HR &amp; Payroll implementation)</span>
+<span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
+</div>
+</div>
+<!-- App Tabs -->
+<nav class="hidden md:flex items-center gap-1 text-[13px]">
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="cockpit_living_project_workspace/index.html">Cockpit</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="discover_living_project_workspace/index.html">Discover</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="map_living_project_workspace/index.html">Map</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="state_living_project_workspace/index.html">State</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="outputs_living_project_workspace/index.html">Outputs</a>
+</nav>
+</div>
+<!-- Right utility status & avatar -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded border border-line bg-surface text-[12px] font-mono text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-valid"></span>
+<span class="text-ink font-medium">Live Project Model</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-valid">Synced</span>
+</div>
+<div class="flex items-center gap-2 pl-2 border-l border-line">
+<div class="w-7 h-7 rounded-full bg-ink text-surface flex items-center justify-center font-mono text-[11px] font-medium">LA</div>
+</div>
+</div>
+</header>
+
+<!-- Subheader / Context Strip -->
+<div class="bg-surface border-b border-line px-6 py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-[12px]">
+<span class="text-ink-muted">HR Transformation</span>
+<span class="text-ink-subtle">/</span>
+<span class="text-ink-muted">Frappe HR &amp; Payroll</span>
+<span class="text-ink-subtle">/</span>
+<span class="font-medium text-ink">Leave &amp; Attendance Domain</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-line bg-canvas text-[11px] font-mono uppercase tracking-wider text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-signal"></span>
+<span class="">Project Updated</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-ink font-medium">Just now</span>
+</div>
+</div>
+</div>
+
+<!-- Main Content -->
+<main class="flex-1 flex flex-col bg-canvas">
+<div class="max-w-[1440px] mx-auto p-8">
+<!-- Header -->
+<div class="mb-8">
+<h1 class="text-[28px] font-semibold tracking-tight text-ink">Living Project Workspace</h1>
+<p class="text-[14px] text-ink-muted mt-1">Navigate to any workspace view below.</p>
+</div>
+
+<!-- Workspace Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+<!-- Cockpit -->
+<a href="cockpit_living_project_workspace/index.html" class="group bg-surface border border-line rounded-xl p-6 shadow-xs hover:border-signal-blue hover:shadow-sm transition-all flex flex-col text-left">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 rounded bg-signal-blue/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-signal-blue">dashboard</span>
+</div>
+<h2 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Cockpit</h2>
+</div>
+<p class="text-[12px] text-ink-muted leading-relaxed mb-3">Orientation &amp; continuity workspace for the Frappe HR &amp; Payroll migration. Real project state, no analytics clutter.</p>
+<span class="text-[10px] font-mono text-ink-muted">Where are we?</span>
+</a>
+
+<!-- Discover -->
+<a href="discover_living_project_workspace/index.html" class="group bg-surface border border-line rounded-xl p-6 shadow-xs hover:border-signal-blue hover:shadow-sm transition-all flex flex-col text-left">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 rounded bg-signal-blue/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-signal-blue">search</span>
+</div>
+<h2 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Discover</h2>
+</div>
+<p class="text-[12px] text-ink-muted leading-relaxed mb-3">BA Working Session — a live dialogue between architect and an AI agent that mutates the process model graph in real time.</p>
+<span class="text-[10px] font-mono text-ink-muted">What are we learning?</span>
+</a>
+
+<!-- Map -->
+<a href="map_living_project_workspace/index.html" class="group bg-surface border border-line rounded-xl p-6 shadow-xs hover:border-signal-blue hover:shadow-sm transition-all flex flex-col text-left">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 rounded bg-signal-blue/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-signal-blue">account_tree</span>
+</div>
+<h2 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Map</h2>
+</div>
+<p class="text-[12px] text-ink-muted leading-relaxed mb-3">Spatial node-link diagram of the leave application &amp; approval flow, with multi-tier escalation and HR fallback branches.</p>
+<span class="text-[10px] font-mono text-ink-muted">How does everything connect?</span>
+</a>
+
+<!-- State -->
+<a href="state_living_project_workspace/index.html" class="group bg-surface border border-line rounded-xl p-6 shadow-xs hover:border-signal-blue hover:shadow-sm transition-all flex flex-col text-left">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 rounded bg-signal-blue/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-signal-blue">hub</span>
+</div>
+<h2 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">State</h2>
+</div>
+<p class="text-[12px] text-ink-muted leading-relaxed mb-3">Structured knowledge graph with 118 active nodes — requirements, questions, decisions, and evidence tied directly to source transcripts.</p>
+<span class="text-[10px] font-mono text-ink-muted">What do we know?</span>
+</a>
+
+<!-- Outputs -->
+<a href="outputs_living_project_workspace/index.html" class="group bg-surface border border-line rounded-xl p-6 shadow-xs hover:border-signal-blue hover:shadow-sm transition-all flex flex-col text-left">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 rounded bg-signal-blue/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-signal-blue">inventory</span>
+</div>
+<h2 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Outputs</h2>
+</div>
+<p class="text-[12px] text-ink-muted leading-relaxed mb-3">8 state projections compiled from canonical state — project brief, requirements, stakeholder matrix, process flow, architecture, plan, issues, and readiness report.</p>
+<span class="text-[10px] font-mono text-ink-muted">What can we produce?</span>
+</a>
+</div>
+
+<!-- Lifecycle Rail -->
+<div class="mt-8 bg-surface border border-line rounded-lg p-2 flex items-center gap-1 text-[12px] font-mono text-ink-muted">
+<div class="px-3 py-1.5 rounded bg-signal-blue-subtle text-signal-blue flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-blue animate-pulse"></span>
+<span>1. Understand</span>
+<span class="text-[10px] font-mono px-1 rounded bg-white/70 border border-signal-blue/20 uppercase">Active</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-deep-line">arrow_forward</span>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-deep-line"></span>
+<span>2. Define</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-deep-line">arrow_forward</span>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-deep-line"></span>
+<span>3. Validate</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-deep-line">arrow_forward</span>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-deep-line"></span>
+<span>4. Execute</span>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="h-9 bg-surface border-t border-line px-6 flex items-center justify-between text-[11px] font-mono text-ink-muted">
+<div class="max-w-[1440px] mx-auto w-full flex items-center justify-between">
+<span>WorkSimplified · Living Project Workspace</span>
+<div>
+<span class="text-ink">HR Transformation :: Leave &amp; Attendance Domain</span>
+<span class="text-ink-subtle">·</span>
+<span>Model revision #04</span>
+</div>
+</div>
+</footer>
+</body></html>

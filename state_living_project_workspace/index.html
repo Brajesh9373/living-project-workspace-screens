@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>WorkSimplified — State: What do we know?</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "canvas": "#F7F7F5",
+            "surface": "#FFFFFF",
+            "ink": "#18181B",
+            "muted-ink": "#71717A",
+            "quiet-line": "#E4E4E7",
+            "deep-line": "#D4D4D8",
+            "signal-blue": "#356AE6",
+            "primary": "#356AE6",
+            "status-validated-bg": "#DCFCE7",
+            "status-validated-text": "#15803D",
+            "status-evolving-bg": "#FEF3C7",
+            "status-evolving-text": "#B45309",
+            "status-clarification-bg": "#F1F5F9",
+            "status-clarification-text": "#475569",
+            "line": "#E4E4E7",
+            "ink-muted": "#71717A",
+            "ink-subtle": "#A1A1AA",
+            "valid": "#15803D",
+            "signal": "#356AE6"
+          },
+          fontFamily: {
+            sans: ["Geist", "sans-serif"],
+            mono: ["Geist Mono", "JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #F7F7F5;
+        color: #18181B;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E4E4E7;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans bg-canvas text-ink antialiased selection:bg-signal-blue/10 selection:text-signal-blue">
+<!-- Top Chrome Navigation -->
+<header class="h-13 bg-surface border-b border-line px-6 flex items-center justify-between sticky top-0 z-40">
+<div class="flex items-center gap-6">
+<!-- Brand & Project Selector -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-ink flex items-center justify-center text-surface text-[12px] font-mono font-bold tracking-tight">W</div>
+<span class="font-semibold text-[14px] tracking-tight text-ink">WorkSimplified</span>
+</div>
+<span class="text-line text-[14px]">/</span>
+<div class="flex items-center gap-2 group cursor-pointer">
+<span class="text-[13px] font-medium text-ink">HR Transformation</span>
+<span class="text-[12px] text-ink-muted font-normal">(Frappe HR &amp; Payroll implementation)</span>
+<span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
+</div>
+</div>
+<!-- App Tabs -->
+<nav class="hidden md:flex items-center gap-1 text-[13px]">
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../cockpit_living_project_workspace/index.html">Cockpit</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../discover_living_project_workspace/index.html">Discover</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../map_living_project_workspace/index.html">Map</a>
+<a class="px-3 py-1.5 rounded font-semibold text-ink bg-canvas border border-line text-[13px]" href="index.html">State</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../outputs_living_project_workspace/index.html">Outputs</a>
+</nav>
+</div>
+<!-- Right utility status & avatar -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded border border-line bg-surface text-[12px] font-mono text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-valid"></span>
+<span class="text-ink font-medium">Live Project Model</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-valid">Synced</span>
+</div>
+<div class="flex items-center gap-2 pl-2 border-l border-line">
+<div class="w-7 h-7 rounded-full bg-ink text-surface flex items-center justify-center font-mono text-[11px] font-medium">LA</div>
+</div>
+</div>
+</header>
+<!-- Subheader / Context Strip -->
+<div class="bg-surface border-b border-line px-6 py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-[12px]">
+<span class="text-ink-muted">HR Transformation</span>
+<span class="text-ink-subtle">/</span>
+<span class="text-ink-muted">Frappe HR &amp; Payroll</span>
+<span class="text-ink-subtle">/</span>
+<span class="font-medium text-ink">Leave &amp; Attendance Domain</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-line bg-canvas text-[11px] font-mono uppercase tracking-wider text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-signal"></span>
+<span class="">Project Updated</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-ink font-medium">Just now</span>
+</div>
+</div>
+</div>
+<!-- Main Content Space -->
+<main class="w-full pt-14 pb-8 flex-1 flex flex-col">
+<div class="max-w-[1440px] w-full mx-auto px-6 py-5 flex flex-col gap-4 flex-1">
+<!-- Header & Philosophy Strip -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-quiet-line/80">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2.5">
+<h1 class="text-lg font-semibold tracking-tight text-ink">State — What do we know?</h1>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Living Project Workspace
+            </span>
+</div>
+<p class="text-xs text-muted-ink">
+            Structured knowledge graph synthesising requirements, questions, and decisions directly tied to evidence.
+          </p>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1.5 text-xs text-muted-ink bg-surface border border-quiet-line px-2.5 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[14px] text-signal-blue">hub</span>
+<span>Graph sync: <strong class="text-ink font-mono font-medium">118 nodes active</strong></span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-signal-blue text-white rounded-lg text-xs font-medium hover:bg-blue-600 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[15px]">add</span>
+<span>Add Statement</span>
+</button>
+</div>
+</div>
+<!-- Subheader Category Filter Strip -->
+<div class="flex items-center justify-between gap-4 overflow-x-auto pb-1">
+<div class="flex items-center gap-1.5">
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium transition-colors bg-ink text-white shadow-sm">
+            All
+          </button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Requirements <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">42</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Questions <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800">7</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Assumptions <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">12</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Decisions <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">18</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Business Rules <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">24</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Stakeholders <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">6</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Dependencies <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">9</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Risks <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-rose-100 text-rose-700">3</span>
+</button>
+</div>
+<div class="hidden lg:flex items-center gap-2 text-[11px] text-muted-ink shrink-0">
+<span class="material-symbols-outlined text-[14px] text-signal-blue">route</span>
+<span>Traceability flow: <strong class="text-ink">Interview → Question → Requirement → Workflow</strong></span>
+</div>
+</div>
+<!-- Two-Column Workspace Layout (55% Left List, 45% Right Inspector) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start flex-1 min-h-0">
+<!-- Left Column: Canonical Knowledge List (55% -> ~7 cols) -->
+<section class="lg:col-span-7 flex flex-col gap-3 min-w-0">
+<!-- Search & Filter Controls -->
+<div class="flex items-center gap-2">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-ink text-[16px]">search</span>
+<input class="w-full h-9 pl-9 pr-4 text-xs bg-surface border border-quiet-line rounded-lg text-ink placeholder:text-muted-ink focus:outline-none focus:ring-1 focus:ring-signal-blue focus:border-signal-blue transition-all" placeholder="Filter canonical state... (⌘K)" type="text"/>
+</div>
+<div class="flex items-center gap-1 bg-surface border border-quiet-line rounded-lg p-0.5">
+<button class="px-2 py-1 text-[11px] font-medium text-ink bg-canvas rounded">All States</button>
+<button class="px-2 py-1 text-[11px] font-medium text-muted-ink hover:text-ink rounded">Verified</button>
+<button class="px-2 py-1 text-[11px] font-medium text-muted-ink hover:text-ink rounded">Unresolved</button>
+</div>
+</div>
+<!-- Structured Knowledge Feed (Non-ERP Card List with relationships) -->
+<div class="flex flex-col gap-2.5">
+<!-- Item 1: REQ-001 [ VALIDATED ] -->
+<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-xs font-semibold text-ink">REQ-001</span>
+<span class="text-xs font-medium text-ink">Employees can apply for leave online</span>
+</div>
+<p class="text-xs text-muted-ink line-clamp-1">
+                    Standard employee self-service leave application with balance calculations and date conflict checks.
+                  </p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-validated-bg text-status-validated-text shrink-0">
+                  VALIDATED
+                </span>
+</div>
+<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-zinc-400">subdirectory_arrow_right</span>
+                  3 downstream links
+                </span>
+<span>•</span>
+<span class="font-mono text-[10px] text-zinc-500">DocType: Leave Application</span>
+</div>
+</div>
+<!-- Item 2: REQ-002 [ EVOLVING ] -->
+<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-xs font-semibold text-ink">REQ-002</span>
+<span class="text-xs font-medium text-ink">Managers can approve or reject leave requests</span>
+</div>
+<p class="text-xs text-muted-ink line-clamp-1">
+                    Direct managers receive contextual notification with one-click decisioning and mandatory rejection notes.
+                  </p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-evolving-bg text-status-evolving-text shrink-0">
+                  EVOLVING
+                </span>
+</div>
+<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink">
+<span class="flex items-center gap-1 text-amber-700">
+<span class="material-symbols-outlined text-[13px]">help_outline</span>
+                  Linked to Q-003
+                </span>
+<span>•</span>
+<span class="font-mono text-[10px] text-zinc-500">Frappe Standard Flow</span>
+</div>
+</div>
+<!-- Item 3: REQ-003 [ PROPOSED / NEW ] (SELECTED ACTIVE CARD) -->
+<div class="group bg-surface border-2 border-signal-blue rounded-xl p-3.5 transition-all cursor-pointer shadow-sm relative">
+<div class="absolute -left-1 top-4 bottom-4 w-1 bg-signal-blue rounded-r"></div>
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-xs font-semibold text-signal-blue">REQ-003</span>
+<span class="text-xs font-semibold text-ink">HR can override manager approval in specific cases</span>
+</div>
+<p class="text-xs text-muted-ink line-clamp-2">
+                    In instances where a reporting manager is absent or on leave, HR administrators possess permissions to act as emergency approvers.
+                  </p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-semibold tracking-wide uppercase bg-blue-50 text-signal-blue border border-blue-200 shrink-0">
+                  PROPOSED / NEW
+                </span>
+</div>
+<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/70 text-[11px]">
+<span class="text-signal-blue font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">visibility</span>
+                  Active in Inspector
+                </span>
+<span class="text-muted-ink">•</span>
+<span class="text-muted-ink flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">chat</span> Session #14
+                </span>
+<span class="text-muted-ink">•</span>
+<span class="font-mono text-[10px] text-zinc-600">DocType: Leave Application</span>
+</div>
+</div>
+<!-- Item 4: Q-003 [ UNDER CLARIFICATION ] -->
+<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-xs font-semibold text-slate-700">Q-003</span>
+<span class="text-xs font-medium text-ink">Who approves when the manager is unavailable?</span>
+</div>
+<p class="text-xs text-muted-ink line-clamp-1">
+                    Unresolved edge case regarding delegation matrices during sudden medical leave of department heads.
+                  </p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-clarification-bg text-status-clarification-text shrink-0">
+                  UNDER CLARIFICATION
+                </span>
+</div>
+<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink">
+<span class="text-slate-600 flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[13px]">lightbulb</span>
+                  Clarification proposed in REQ-003
+                </span>
+</div>
+</div>
+<!-- Item 5: DEC-004 [ VALIDATED ] -->
+<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-xs font-semibold text-emerald-800">DEC-004</span>
+<span class="text-xs font-medium text-ink">Use Frappe Standard Workflow state transitions instead of custom hooks</span>
+</div>
+<p class="text-xs text-muted-ink line-clamp-1">
+                    Maintain upstream upgrade path by avoiding monkey-patching leave_application.py and configuring native Workflows.
+                  </p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-validated-bg text-status-validated-text shrink-0">
+                  VALIDATED
+                </span>
+</div>
+<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink">
+<span class="text-emerald-700 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">gavel</span> ADR Architect Ratified
+                </span>
+<span>•</span>
+<span class="text-muted-ink">Affects 12 requirements</span>
+</div>
+</div>
+<!-- Item 6: BR-008 [ VALIDATED ] -->
+<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-xs font-semibold text-emerald-800">BR-008</span>
+<span class="text-xs font-medium text-ink">Maximum consecutive sick leave without medical proof is 3 days</span>
+</div>
+<p class="text-xs text-muted-ink line-clamp-1">
+                    Statutory labor rule configured into Frappe Leave Type attachment validation.
+                  </p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-validated-bg text-status-validated-text shrink-0">
+                  VALIDATED
+                </span>
+</div>
+<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink">
+<span>Compliance &amp; Legal verified</span>
+</div>
+</div>
+<!-- Item 7: ASM-002 [ EVOLVING ] -->
+<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-xs font-semibold text-amber-800">ASM-002</span>
+<span class="text-xs font-medium text-ink">All managers have daily email or mobile app access</span>
+</div>
+<p class="text-xs text-muted-ink line-clamp-1">
+                    Assumes warehouse team leads possess company-provided handhelds or work stations during shifts.
+                  </p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-evolving-bg text-status-evolving-text shrink-0">
+                  EVOLVING
+                </span>
+</div>
+<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink">
+<span class="text-amber-700 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">pending</span> Pending Warehouse Site Lead feedback
+                </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Relationship & Evidence Inspector (45% -> ~5 cols) -->
+<aside class="lg:col-span-5 sticky top-20">
+<div class="bg-surface border border-quiet-line rounded-[12px] p-5 shadow-sm flex flex-col gap-4">
+<!-- Inspector Header & Badges -->
+<div class="flex items-start justify-between gap-3 pb-3 border-b border-quiet-line">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="font-mono text-xs font-bold text-signal-blue">REQ-003</span>
+<span class="text-[11px] px-2 py-0.5 rounded bg-blue-50 text-signal-blue font-medium border border-blue-200">
+                    Proposed
+                  </span>
+</div>
+<h2 class="text-sm font-semibold text-ink leading-snug">HR Manager Approval Override</h2>
+<span class="text-[11px] text-muted-ink">Auto-derived from Discover analysis</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-muted-ink hover:text-ink hover:bg-canvas transition-colors" title="Bookmark node">
+<span class="material-symbols-outlined text-[17px]">bookmark</span>
+</button>
+<button class="p-1 rounded text-muted-ink hover:text-ink hover:bg-canvas transition-colors" title="More options">
+<span class="material-symbols-outlined text-[17px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- VISUALLY PROMINENT Relationship Chain -->
+<div class="bg-canvas border border-quiet-line rounded-lg p-3.5 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-signal-blue">schema</span>
+                  Relationship Chain
+                </span>
+<span class="text-[10px] text-signal-blue font-medium bg-blue-50 px-1.5 py-0.2 rounded border border-blue-100">Live Lineage</span>
+</div>
+<!-- Interactive Step-by-Step Chain Flow -->
+<div class="flex flex-col gap-1.5 pt-1">
+<!-- 1. Conversation -->
+<div class="flex items-center gap-2 text-xs">
+<span class="w-5 h-5 rounded-full bg-white border border-quiet-line flex items-center justify-center text-muted-ink shrink-0">
+<span class="material-symbols-outlined text-[12px]">forum</span>
+</span>
+<span class="text-muted-ink">Conversation:</span>
+<span class="font-medium text-ink hover:text-signal-blue cursor-pointer underline decoration-dotted">Session #14 (Discovery)</span>
+</div>
+<div class="pl-2.5 text-zinc-300 -my-1">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+</div>
+<!-- 2. Question -->
+<div class="flex items-center gap-2 text-xs">
+<span class="w-5 h-5 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 shrink-0">
+<span class="material-symbols-outlined text-[12px]">help</span>
+</span>
+<span class="text-muted-ink">Question:</span>
+<span class="font-mono text-[11px] font-medium text-amber-800 bg-amber-100/60 px-1.5 py-0.2 rounded">Q-003</span>
+<span class="text-ink truncate text-[11px] max-w-[190px]">Who approves when manager is unavailable?</span>
+</div>
+<div class="pl-2.5 text-zinc-300 -my-1">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+</div>
+<!-- 3. Clarification -->
+<div class="flex items-center gap-2 text-xs">
+<span class="w-5 h-5 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-signal-blue shrink-0">
+<span class="material-symbols-outlined text-[12px]">lightbulb</span>
+</span>
+<span class="text-muted-ink">Clarification:</span>
+<span class="italic text-ink font-serif text-[11px]">"HR can override"</span>
+</div>
+<div class="pl-2.5 text-zinc-300 -my-1">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+</div>
+<!-- 4. Requirement (Active) -->
+<div class="flex items-center gap-2 text-xs bg-white p-1.5 rounded border border-signal-blue/40 shadow-xs">
+<span class="w-5 h-5 rounded-full bg-signal-blue text-white flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</span>
+<span class="font-semibold text-signal-blue">Requirement:</span>
+<span class="font-mono text-[11px] font-bold text-signal-blue">REQ-003</span>
+<span class="text-[11px] text-ink font-medium">HR Manager Override</span>
+</div>
+<div class="pl-2.5 text-zinc-300 -my-1">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+</div>
+<!-- 5. Flow Node -->
+<div class="flex items-center gap-2 text-xs">
+<span class="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0">
+<span class="material-symbols-outlined text-[12px]">account_tree</span>
+</span>
+<span class="text-muted-ink">Target Flow:</span>
+<span class="text-emerald-800 font-medium text-[11px] hover:underline cursor-pointer">BA Flow: Node #4 (HR Exception Step)</span>
+</div>
+</div>
+</div>
+<!-- Description Block -->
+<div class="flex flex-col gap-1.5">
+<span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono">Statement Definition</span>
+<p class="text-xs text-ink leading-relaxed bg-canvas/60 p-3 rounded-lg border border-quiet-line/60">
+                In instances where a reporting manager is absent or on leave, HR administrators possess permissions to act as emergency approvers to prevent payroll cutoff blockages.
+              </p>
+</div>
+<!-- Transcript Evidence -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-zinc-500">record_voice_over</span>
+                  Evidence from Transcript
+                </span>
+<span class="font-mono text-[10px] text-muted-ink">00:42:15</span>
+</div>
+<blockquote class="bg-amber-50/50 border-l-2 border-amber-400 p-2.5 rounded-r-lg text-xs text-ink italic leading-snug">
+                “HR can override the manager in such cases.”
+                <span class="block mt-1 text-[11px] font-medium not-italic text-muted-ink">
+                  — Spoken by <strong class="text-ink">Marcus Vance</strong> (Head of HR Operations)
+                </span>
+</blockquote>
+</div>
+<!-- Related Technical DocType Schema -->
+<div class="flex flex-col gap-1.5">
+<span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono">Related Frappe DocType</span>
+<div class="flex items-center justify-between bg-canvas px-3 py-2 rounded-lg border border-quiet-line">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-muted-ink">data_object</span>
+<span class="text-xs font-mono font-medium text-ink">Leave Application</span>
+</div>
+<code class="text-[11px] font-mono text-signal-blue bg-white px-2 py-0.5 rounded border border-quiet-line">workflow_state_override</code>
+</div>
+</div>
+<!-- Primary Actions Toolbar -->
+<div class="pt-2 flex flex-col gap-2 border-t border-quiet-line">
+<button class="w-full h-9 bg-signal-blue hover:bg-blue-600 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-xs">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Validate Requirement</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<a href="../discover_living_project_workspace/index.html" class="h-8 bg-surface hover:bg-canvas border border-quiet-line text-ink rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[14px] text-muted-ink">chat</span>
+<span>Open in Discover</span>
+</a>
+<a href="../map_living_project_workspace/index.html" class="h-8 bg-surface hover:bg-canvas border border-quiet-line text-ink rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[14px] text-muted-ink">account_tree</span>
+<span>Trace in Map</span>
+</a>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Clean Minimal Footer -->
+<footer class="w-full bg-surface border-t border-quiet-line py-3">
+<div class="max-w-[1440px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-ink gap-2">
+<div class="flex items-center gap-2">
+<span class="font-medium text-ink">WorkSimplified</span>
+<span>•</span>
+<span>Living Project Workspace</span>
+</div>
+<div class="flex items-center gap-4 text-[11px]">
+<span class="flex items-center gap-1 text-emerald-700">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          Relationship Engine Connected
+        </span>
+<span>Press <kbd class="px-1 py-0.5 font-mono bg-canvas border border-quiet-line rounded">J</kbd> / <kbd class="px-1 py-0.5 font-mono bg-canvas border border-quiet-line rounded">K</kbd> to inspect next</span>
+</div>
+</div>
+</footer>
+</body></html>

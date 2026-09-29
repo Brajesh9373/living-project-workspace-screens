@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>Map — How does everything connect?</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overscroll-behavior: none;
+        font-family: 'Geist', sans-serif;
+      }
+    }
+    .font-mono-code {
+      font-family: 'Geist Mono', monospace;
+    }
+    /* Minimal custom scrollbar if needed */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E4E4E7;
+      border-radius: 9999px;
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            canvas: "#F7F7F5",
+            surface: "#FFFFFF",
+            ink: "#18181B",
+            "muted-ink": "#71717A",
+            "quiet-line": "#E4E4E7",
+            "signal-blue": "#356AE6",
+            "state-validated": "#15803D",
+            "state-validated-bg": "#F0FDF4",
+            "state-validated-border": "#BBF7D0",
+            "state-evolving": "#B45309",
+            "state-evolving-bg": "#FFFBEB",
+            "state-evolving-border": "#FDE68A",
+            "state-open": "#4B5563",
+            "state-open-bg": "#F3F4F6",
+            "state-conflict": "#B91C1C",
+            "state-conflict-bg": "#FEF2F2",
+            "line": "#E4E4E7",
+            "ink-muted": "#71717A",
+            "ink-subtle": "#A1A1AA",
+            "valid": "#15803D",
+            "signal": "#356AE6"
+          },
+          fontFamily: {
+            sans: ['Geist', 'sans-serif'],
+            mono: ['Geist Mono', 'monospace']
+          },
+          borderRadius: {
+            'node': '12px'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen flex flex-col font-sans bg-canvas text-ink antialiased select-none overflow-hidden">
+<!-- Top Chrome Navigation -->
+<header class="h-13 bg-surface border-b border-line px-6 flex items-center justify-between sticky top-0 z-40">
+<div class="flex items-center gap-6">
+<!-- Brand & Project Selector -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-ink flex items-center justify-center text-surface text-[12px] font-mono font-bold tracking-tight">W</div>
+<span class="font-semibold text-[14px] tracking-tight text-ink">WorkSimplified</span>
+</div>
+<span class="text-line text-[14px]">/</span>
+<div class="flex items-center gap-2 group cursor-pointer">
+<span class="text-[13px] font-medium text-ink">HR Transformation</span>
+<span class="text-[12px] text-ink-muted font-normal">(Frappe HR &amp; Payroll implementation)</span>
+<span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
+</div>
+</div>
+<!-- App Tabs -->
+<nav class="hidden md:flex items-center gap-1 text-[13px]">
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../cockpit_living_project_workspace/index.html">Cockpit</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../discover_living_project_workspace/index.html">Discover</a>
+<a class="px-3 py-1.5 rounded font-semibold text-ink bg-canvas border border-line text-[13px]" href="index.html">Map</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../state_living_project_workspace/index.html">State</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../outputs_living_project_workspace/index.html">Outputs</a>
+</nav>
+</div>
+<!-- Right utility status & avatar -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded border border-line bg-surface text-[12px] font-mono text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-valid"></span>
+<span class="text-ink font-medium">Live Project Model</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-valid">Synced</span>
+</div>
+<div class="flex items-center gap-2 pl-2 border-l border-line">
+<div class="w-7 h-7 rounded-full bg-ink text-surface flex items-center justify-center font-mono text-[11px] font-medium">LA</div>
+</div>
+</div>
+</header>
+<!-- Subheader / Context Strip -->
+<div class="bg-surface border-b border-line px-6 py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-[12px]">
+<span class="text-ink-muted">HR Transformation</span>
+<span class="text-ink-subtle">/</span>
+<span class="text-ink-muted">Frappe HR &amp; Payroll</span>
+<span class="text-ink-subtle">/</span>
+<span class="font-medium text-ink">Leave &amp; Attendance Domain</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-line bg-canvas text-[11px] font-mono uppercase tracking-wider text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-signal"></span>
+<span class="">Project Updated</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-ink font-medium">Just now</span>
+</div>
+</div>
+</div>
+<!-- Map Toolbar -->
+<div class="bg-surface border-b border-line px-6 py-2.5 flex items-center justify-between shrink-0 z-20">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="font-semibold text-[13px] text-ink tracking-tight">Map</span>
+<span class="text-[12px] text-muted-ink">— How does everything connect?</span>
+</div>
+<div class="h-3.5 w-px bg-line hidden md:block"></div>
+<!-- Flow Selector Pills -->
+<div class="flex items-center gap-1 p-0.5 bg-canvas rounded-lg border border-line text-[12px]">
+<button class="px-2.5 py-1 rounded-[6px] bg-surface font-medium text-ink shadow-xs border border-line/60 flex items-center gap-1.5 transition-all">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-blue"></span>
+          BA Flow <span class="text-[10px] text-muted-ink font-mono">(Active)</span>
+</button>
+<button class="px-2.5 py-1 rounded-[6px] text-muted-ink hover:text-ink transition-colors">Functional Flow</button>
+<button class="px-2.5 py-1 rounded-[6px] text-muted-ink hover:text-ink transition-colors">Technical Flow</button>
+<button class="px-2.5 py-1 rounded-[6px] text-muted-ink hover:text-ink transition-colors hidden xl:inline-block">Project Flow</button>
+<button class="px-2.5 py-1 rounded-[6px] text-muted-ink hover:text-ink transition-colors hidden sm:inline-block">Frappe Flow</button>
+</div>
+</div>
+<!-- Minimal Viewport Controls -->
+<div class="flex items-center gap-1.5">
+<div class="flex items-center bg-canvas border border-line rounded-md p-0.5 text-[12px]">
+<button class="w-6 h-6 flex items-center justify-center text-muted-ink hover:text-ink rounded hover:bg-surface transition-colors" id="zoom-out" title="Zoom Out">
+<span class="material-symbols-outlined text-[15px]">remove</span>
+</button>
+<span class="px-2 text-[11px] font-mono text-ink" id="zoom-val">100%</span>
+<button class="w-6 h-6 flex items-center justify-center text-muted-ink hover:text-ink rounded hover:bg-surface transition-colors" id="zoom-in" title="Zoom In">
+<span class="material-symbols-outlined text-[15px]">add</span>
+</button>
+</div>
+<button class="px-2.5 py-1 bg-canvas hover:bg-surface border border-line rounded-md text-[12px] font-medium text-ink transition-colors">
+        Fit
+      </button>
+<div class="h-3.5 w-px bg-line mx-0.5"></div>
+<button class="px-2 py-1 text-muted-ink hover:text-ink border border-transparent hover:border-line rounded-md text-[12px] flex items-center gap-1 transition-colors" id="toggle-drawer" title="Toggle Detail Panel">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span class="text-[11px] font-medium hidden sm:inline">Details</span>
+</button>
+</div>
+</div>
+<!-- Center Spatial Canvas Area -->
+<main class="relative flex-1 w-full bg-canvas overflow-auto cursor-grab active:cursor-grabbing" id="canvas-stage">
+<!-- 16px Subtle Dot Grid Background -->
+<div class="absolute inset-0 pointer-events-none opacity-40 min-w-[1400px] min-h-[900px]" style="background-image: radial-gradient(#A1A1AA 1px, transparent 1px); background-size: 16px 16px;">
+</div>
+<!-- Scalable Whiteboard Container -->
+<div class="relative min-w-[1360px] min-h-[760px] p-16" id="flow-container">
+<!-- SVG Connectors Layer -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrow" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="5" refy="3" viewbox="0 0 6 6">
+<path d="M 0 0 L 6 3 L 0 6 z" fill="#A1A1AA"></path>
+</marker>
+<marker id="arrow-blue" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="5" refy="3" viewbox="0 0 6 6">
+<path d="M 0 0 L 6 3 L 0 6 z" fill="#356AE6"></path>
+</marker>
+</defs>
+<!-- [Employee] (x:100, y:240, w:120, h:56) -> right center (220, 268) to [Submit Leave Request] left center (270, 268) -->
+<path d="M 220 268 L 270 268" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-width="1.5"></path>
+<!-- [Submit Leave Request] (x:270, y:236, w:190, h:64) -> right center (460, 268) to [Manager Approval] left center (510, 268) -->
+<path d="M 460 268 L 510 268" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-width="1.5"></path>
+<!-- [Manager Approval] (x:510, y:236, w:180, h:64) -> right center (690, 268) to [Manager unavailable?] left center (740, 268) -->
+<path d="M 690 268 L 740 268" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-width="1.5"></path>
+<!-- [Condition: Manager unavailable?] (x:740, y:226, w:200, h:84) -->
+<!-- Branch 1: (YES) top right (940, 250) -> curve to [HR Override] left center (1020, 168) -->
+<path d="M 940 250 C 975 250, 985 168, 1020 168" fill="none" marker-end="url(#arrow-blue)" stroke="#356AE6" stroke-width="1.5"></path>
+<!-- Branch 2: (NO) bottom right (940, 286) -> curve to [Direct Approval] left center (1020, 368) -->
+<path d="M 940 286 C 975 286, 985 368, 1020 368" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-width="1.5"></path>
+<!-- [HR Override] right center (1190, 168) -> curve down to [Frappe HR] left center (1250, 268) -->
+<path d="M 1190 168 C 1220 168, 1225 250, 1250 258" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-width="1.5"></path>
+<!-- [Direct Approval] right center (1190, 368) -> curve up to [Frappe HR] left center (1250, 268) -->
+<path d="M 1190 368 C 1220 368, 1225 286, 1250 278" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-width="1.5"></path>
+<!-- [Frappe HR: Leave Allocation Record] bottom center (1380, 308) -> down to [Frappe Payroll] top center (1380, 420) -->
+<path d="M 1380 308 L 1380 420" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-dasharray="3 3" stroke-width="1.5"></path>
+</svg>
+<!-- Connection Flow Edge Labels -->
+<div class="absolute left-[955px] top-[190px] z-10 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+<span class="px-1.5 py-0.5 rounded bg-surface border border-blue-200 text-signal-blue font-mono text-[10px] font-semibold tracking-wide shadow-2xs">
+          YES
+        </span>
+</div>
+<div class="absolute left-[955px] top-[340px] z-10 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+<span class="px-1.5 py-0.5 rounded bg-surface border border-quiet-line text-muted-ink font-mono text-[10px] font-medium shadow-2xs">
+          NO
+        </span>
+</div>
+<div class="absolute left-[1380px] top-[364px] z-10 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+<span class="px-1.5 py-0.5 rounded bg-surface border border-quiet-line text-muted-ink font-mono text-[9px] uppercase tracking-wider">
+          Sync Event
+        </span>
+</div>
+<!-- NODES ON CANVAS -->
+<!-- Node 1: [Employee] (Start Actor) -->
+<div class="absolute left-[100px] top-[240px] w-[120px] bg-surface rounded-node border border-quiet-line p-3 shadow-xs hover:border-muted-ink transition-all cursor-pointer">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="material-symbols-outlined text-[15px] text-muted-ink">person</span>
+<span class="font-mono text-[9px] uppercase tracking-wider text-muted-ink">Actor</span>
+</div>
+<div class="font-semibold text-[13px] text-ink tracking-tight">Employee</div>
+</div>
+<!-- Node 2: [Submit Leave Request] -->
+<div class="absolute left-[270px] top-[236px] w-[190px] bg-surface rounded-node border border-quiet-line p-3.5 shadow-xs hover:border-muted-ink transition-all cursor-pointer">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-mono text-[9px] uppercase tracking-wider text-muted-ink">Process Step</span>
+<span class="px-1.5 py-0.5 rounded font-mono text-[9px] font-medium bg-state-validated-bg text-state-validated border border-state-validated-border">
+            VALIDATED
+          </span>
+</div>
+<div class="font-semibold text-[13px] text-ink tracking-tight">Submit Leave Request</div>
+<div class="text-[11px] text-muted-ink mt-0.5">Captures dates, type, reason</div>
+</div>
+<!-- Node 3: [Manager Approval] -->
+<div class="absolute left-[510px] top-[236px] w-[180px] bg-surface rounded-node border border-quiet-line p-3.5 shadow-xs hover:border-muted-ink transition-all cursor-pointer">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-mono text-[9px] uppercase tracking-wider text-muted-ink">Review</span>
+<span class="px-1.5 py-0.5 rounded font-mono text-[9px] font-medium bg-state-evolving-bg text-state-evolving border border-state-evolving-border">
+            EVOLVING
+          </span>
+</div>
+<div class="font-semibold text-[13px] text-ink tracking-tight">Manager Approval</div>
+<div class="text-[11px] text-muted-ink mt-0.5">Primary reporting manager</div>
+</div>
+<!-- Node 4: [Manager unavailable?] (Condition node, blue outline / tag NEW) -->
+<div class="absolute left-[740px] top-[226px] w-[200px] bg-surface rounded-node border-2 border-signal-blue p-3.5 shadow-xs transition-all cursor-pointer">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-signal-blue">call_split</span>
+<span class="font-mono text-[9px] font-semibold uppercase tracking-wider text-signal-blue">Condition</span>
+</div>
+<span class="px-1.5 py-0.5 rounded font-mono text-[9px] font-bold bg-blue-50 text-signal-blue border border-blue-200">
+            NEW
+          </span>
+</div>
+<div class="font-semibold text-[13px] text-ink tracking-tight">Manager unavailable?</div>
+<div class="text-[11px] text-muted-ink mt-0.5">SLA timeout or out of office</div>
+</div>
+<!-- Node 5: [HR Override] (Selected / Highlighted Node) -->
+<div class="absolute left-[1020px] top-[136px] w-[170px] bg-surface rounded-node border-2 border-signal-blue ring-4 ring-signal-blue/10 p-3.5 shadow-sm transition-all cursor-pointer" id="node-hr-override">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-mono text-[9px] uppercase tracking-wider text-muted-ink">NODE-LR-004</span>
+<span class="px-1.5 py-0.5 rounded font-mono text-[9px] font-semibold bg-state-validated-bg text-state-validated border border-state-validated-border">
+            VALIDATED
+          </span>
+</div>
+<div class="font-semibold text-[13px] text-ink tracking-tight flex items-center justify-between">
+<span>HR Override</span>
+<span class="material-symbols-outlined text-[15px] text-signal-blue">shield_person</span>
+</div>
+<div class="text-[11px] text-muted-ink mt-0.5">Fallback escalation rule</div>
+</div>
+<!-- Node 6: [Direct Approval] -->
+<div class="absolute left-[1020px] top-[336px] w-[170px] bg-surface rounded-node border border-quiet-line p-3.5 shadow-xs hover:border-muted-ink transition-all cursor-pointer">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-mono text-[9px] uppercase tracking-wider text-muted-ink">Action</span>
+<span class="px-1.5 py-0.5 rounded font-mono text-[9px] font-medium bg-state-validated-bg text-state-validated border border-state-validated-border">
+            VALIDATED
+          </span>
+</div>
+<div class="font-semibold text-[13px] text-ink tracking-tight">Direct Approval</div>
+<div class="text-[11px] text-muted-ink mt-0.5">Normal manager sign-off</div>
+</div>
+<!-- Node 7: [Frappe HR: Leave Allocation Record] -->
+<div class="absolute left-[1250px] top-[228px] w-[260px] bg-surface rounded-node border border-quiet-line p-3.5 shadow-xs hover:border-muted-ink transition-all cursor-pointer">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-1 text-[#0089FF]">
+<span class="material-symbols-outlined text-[14px]">dataset</span>
+<span class="font-mono text-[9px] font-semibold uppercase tracking-wider">Frappe HR System</span>
+</div>
+<span class="px-1.5 py-0.5 rounded font-mono text-[9px] font-medium bg-state-validated-bg text-state-validated border border-state-validated-border">
+            VALIDATED
+          </span>
+</div>
+<div class="font-semibold text-[13px] text-ink tracking-tight">Leave Allocation Record</div>
+<div class="text-[11px] text-muted-ink mt-0.5 font-mono">DocType: Leave Application</div>
+<div class="mt-2 pt-2 border-t border-quiet-line text-[10px] text-muted-ink flex items-center justify-between">
+<span>Ledger entry created</span>
+<span class="text-state-validated font-mono font-medium">Auto-approved</span>
+</div>
+</div>
+<!-- Node 8: [Frappe Payroll: Salary Slip Deduction Check] -->
+<div class="absolute left-[1250px] top-[420px] w-[260px] bg-surface rounded-node border border-quiet-line p-3.5 shadow-xs hover:border-muted-ink transition-all cursor-pointer">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-1 text-[#6366F1]">
+<span class="material-symbols-outlined text-[14px]">payments</span>
+<span class="font-mono text-[9px] font-semibold uppercase tracking-wider">Frappe Payroll</span>
+</div>
+<span class="px-1.5 py-0.5 rounded font-mono text-[9px] font-medium bg-state-evolving-bg text-state-evolving border border-state-evolving-border">
+            EVOLVING
+          </span>
+</div>
+<div class="font-semibold text-[13px] text-ink tracking-tight">Salary Slip Deduction Check</div>
+<div class="text-[11px] text-muted-ink mt-0.5 font-mono">DocType: Salary Slip (LWP eval)</div>
+<div class="mt-2 pt-2 border-t border-quiet-line text-[10px] text-muted-ink flex items-center justify-between">
+<span>Monthly cycle trigger</span>
+<span class="text-state-evolving font-mono font-medium">Pending test</span>
+</div>
+</div>
+<!-- Minimal Canvas Legend -->
+<div class="absolute left-8 bottom-8 bg-surface/90 backdrop-blur-xs border border-quiet-line rounded-lg p-2.5 shadow-xs flex items-center gap-4 text-[11px] font-mono text-muted-ink">
+<span class="text-ink font-semibold">STATES:</span>
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-state-validated"></span>
+          VALIDATED
+        </span>
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-state-evolving"></span>
+          EVOLVING
+        </span>
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-state-open"></span>
+          OPEN
+        </span>
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-state-conflict"></span>
+          CONFLICT
+        </span>
+</div>
+</div>
+<!-- Restrained Context Drawer (Slide-over floating detail card, NOT permanent giant inspector) -->
+<aside class="fixed right-6 bottom-6 w-[340px] bg-surface rounded-node border border-quiet-line shadow-lg flex flex-col z-30 overflow-hidden transition-all duration-200" id="context-card">
+<!-- Card Header -->
+<div class="p-3.5 border-b border-quiet-line flex items-center justify-between bg-[#FAFAFA]">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-signal-blue"></div>
+<span class="font-mono text-[11px] font-semibold uppercase tracking-wider text-muted-ink">Selected Node</span>
+</div>
+<button class="text-muted-ink hover:text-ink transition-colors p-0.5 rounded" id="close-card">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<!-- Card Body Content -->
+<div class="p-4 space-y-3.5 text-[12px]">
+<!-- Node Title & State -->
+<div>
+<div class="flex items-start justify-between">
+<h3 class="font-semibold text-[15px] text-ink leading-tight">HR Override</h3>
+<span class="px-1.5 py-0.5 rounded font-mono text-[9px] font-semibold bg-state-validated-bg text-state-validated border border-state-validated-border">
+              VALIDATED
+            </span>
+</div>
+<div class="font-mono text-[11px] text-muted-ink mt-0.5">ID: NODE-LR-004</div>
+</div>
+<div class="h-px bg-quiet-line"></div>
+<!-- Metadata Attributes -->
+<div class="space-y-2.5">
+<div>
+<span class="block text-[10px] font-mono uppercase tracking-wider text-muted-ink">Origin</span>
+<p class="text-ink mt-0.5 font-medium">Discover Session #14 <span class="text-muted-ink font-normal">(BA Agent + Lead Architect)</span></p>
+</div>
+<div>
+<span class="block text-[10px] font-mono uppercase tracking-wider text-muted-ink">Governing Requirement</span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-mono text-[11px] font-medium text-signal-blue bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200">
+                REQ-003
+              </span>
+<span class="text-muted-ink text-[11px]">Unresponsive Approver SLA</span>
+</div>
+</div>
+<div>
+<span class="block text-[10px] font-mono uppercase tracking-wider text-muted-ink">Evidence</span>
+<div class="mt-1 p-2 rounded bg-[#F7F7F5] border border-quiet-line text-[11px] text-ink italic leading-relaxed">
+              "HR can override the manager in such cases."
+            </div>
+</div>
+<div>
+<span class="block text-[10px] font-mono uppercase tracking-wider text-muted-ink">Frappe Target</span>
+<code class="block mt-1 p-1.5 rounded bg-[#F4F4F5] font-mono text-[11px] text-ink border border-quiet-line/80 break-all">
+              leave_application.js
+            </code>
+<span class="text-[10px] text-muted-ink mt-0.5 block">Custom workflow state rule</span>
+</div>
+</div>
+<div class="h-px bg-quiet-line pt-1"></div>
+<!-- Quick Action Button -->
+<div class="pt-0.5 flex items-center justify-between">
+<button class="text-signal-blue hover:underline text-[11px] font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">history_edu</span>
+            View Discovery Thread
+          </button>
+<span class="text-[10px] font-mono text-muted-ink">Synced 4m ago</span>
+</div>
+</div>
+</aside>
+</main>
+<!-- Interactive script for Zoom, Pan feel, and Drawer Toggle -->
+<script>
+    (function initWorkspace() {
+      const zoomVal = document.getElementById('zoom-val');
+      const zoomIn = document.getElementById('zoom-in');
+      const zoomOut = document.getElementById('zoom-out');
+      const flowContainer = document.getElementById('flow-container');
+      const card = document.getElementById('context-card');
+      const closeCard = document.getElementById('close-card');
+      const toggleDrawer = document.getElementById('toggle-drawer');
+      const hrNode = document.getElementById('node-hr-override');
+
+      let zoom = 100;
+
+      function updateZoom(newZoom) {
+        zoom = Math.min(150, Math.max(70, newZoom));
+        zoomVal.textContent = zoom + '%';
+        flowContainer.style.transform = `scale(${zoom / 100})`;
+        flowContainer.style.transformOrigin = 'top left';
+      }
+
+      if (zoomIn) {
+        zoomIn.addEventListener('click', () => updateZoom(zoom + 10));
+      }
+      if (zoomOut) {
+        zoomOut.addEventListener('click', () => updateZoom(zoom - 10));
+      }
+
+      if (closeCard && card) {
+        closeCard.addEventListener('click', () => {
+          card.classList.add('hidden');
+        });
+      }
+
+      if (toggleDrawer && card) {
+        toggleDrawer.addEventListener('click', () => {
+          card.classList.toggle('hidden');
+        });
+      }
+
+      if (hrNode && card) {
+        hrNode.addEventListener('click', () => {
+          card.classList.remove('hidden');
+        });
+      }
+    })();
+  </script>
+</body></html>

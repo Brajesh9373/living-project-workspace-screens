@@ -1,0 +1,441 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Discover — What are we learning? | WorkSimplified</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: "#F7F7F5",
+            surface: "#FFFFFF",
+            ink: "#18181B",
+            "ink-muted": "#71717A",
+            "ink-subtle": "#A1A1AA",
+            line: "#E4E4E7",
+            "line-subtle": "#F4F4F5",
+            signal: "#356AE6",
+            "signal-hover": "#2856C7",
+            "signal-soft": "#EEF3FF",
+            valid: "#15803D",
+            "valid-bg": "#DCFCE7",
+            evolving: "#B45309",
+            "evolving-bg": "#FEF3C7",
+            proposed: "#475569",
+            "proposed-bg": "#F1F5F9"
+          },
+          fontFamily: {
+            sans: ["Geist", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
+            mono: ["Geist Mono", "ui-monospace", "SFMono-Regular", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #F7F7F5;
+      color: #18181B;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
+    }
+    .dot-grid {
+      background-image: radial-gradient(#D4D4D8 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E4E4E7;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D4D4D8;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+<!-- Top Chrome Navigation -->
+<header class="h-13 bg-surface border-b border-line px-6 flex items-center justify-between sticky top-0 z-40">
+<div class="flex items-center gap-6">
+<!-- Brand & Project Selector -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-ink flex items-center justify-center text-surface text-[12px] font-mono font-bold tracking-tight">
+            W
+          </div>
+<span class="font-semibold text-[14px] tracking-tight text-ink">WorkSimplified</span>
+</div>
+<span class="text-line text-[14px]">/</span>
+<div class="flex items-center gap-2 group cursor-pointer">
+<span class="text-[13px] font-medium text-ink">HR Transformation</span>
+<span class="text-[12px] text-ink-muted font-normal">(Frappe HR &amp; Payroll implementation)</span>
+<span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
+</div>
+</div>
+<!-- App Tabs -->
+<nav class="hidden md:flex items-center gap-1 text-[13px]">
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../cockpit_living_project_workspace/index.html">Cockpit</a>
+<a class="px-3 py-1.5 rounded font-semibold text-ink bg-canvas border border-line text-[13px]" href="index.html">Discover</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../map_living_project_workspace/index.html">Map</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../state_living_project_workspace/index.html">State</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../outputs_living_project_workspace/index.html">Outputs</a>
+</nav>
+</div>
+<!-- Right utility status & avatar -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded border border-line bg-surface text-[12px] font-mono text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-valid"></span>
+<span class="text-ink font-medium">Live Project Model</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-valid">Synced</span>
+</div>
+<div class="flex items-center gap-2 pl-2 border-l border-line">
+<div class="w-7 h-7 rounded-full bg-ink text-surface flex items-center justify-center font-mono text-[11px] font-medium">
+          LA
+        </div>
+</div>
+</div>
+</header>
+<!-- Subheader / Context Strip -->
+<div class="bg-surface border-b border-line px-6 py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-[12px]">
+<span class="text-ink-muted">HR Transformation</span>
+<span class="text-ink-subtle">/</span>
+<span class="text-ink-muted">Frappe HR &amp; Payroll</span>
+<span class="text-ink-subtle">/</span>
+<span class="font-medium text-ink">Leave &amp; Attendance Domain</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-line bg-canvas text-[11px] font-mono uppercase tracking-wider text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-signal"></span>
+<span class="">Project Updated</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-ink font-medium">Just now</span>
+</div>
+</div>
+</div>
+<!-- Main Split Workbench Container -->
+<main class="flex-1 flex flex-col lg:flex-row w-full max-w-[1440px] mx-auto p-4 gap-4 overflow-hidden">
+<!-- LEFT PANE: BA Working Session (42% width) -->
+<section class="w-full flex flex-col bg-surface border border-line rounded-xl shadow-xs overflow-hidden h-[calc(100vh-8.5rem)] lg:w-[48%]">
+<!-- Session Header -->
+<div class="px-4 py-3 border-b border-line flex items-center justify-between bg-surface shrink-0">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-md border border-line bg-canvas flex items-center justify-center text-ink font-mono text-[12px] font-semibold">
+            BA
+          </div>
+<div>
+<h1 class="text-[13px] font-semibold text-ink leading-tight">BA Working Session</h1>
+<p class="text-[11px] text-ink-muted font-mono">Leave Management Discovery</p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-ink-muted">
+<button class="p-1 rounded hover:bg-canvas hover:text-ink transition-colors" title="Branch Session">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+</button>
+<button class="p-1 rounded hover:bg-canvas hover:text-ink transition-colors" title="Session Options">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- Dialogue Timeline -->
+<div class="flex-1 p-5 overflow-y-auto space-y-6">
+<!-- Initial BA Agent Message -->
+<div class="space-y-1.5">
+<div class="flex items-center gap-2">
+<span class="text-[11px] font-mono font-medium text-ink">BA Agent</span>
+<span class="text-[11px] font-mono text-ink-subtle">10:41:20</span>
+</div>
+<div class="bg-canvas border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink">
+            I understand that employees submit leave requests through their manager. What happens when the manager is unavailable?
+          </div>
+</div>
+<!-- User Statement -->
+<div class="space-y-1.5 pl-6">
+<div class="flex items-center justify-end gap-2">
+<span class="text-[11px] font-mono text-ink-subtle">10:42:05</span>
+<span class="text-[11px] font-mono font-medium text-ink">Lead Architect / PM</span>
+</div>
+<div class="bg-surface border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink text-left">
+            HR can override the manager in such cases.
+          </div>
+</div>
+<!-- BA Agent Confirmation & State Mutation Output -->
+<div class="space-y-2.5">
+<div class="flex items-center gap-2">
+<span class="text-[11px] font-mono font-medium text-ink">BA Agent</span>
+<span class="text-[11px] font-mono text-ink-subtle">10:42:08</span>
+<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-valid-bg text-valid font-medium">Model Synchronized</span>
+</div>
+<div class="bg-canvas border border-line rounded-lg p-3.5 space-y-3">
+<p class="text-[13px] leading-relaxed text-ink">
+              Got it. I’ve updated the approval path and marked the override rule as newly established.
+            </p>
+<!-- Subtle Structured Mutation Chips -->
+<div class="pt-2 border-t border-line/80 space-y-1.5">
+<span class="text-[10px] font-mono uppercase tracking-wider text-ink-muted block font-semibold">Graph Delta Applied</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface border border-line text-[11px] font-mono text-ink">
+<span class="text-signal font-bold">+</span> Rule: HR Override Established
+                </span>
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface border border-line text-[11px] font-mono text-ink">
+<span class="text-signal font-bold">+</span> Flow Node: Manager unavailable?
+                </span>
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface border border-line text-[11px] font-mono text-ink">
+<span class="text-proposed font-bold">REQ-003</span> Created: Proposed
+                </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Live Interaction Notice -->
+<div class="flex items-center justify-center pt-2">
+<div class="px-3 py-1 rounded-full border border-line bg-surface text-[11px] font-mono text-ink-muted flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal"></span>
+            Listening for assertions, policies, or rule changes...
+          </div>
+</div>
+</div>
+<!-- Dialogue Input Box -->
+<div class="p-3.5 border-t border-line bg-surface shrink-0 space-y-2">
+<label class="block text-[11px] font-mono text-ink-muted uppercase tracking-wider">Project Specification Input</label>
+<div class="border border-line rounded-lg p-2.5 bg-canvas focus-within:bg-surface focus-within:border-ink transition-colors">
+<textarea class="w-full bg-transparent border-0 p-0 text-[13px] text-ink placeholder:text-ink-subtle focus:ring-0 focus:outline-none resize-none leading-relaxed" placeholder="Reply to BA Agent or propose rule (e.g., 'Escalate after 48h')..." rows="2"></textarea>
+<div class="flex items-center justify-between pt-2 border-t border-line/60 mt-1">
+<div class="flex items-center gap-2 text-[11px] font-mono text-ink-muted">
+<span class="px-1.5 py-0.5 rounded bg-surface border border-line text-ink-muted">Enter ↵</span> to commit
+            </div>
+<button class="px-3 py-1.5 rounded bg-signal hover:bg-signal-hover text-surface text-[12px] font-medium transition-colors inline-flex items-center gap-1 shadow-xs">
+<span class="">Send</span>
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT PANE: Live Process Model Canvas (58% width) -->
+<section class="w-full flex flex-col bg-canvas border border-line rounded-xl shadow-xs overflow-hidden h-[calc(100vh-8.5rem)] relative lg:w-[52%]">
+<!-- Canvas Header & Toolbar -->
+<div class="px-4 py-3 border-b border-line bg-surface flex items-center justify-between shrink-0 z-10">
+<div class="flex items-center gap-3">
+<h2 class="text-[13px] font-semibold text-ink">Live Process Flow</h2>
+<span class="text-ink-subtle text-[12px]">·</span>
+<span class="text-[12px] text-ink-muted">Leave Application &amp; Approval</span>
+<span class="px-1.5 py-0.5 rounded border border-line bg-canvas text-[10px] font-mono font-medium text-ink-muted">BA Flow</span>
+</div>
+<!-- Minimal View Controls -->
+<div class="flex items-center gap-1 border border-line rounded-md bg-surface px-1 py-0.5">
+<button class="w-6 h-6 flex items-center justify-center text-ink-muted hover:text-ink text-[12px] font-mono transition-colors">−</button>
+<span class="text-[11px] font-mono text-ink px-1.5 font-medium select-none">100%</span>
+<button class="w-6 h-6 flex items-center justify-center text-ink-muted hover:text-ink text-[12px] font-mono transition-colors">+</button>
+<div class="w-px h-3.5 bg-line mx-0.5"></div>
+<button class="px-1.5 h-6 flex items-center justify-center text-ink-muted hover:text-ink text-[11px] font-mono transition-colors">Fit</button>
+</div>
+</div>
+<!-- Spatial Canvas with 16px Dot Grid -->
+<div class="flex-1 dot-grid overflow-auto p-8 relative flex flex-col items-center min-w-[700px]">
+<!-- Visual Cue: Updated Indicator -->
+<div class="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-line bg-surface/95 backdrop-blur shadow-xs text-[11px] font-mono text-ink-muted">
+<span class="w-2 h-2 rounded-full bg-signal animate-pulse"></span>
+<span class="">HR Override branch updated from statement 1m ago</span>
+</div>
+<div class="w-full max-w-[680px] flex flex-col items-center py-4 relative select-none">
+  <!-- 1. Node: [Employee] -->
+  <div class="w-60 bg-surface border border-line rounded-xl p-3 shadow-xs text-center relative hover:border-ink transition-colors group">
+    <div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-line-subtle">
+      <span class="text-[10px] font-mono text-ink-subtle uppercase tracking-wider">Start Actor</span>
+      <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-proposed-bg text-proposed font-medium">Role</span>
+    </div>
+    <div class="text-[13px] font-semibold text-ink group-hover:text-signal transition-colors">Employee</div>
+    <div class="text-[11px] text-ink-muted font-mono mt-0.5">Applicant Identity</div>
+  </div>
+
+  <!-- Connector 1 -> 2 -->
+  <div class="w-full flex justify-center py-1">
+    <svg width="24" height="32" viewBox="0 0 24 32" fill="none" class="text-ink-subtle overflow-visible">
+      <path d="M12 0V26" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round"></path>
+      <path d="M8 22L12 26L16 22" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </div>
+
+  <!-- 2. Node: [Submit Leave Request] -->
+  <div class="w-64 bg-surface border border-line rounded-xl p-3 shadow-xs relative hover:border-ink transition-colors group">
+    <div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-line-subtle">
+      <span class="text-[10px] font-mono text-ink-subtle">REQ-001</span>
+      <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-valid-bg text-valid font-medium">VALIDATED</span>
+    </div>
+    <div class="text-[13px] font-semibold text-ink group-hover:text-signal transition-colors">Submit Leave Request</div>
+    <div class="text-[11px] text-ink-muted mt-0.5">Captures dates, leave type &amp; reason</div>
+  </div>
+
+  <!-- Connector 2 -> 3 -->
+  <div class="w-full flex justify-center py-1">
+    <svg width="24" height="32" viewBox="0 0 24 32" fill="none" class="text-ink-subtle overflow-visible">
+      <path d="M12 0V26" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round"></path>
+      <path d="M8 22L12 26L16 22" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </div>
+
+  <!-- 3. Node: [Manager Approval] -->
+  <div class="w-64 bg-surface border border-line rounded-xl p-3 shadow-xs relative hover:border-ink transition-colors group">
+    <div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-line-subtle">
+      <span class="text-[10px] font-mono text-ink-subtle">REQ-002</span>
+      <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-evolving-bg text-evolving font-medium">EVOLVING</span>
+    </div>
+    <div class="text-[13px] font-semibold text-ink group-hover:text-signal transition-colors">Manager Approval</div>
+    <div class="text-[11px] text-ink-muted mt-0.5">Primary notification &amp; decision</div>
+  </div>
+
+  <!-- Connector 3 -> 4 with label badge -->
+  <div class="w-full flex flex-col items-center py-1 relative">
+    <div class="h-5 w-px bg-line"></div>
+    <div class="z-10 bg-canvas px-2.5 py-0.5 text-[10px] font-mono text-ink-muted border border-line rounded-full whitespace-nowrap shadow-xs my-0.5">
+      If unavailable after 48h
+    </div>
+    <svg width="24" height="18" viewBox="0 0 24 18" fill="none" class="overflow-visible">
+      <path d="M12 0V12" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round"></path>
+      <path d="M8 8L12 12L16 8" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </div>
+
+  <!-- 4. Node: [Manager unavailable?] Condition Decision Card (MUTATED) -->
+  <div class="w-72 bg-surface border-2 border-signal rounded-xl p-3.5 shadow-sm relative transition-all group ring-4 ring-signal-soft">
+    <div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-line-subtle">
+      <span class="text-[10px] font-mono font-semibold text-signal flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-signal animate-pulse"></span>
+        NEW FROM CONVERSATION
+      </span>
+      <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-signal-soft text-signal font-semibold">RULE-04</span>
+    </div>
+    <div class="text-[13px] font-semibold text-ink flex items-center justify-between">
+      <span class="">Manager unavailable?</span>
+      <span class="material-symbols-outlined text-[16px] text-signal">help_outline</span>
+    </div>
+    <div class="text-[11px] text-ink-muted font-mono mt-1">Condition: SLA expired or Out of Office</div>
+  </div>
+
+  <!-- SVG Branch Connectors (Split from Decision to 2 branches) -->
+  <div class="w-full max-w-[560px] h-14 relative flex items-center justify-center">
+    <svg class="w-full h-full overflow-visible" viewBox="0 0 560 56" fill="none">
+      <!-- Center stem -->
+      <path d="M280 0V14" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round"></path>
+      <!-- Left Branch to HR Override (Signal Blue) -->
+      <path d="M280 14C280 28 140 20 140 38V50" stroke="#356AE6" stroke-width="1.5" stroke-linecap="round"></path>
+      <path d="M136 46L140 50L144 46" stroke="#356AE6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+      <!-- Right Branch to Manager Signs Off (Subtle Line) -->
+      <path d="M280 14C280 28 420 20 420 38V50" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round"></path>
+      <path d="M416 46L420 50L424 46" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <!-- Branch Labels -->
+    <div class="absolute left-[70px] top-[14px] bg-surface border border-signal/40 text-signal px-2 py-0.5 rounded-full text-[10px] font-mono font-medium shadow-xs flex items-center gap-1">
+      <span class="w-1 h-1 rounded-full bg-signal"></span>
+      YES (Override)
+    </div>
+    <div class="absolute right-[70px] top-[14px] bg-surface border border-line text-ink-muted px-2 py-0.5 rounded-full text-[10px] font-mono shadow-xs">
+      NO (Standard)
+    </div>
+  </div>
+
+  <!-- Parallel Target Nodes Container -->
+  <div class="w-full max-w-[560px] grid grid-cols-2 gap-8 items-stretch">
+    <!-- 5a. Node: [HR Override] (YES Branch Target) -->
+    <div class="bg-surface border-2 border-signal/80 rounded-xl p-3.5 shadow-xs relative hover:border-signal transition-colors group flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-line-subtle">
+          <span class="text-[10px] font-mono text-signal font-semibold">REQ-003</span>
+          <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-valid-bg text-valid font-medium">VALIDATED</span>
+        </div>
+        <div class="text-[13px] font-semibold text-ink group-hover:text-signal transition-colors">HR Override</div>
+        <div class="text-[11px] text-ink-muted mt-0.5">Authorized HR admin executes approval</div>
+      </div>
+      <div class="mt-2.5 pt-2 border-t border-line-subtle flex items-center gap-1.5 text-[10px] font-mono text-signal">
+        <span class="material-symbols-outlined text-[13px]">bolt</span>
+        <span class="">Direct escalation active</span>
+      </div>
+    </div>
+
+    <!-- 5b. Node: [Manager Signs Off] (Standard Path) -->
+    <div class="bg-surface border border-line rounded-xl p-3.5 shadow-xs relative hover:border-ink transition-colors group flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-line-subtle">
+          <span class="text-[10px] font-mono text-ink-subtle">PATH-A</span>
+          <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-valid-bg text-valid font-medium">STANDARD</span>
+        </div>
+        <div class="text-[13px] font-semibold text-ink group-hover:text-signal transition-colors">Manager Signs Off</div>
+        <div class="text-[11px] text-ink-muted mt-0.5">Approved via normal email/UI notification</div>
+      </div>
+      <div class="mt-2.5 pt-2 border-t border-line-subtle flex items-center gap-1.5 text-[10px] font-mono text-ink-muted">
+        <span class="material-symbols-outlined text-[13px]">mail</span>
+        <span class="">Standard SLA notification</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SVG Converge Connectors (Merge back to End State) -->
+  <div class="w-full max-w-[560px] h-14 relative flex items-center justify-center">
+    <svg class="w-full h-full overflow-visible" viewBox="0 0 560 56" fill="none">
+      <!-- Left Branch in (Signal Blue) -->
+      <path d="M140 0V12C140 28 280 20 280 40" stroke="#356AE6" stroke-width="1.5" stroke-linecap="round"></path>
+      <!-- Right Branch in (Subtle Line) -->
+      <path d="M420 0V12C420 28 280 20 280 40" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round"></path>
+      <!-- Combined downstem with arrow -->
+      <path d="M280 40V50" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round"></path>
+      <path d="M276 46L280 50L284 46" stroke="#D4D4D8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </div>
+
+  <!-- 6. Node: [Leave Record Updated] (End state / Frappe DocType) -->
+  <div class="w-72 bg-surface border border-line rounded-xl p-3.5 shadow-xs relative hover:border-ink transition-colors group">
+    <div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-line-subtle">
+      <span class="text-[10px] font-mono text-ink-subtle">Frappe DocType: Leave Allocation</span>
+      <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-valid-bg text-valid font-medium">VALIDATED</span>
+    </div>
+    <div class="text-[13px] font-semibold text-ink group-hover:text-signal transition-colors flex items-center gap-1.5">
+      <span class="material-symbols-outlined text-[16px] text-valid">check_circle</span>
+      <span class="">Leave Record Updated</span>
+    </div>
+    <div class="text-[11px] text-ink-muted mt-0.5">Balance adjusted &amp; notification dispatched</div>
+  </div>
+</div>
+</div>
+<!-- Canvas Footer Status Strip -->
+<div class="px-4 py-2 border-t border-line bg-surface flex items-center justify-between text-[11px] font-mono text-ink-muted z-10 shrink-0">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-valid"></span> 3 Validated
+          </span>
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-evolving"></span> 1 Evolving
+          </span>
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-signal"></span> 1 Newly Inferred
+          </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="">Target Engine: Frappe HR v15.2</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Quiet Tool Footer -->
+<footer class="h-9 bg-surface border-t border-line px-6 flex items-center justify-between text-[11px] font-mono text-ink-muted">
+<div class="">WorkSimplified · Discover Living Project Engine</div>
+<div class="flex items-center gap-4">
+<span class="text-ink">Leave &amp; Attendance Discovery · ADR-042 Ready</span>
+<span class="text-ink-subtle">|</span>
+<span class="">Model revision #04</span>
+</div>
+</footer>
+
+
+</body></html>

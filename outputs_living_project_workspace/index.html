@@ -1,0 +1,499 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="web_standard" name="shell-type">
+<title>Outputs — What can we produce? | WorkSimplified</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #F7F7F5;
+        color: #18181B;
+        font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+    }
+    .font-mono-id {
+      font-family: 'Geist Mono', monospace;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D4D4D8;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #A1A1AA;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: "#F7F7F5",
+            surface: "#FFFFFF",
+            ink: "#18181B",
+            "muted-ink": "#71717A",
+            "quiet-line": "#E4E4E7",
+            "deep-line": "#D4D4D8",
+            "signal-blue": "#356AE6",
+            "signal-blue-hover": "#2556C7",
+            "emerald-soft": "#ECFDF5",
+            "emerald-text": "#047857",
+            "amber-soft": "#FFFBEB",
+            "amber-text": "#B45309",
+            "line": "#E4E4E7",
+            "ink-muted": "#71717A",
+            "ink-subtle": "#A1A1AA",
+            "valid": "#15803D",
+            "signal": "#356AE6"
+          },
+          fontFamily: {
+            sans: ['Geist', 'sans-serif'],
+            mono: ['Geist Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen flex flex-col font-sans bg-canvas text-ink antialiased">
+<!-- Top Chrome Navigation -->
+<header class="h-13 bg-surface border-b border-line px-6 flex items-center justify-between sticky top-0 z-40">
+<div class="flex items-center gap-6">
+<!-- Brand & Project Selector -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-ink flex items-center justify-center text-surface text-[12px] font-mono font-bold tracking-tight">W</div>
+<span class="font-semibold text-[14px] tracking-tight text-ink">WorkSimplified</span>
+</div>
+<span class="text-line text-[14px]">/</span>
+<div class="flex items-center gap-2 group cursor-pointer">
+<span class="text-[13px] font-medium text-ink">HR Transformation</span>
+<span class="text-[12px] text-ink-muted font-normal">(Frappe HR &amp; Payroll implementation)</span>
+<span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
+</div>
+</div>
+<!-- App Tabs -->
+<nav class="hidden md:flex items-center gap-1 text-[13px]">
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../cockpit_living_project_workspace/index.html">Cockpit</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../discover_living_project_workspace/index.html">Discover</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../map_living_project_workspace/index.html">Map</a>
+<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../state_living_project_workspace/index.html">State</a>
+<a class="px-3 py-1.5 rounded font-semibold text-ink bg-canvas border border-line text-[13px]" href="index.html">Outputs</a>
+</nav>
+</div>
+<!-- Right utility status & avatar -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded border border-line bg-surface text-[12px] font-mono text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-valid"></span>
+<span class="text-ink font-medium">Live Project Model</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-valid">Synced</span>
+</div>
+<div class="flex items-center gap-2 pl-2 border-l border-line">
+<div class="w-7 h-7 rounded-full bg-ink text-surface flex items-center justify-center font-mono text-[11px] font-medium">LA</div>
+</div>
+</div>
+</header>
+<!-- Subheader / Context Strip -->
+<div class="bg-surface border-b border-line px-6 py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-[12px]">
+<span class="text-ink-muted">HR Transformation</span>
+<span class="text-ink-subtle">/</span>
+<span class="text-ink-muted">Frappe HR &amp; Payroll</span>
+<span class="text-ink-subtle">/</span>
+<span class="font-medium text-ink">Leave &amp; Attendance Domain</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-line bg-canvas text-[11px] font-mono uppercase tracking-wider text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-signal"></span>
+<span class="">Project Updated</span>
+<span class="text-ink-subtle">·</span>
+<span class="text-ink font-medium">Just now</span>
+</div>
+</div>
+</div>
+<!-- Main Viewport -->
+<main class="w-full pt-14 flex-1">
+<div class="max-w-[1440px] mx-auto px-6 py-8 flex flex-col gap-8">
+<!-- View Header -->
+<section class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-quiet-line">
+<div class="flex flex-col gap-2 max-w-3xl">
+<div class="flex items-center gap-2 font-mono text-[11px] text-muted-ink uppercase tracking-wider">
+<span class="">Project State Consequence Layer</span>
+<span class="">/</span>
+<span class="text-signal-blue font-medium">Deterministic Synthesis</span>
+</div>
+<h1 class="text-[30px] font-semibold tracking-tight text-ink leading-none">
+            Outputs — What can we produce?
+          </h1>
+<p class="text-[14px] text-muted-ink leading-relaxed mt-1">
+            Living projections and implementation deliverables compiled directly from canonical state. Changes in Discover or Map continuously update these outputs.
+          </p>
+</div>
+<!-- Primary Action Group -->
+<div class="flex flex-wrap items-center gap-2.5 shrink-0">
+<button class="h-[42px] px-3.5 bg-surface hover:bg-canvas text-ink border border-quiet-line text-[13px] font-medium rounded-md transition-colors flex items-center gap-1.5 shadow-sm" id="btn-export-pdf">
+<span class="material-symbols-outlined text-[17px] text-muted-ink">picture_as_pdf</span>
+<span class="">Export PDF Package</span>
+</button>
+<button class="h-[42px] px-3.5 bg-surface hover:bg-canvas text-ink border border-quiet-line text-[13px] font-medium rounded-md transition-colors flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[17px] text-muted-ink">description</span>
+<span class="">DOCX</span>
+</button>
+<button class="h-[42px] px-3.5 bg-surface hover:bg-canvas text-ink border border-quiet-line text-[13px] font-medium rounded-md transition-colors flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[17px] text-muted-ink">ios_share</span>
+<span class="">Share</span>
+</button>
+<button class="h-[42px] px-5 bg-signal-blue hover:bg-signal-blue-hover text-white text-[13px] font-semibold rounded-md transition-all flex items-center gap-2 shadow-sm" id="btn-export-frappe">
+<span class="">Export to Frappe</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Artifacts Section Intro & Metadata Filter -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="text-[14px] font-semibold text-ink">8 State Projections</span>
+<span class="h-3 w-px bg-quiet-line"></span>
+<span class="text-[12px] font-mono text-muted-ink">Frappe v15 Target Baseline</span>
+</div>
+<div class="text-[12px] text-muted-ink flex items-center gap-1.5 font-mono">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="">Zero Stale Documentation</span>
+</div>
+</div>
+<!-- 8 State Consequences Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<!-- 1. Project Brief -->
+<div class="bg-surface rounded-lg border border-quiet-line p-5 flex flex-col justify-between hover:border-deep-line hover:shadow-sm transition-all group">
+<div class="flex flex-col gap-3">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-2 py-0.5 rounded border border-quiet-line">ART-01</span>
+<h3 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Project Brief</h3>
+</div>
+<span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-text bg-emerald-soft px-2 py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                State Synced · 100% Reconciled
+              </span>
+</div>
+<p class="text-[13px] text-muted-ink leading-relaxed">
+              Executive synthesis of HR Transformation goals, target architecture, and Frappe v15 baseline.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t border-quiet-line flex items-center justify-between">
+<span class="font-mono text-[11px] text-muted-ink">Revision #14</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-[12px] font-medium text-muted-ink hover:text-ink hover:bg-canvas rounded transition-colors">
+                View Projection
+              </button>
+<button class="px-3 py-1 bg-canvas hover:bg-quiet-line/60 text-ink text-[12px] font-medium rounded border border-quiet-line transition-colors flex items-center gap-1">
+<span class="">Generate</span>
+<span class="text-[12px]">→</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 2. Requirements & Scope -->
+<div class="bg-surface rounded-lg border border-quiet-line p-5 flex flex-col justify-between hover:border-deep-line hover:shadow-sm transition-all group">
+<div class="flex flex-col gap-3">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-2 py-0.5 rounded border border-quiet-line">ART-02</span>
+<h3 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Requirements &amp; Scope</h3>
+</div>
+<span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-amber-text bg-amber-soft px-2 py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                38 Validated · 4 Evolving
+              </span>
+</div>
+<p class="text-[13px] text-muted-ink leading-relaxed">
+              42 canonical requirements across Employee Lifecycle, Leave, and Payroll (includes REQ-003 HR Override).
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t border-quiet-line flex items-center justify-between">
+<span class="font-mono text-[11px] text-muted-ink">42 Canonical Records</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-[12px] font-medium text-muted-ink hover:text-ink hover:bg-canvas rounded transition-colors">
+                View Projection
+              </button>
+<button class="px-3 py-1 bg-canvas hover:bg-quiet-line/60 text-ink text-[12px] font-medium rounded border border-quiet-line transition-colors flex items-center gap-1">
+<span class="">Generate</span>
+<span class="text-[12px]">→</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 3. Stakeholder Matrix -->
+<div class="bg-surface rounded-lg border border-quiet-line p-5 flex flex-col justify-between hover:border-deep-line hover:shadow-sm transition-all group">
+<div class="flex flex-col gap-3">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-2 py-0.5 rounded border border-quiet-line">ART-03</span>
+<h3 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Stakeholder Matrix</h3>
+</div>
+<span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-muted-ink bg-canvas px-2 py-0.5 rounded border border-quiet-line">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-blue"></span>
+                6 Stakeholders · 1 Open Escalation
+              </span>
+</div>
+<p class="text-[13px] text-muted-ink leading-relaxed">
+              Identified decision makers, HR Leads, and approver escalation paths.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t border-quiet-line flex items-center justify-between">
+<span class="font-mono text-[11px] text-muted-ink">Matrix v1.2</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-[12px] font-medium text-muted-ink hover:text-ink hover:bg-canvas rounded transition-colors">
+                View Projection
+              </button>
+<button class="px-3 py-1 bg-canvas hover:bg-quiet-line/60 text-ink text-[12px] font-medium rounded border border-quiet-line transition-colors flex items-center gap-1">
+<span class="">Generate</span>
+<span class="text-[12px]">→</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 4. Process Flow (Featured / Active Selection) -->
+<div class="bg-surface rounded-lg border-2 border-signal-blue p-5 flex flex-col justify-between shadow-sm relative group">
+<div class="absolute -top-2.5 right-4 bg-signal-blue text-white px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider font-semibold">
+            Live Previewed Below
+          </div>
+<div class="flex flex-col gap-3">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-signal-blue bg-blue-50 px-2 py-0.5 rounded">ART-04</span>
+<h3 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Process Flow</h3>
+</div>
+<span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-text bg-emerald-soft px-2 py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Synchronized with BA Flow (Map view)
+              </span>
+</div>
+<p class="text-[13px] text-muted-ink leading-relaxed">
+              End-to-end Leave Application &amp; Approval workflow with multi-tier escalation and HR fallback branch.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t border-quiet-line flex items-center justify-between">
+<span class="font-mono text-[11px] text-signal-blue font-medium">Direct Canvas Projection</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-[12px] font-semibold text-signal-blue hover:bg-blue-50 rounded transition-colors">
+                View Projection
+              </button>
+<button class="px-3 py-1 bg-signal-blue text-white hover:bg-signal-blue-hover text-[12px] font-medium rounded transition-colors flex items-center gap-1">
+<span class="">Generate</span>
+<span class="text-[12px]">→</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 5. Technical Architecture -->
+<div class="bg-surface rounded-lg border border-quiet-line p-5 flex flex-col justify-between hover:border-deep-line hover:shadow-sm transition-all group">
+<div class="flex flex-col gap-3">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-2 py-0.5 rounded border border-quiet-line">ART-05</span>
+<h3 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Technical Architecture</h3>
+</div>
+<span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-text bg-emerald-soft px-2 py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                14 Doctype Bindings active
+              </span>
+</div>
+<p class="text-[13px] text-muted-ink leading-relaxed">
+              Frappe HR v15 DocType schema definitions, custom workflow state machine, and webhook hooks.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t border-quiet-line flex items-center justify-between">
+<span class="font-mono text-[11px] text-muted-ink">DocType Schemas Compiled</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-[12px] font-medium text-muted-ink hover:text-ink hover:bg-canvas rounded transition-colors">
+                View Projection
+              </button>
+<button class="px-3 py-1 bg-canvas hover:bg-quiet-line/60 text-ink text-[12px] font-medium rounded border border-quiet-line transition-colors flex items-center gap-1">
+<span class="">Generate</span>
+<span class="text-[12px]">→</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 6. Project Plan -->
+<div class="bg-surface rounded-lg border border-quiet-line p-5 flex flex-col justify-between hover:border-deep-line hover:shadow-sm transition-all group">
+<div class="flex flex-col gap-3">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-2 py-0.5 rounded border border-quiet-line">ART-06</span>
+<h3 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Project Plan</h3>
+</div>
+<span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-text bg-emerald-soft px-2 py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Sprint 02 · On Track
+              </span>
+</div>
+<p class="text-[13px] text-muted-ink leading-relaxed">
+              Milestone timeline structured across Understand, Define, Validate, and Execute.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t border-quiet-line flex items-center justify-between">
+<span class="font-mono text-[11px] text-muted-ink">Execution Stage: Define</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-[12px] font-medium text-muted-ink hover:text-ink hover:bg-canvas rounded transition-colors">
+                View Projection
+              </button>
+<button class="px-3 py-1 bg-canvas hover:bg-quiet-line/60 text-ink text-[12px] font-medium rounded border border-quiet-line transition-colors flex items-center gap-1">
+<span class="">Generate</span>
+<span class="text-[12px]">→</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 7. Issues & Decisions -->
+<div class="bg-surface rounded-lg border border-quiet-line p-5 flex flex-col justify-between hover:border-deep-line hover:shadow-sm transition-all group">
+<div class="flex flex-col gap-3">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-2 py-0.5 rounded border border-quiet-line">ART-07</span>
+<h3 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Issues &amp; Decisions</h3>
+</div>
+<span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-muted-ink bg-canvas px-2 py-0.5 rounded border border-quiet-line">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                18 Logged · 0 Blocker
+              </span>
+</div>
+<p class="text-[13px] text-muted-ink leading-relaxed">
+              18 Architecture Decision Records (ADRs) and resolved edge cases (Q-003 settled).
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t border-quiet-line flex items-center justify-between">
+<span class="font-mono text-[11px] text-muted-ink">ADR Ledger up-to-date</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-[12px] font-medium text-muted-ink hover:text-ink hover:bg-canvas rounded transition-colors">
+                View Projection
+              </button>
+<button class="px-3 py-1 bg-canvas hover:bg-quiet-line/60 text-ink text-[12px] font-medium rounded border border-quiet-line transition-colors flex items-center gap-1">
+<span class="">Generate</span>
+<span class="text-[12px]">→</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 8. Readiness Report -->
+<div class="bg-surface rounded-lg border border-quiet-line p-5 flex flex-col justify-between hover:border-deep-line hover:shadow-sm transition-all group">
+<div class="flex flex-col gap-3">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-2 py-0.5 rounded border border-quiet-line">ART-08</span>
+<h3 class="text-[15px] font-semibold text-ink group-hover:text-signal-blue transition-colors">Readiness Report</h3>
+</div>
+<span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-text bg-emerald-soft px-2 py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                94% Implementation Confidence
+              </span>
+</div>
+<p class="text-[13px] text-muted-ink leading-relaxed">
+              Comprehensive pre-implementation audit for Frappe HR cloud deployment readiness.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t border-quiet-line flex items-center justify-between">
+<span class="font-mono text-[11px] text-muted-ink">Audit Check: 23/24 Passed</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-[12px] font-medium text-muted-ink hover:text-ink hover:bg-canvas rounded transition-colors">
+                View Projection
+              </button>
+<button class="px-3 py-1 bg-canvas hover:bg-quiet-line/60 text-ink text-[12px] font-medium rounded border border-quiet-line transition-colors flex items-center gap-1">
+<span class="">Generate</span>
+<span class="text-[12px]">→</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Preview Pane: Live Compiled Projection -->
+<section class="mt-4 flex flex-col gap-3">
+<div class="flex flex-wrap items-center justify-between gap-2 px-1">
+<div class="flex items-center gap-2">
+
+
+</div>
+
+</div>
+<!-- Compiled Projection Card Body -->
+
+</section>
+</div>
+</main>
+<!-- Clean Bottom Footer -->
+<footer class="w-full bg-surface border-t border-quiet-line mt-12 py-4">
+<div class="max-w-[1440px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12px] text-muted-ink font-mono">
+<div class="flex items-center gap-2">
+<span class="text-ink font-medium">WorkSimplified</span>
+<span class="">·</span>
+<span class="">Living Project Workspace</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="">Target: Frappe HR v15.x</span>
+<span class="">·</span>
+<span class="flex items-center gap-1.5 text-emerald-text">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          State Machine Synced
+        </span>
+</div>
+</div>
+</footer>
+<script>
+    // Interaction handlers
+    const btnFrappe = document.getElementById('btn-export-frappe');
+    if (btnFrappe) {
+      btnFrappe.addEventListener('click', () => {
+        const original = btnFrappe.innerHTML;
+        btnFrappe.innerHTML = `
+          <span class="material-symbols-outlined text-[16px] animate-spin">refresh</span>
+          <span>Deploying to Frappe...</span>
+        `;
+        setTimeout(() => {
+          btnFrappe.innerHTML = `
+            <span class="material-symbols-outlined text-[16px]">check</span>
+            <span>Exported to Frappe HR</span>
+          `;
+          setTimeout(() => {
+            btnFrappe.innerHTML = original;
+          }, 2400);
+        }, 1200);
+      });
+    }
+
+    const btnPdf = document.getElementById('btn-export-pdf');
+    if (btnPdf) {
+      btnPdf.addEventListener('click', () => {
+        const orig = btnPdf.innerHTML;
+        btnPdf.innerHTML = `
+          <span class="material-symbols-outlined text-[16px] animate-spin">sync</span>
+          <span>Compiling PDF...</span>
+        `;
+        setTimeout(() => {
+          btnPdf.innerHTML = `
+            <span class="material-symbols-outlined text-[16px] text-emerald-text">done</span>
+            <span>Package Ready (8 PDFs)</span>
+          `;
+          setTimeout(() => {
+            btnPdf.innerHTML = orig;
+          }, 2400);
+        }, 1000);
+      });
+    }
+  </script>
+
+
+</body></html>

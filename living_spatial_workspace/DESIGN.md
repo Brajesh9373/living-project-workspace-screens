@@ -182,7 +182,7 @@ Corner radii balance precision engineering with physical tangibility:
 
 ### Top Chrome
 - **Dimensions & Layout:** Fixed height between 48px and 52px, spanning the full viewport width. Border-bottom: 1px solid `#E4E4E7`. Background: `#FFFFFF`.
-- **Navigation Cluster:** Segmented breadcrumb layout using `body-md` typography. Delimiters use `#D4D4D8` center-dots (`·`). Contextual route: `WorkSimplified · HR Transformation (Frappe HR & Payroll) · Cockpit`.
+- **Navigation Cluster:** Segmented breadcrumb layout using `body-md` typography. Delimiters use `#D4D4D8` center-dots (`·`). Contextual route: `WorkSimplified · HR Transformation (ERP & Payroll) · Cockpit`.
 - **Workspace Modes:** Flat segmented toggle (`Discover`, `Map`, `State`, `Outputs`) using `body-sm` (`font-weight: 500`). Active items feature a 1px `#E4E4E7` outline, `#FFFFFF` fill, and `#18181B` text. Inactive items use transparent backgrounds with `#71717A` text.
 
 ### Workspace Nodes

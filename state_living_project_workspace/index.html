@@ -80,7 +80,7 @@
 <span class="text-line text-[14px]">/</span>
 <div class="flex items-center gap-2 group cursor-pointer">
 <span class="text-[13px] font-medium text-ink">HR Transformation</span>
-<span class="text-[12px] text-ink-muted font-normal">(Frappe HR &amp; Payroll implementation)</span>
+<span class="text-[12px] text-ink-muted font-normal">(ERP &amp; Payroll implementation)</span>
 <span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
 </div>
 </div>
@@ -111,9 +111,9 @@
 <div class="flex items-center gap-2 text-[12px]">
 <span class="text-ink-muted">HR Transformation</span>
 <span class="text-ink-subtle">/</span>
-<span class="text-ink-muted">Frappe HR &amp; Payroll</span>
+<span class="text-ink-muted">ERP &amp; Payroll</span>
 <span class="text-ink-subtle">/</span>
-<span class="font-medium text-ink">Leave &amp; Attendance Domain</span>
+<a href="../discover_living_project_workspace/index.html" class="font-medium text-ink hover:text-signal-blue hover:underline underline-offset-2 decoration-line transition-colors">Leave &amp; Attendance Domain</a>
 </div>
 <div class="flex items-center gap-3">
 <span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
@@ -145,7 +145,7 @@
 <div class="flex items-center gap-2">
 <div class="flex items-center gap-1.5 text-xs text-muted-ink bg-surface border border-quiet-line px-2.5 py-1 rounded-lg">
 <span class="material-symbols-outlined text-[14px] text-signal-blue">hub</span>
-<span>Graph sync: <strong class="text-ink font-mono font-medium">118 nodes active</strong></span>
+<span>Graph sync: <strong class="text-ink font-mono font-medium"><span data-graph-total>—</span> nodes active</strong></span>
 </div>
 <button class="flex items-center gap-1.5 px-3 py-1.5 bg-signal-blue text-white rounded-lg text-xs font-medium hover:bg-blue-600 transition-colors shadow-sm">
 <span class="material-symbols-outlined text-[15px]">add</span>
@@ -156,38 +156,47 @@
 <!-- Subheader Category Filter Strip -->
 <div class="flex items-center justify-between gap-4 overflow-x-auto pb-1">
 <div class="flex items-center gap-1.5">
-<button class="px-2.5 py-1 rounded-lg text-xs font-medium transition-colors bg-ink text-white shadow-sm">
+<button data-info="all" aria-haspopup="dialog" class="info-btn cursor-pointer px-2.5 py-1 rounded-lg text-xs font-medium border border-quiet-line bg-surface text-muted-ink hover:text-ink hover:bg-canvas transition-colors">
             All
           </button>
-<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
-            Requirements <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">42</span>
+<button data-info="requirements" aria-haspopup="dialog" class="info-btn cursor-pointer px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Requirements <span data-cat-total="requirements" class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700"></span>
 </button>
-<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
-            Questions <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800">7</span>
+<button data-info="questions" aria-haspopup="dialog" class="info-btn cursor-pointer px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Questions <span data-cat-total="questions" class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700"></span>
 </button>
-<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
-            Assumptions <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">12</span>
+<button data-info="assumptions" aria-haspopup="dialog" class="info-btn cursor-pointer px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Assumptions <span data-cat-total="assumptions" class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700"></span>
 </button>
-<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
-            Decisions <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">18</span>
+<button data-info="decisions" aria-haspopup="dialog" class="info-btn cursor-pointer px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Decisions <span data-cat-total="decisions" class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700"></span>
 </button>
-<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
-            Business Rules <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">24</span>
+<button data-info="business-rules" aria-haspopup="dialog" class="info-btn cursor-pointer px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Business Rules <span data-cat-total="business-rules" class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700"></span>
 </button>
-<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
-            Stakeholders <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">6</span>
+<button data-info="stakeholders" aria-haspopup="dialog" class="info-btn cursor-pointer px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Stakeholders <span data-cat-total="stakeholders" class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700"></span>
 </button>
-<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
-            Dependencies <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700">9</span>
+<button data-info="dependencies" aria-haspopup="dialog" class="info-btn cursor-pointer px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Dependencies <span data-cat-total="dependencies" class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700"></span>
 </button>
-<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
-            Risks <span class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-rose-100 text-rose-700">3</span>
+<button data-info="risks" aria-haspopup="dialog" class="info-btn cursor-pointer px-2.5 py-1 rounded-lg text-xs font-medium text-muted-ink hover:text-ink hover:bg-surface border border-transparent hover:border-quiet-line transition-colors flex items-center gap-1.5">
+            Risks <span data-cat-total="risks" class="font-mono text-[11px] px-1.5 py-0.2 rounded bg-zinc-200/70 text-zinc-700"></span>
 </button>
 </div>
 <div class="hidden lg:flex items-center gap-2 text-[11px] text-muted-ink shrink-0">
 <span class="material-symbols-outlined text-[14px] text-signal-blue">route</span>
 <span>Traceability flow: <strong class="text-ink">Interview → Question → Requirement → Workflow</strong></span>
 </div>
+</div>
+<!-- Canonical State Key -->
+<div class="flex flex-wrap items-center gap-x-4 gap-y-2 bg-surface border border-quiet-line rounded-lg px-3 py-2 text-[11px] shadow-xs">
+<span class="font-medium text-ink shrink-0">State key:</span>
+<span class="flex items-center gap-1.5"><span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-blue-50 text-signal-blue border border-blue-200">Proposed / New</span><span class="text-muted-ink">synthesized · first review pending</span></span>
+<span class="flex items-center gap-1.5"><span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-evolving-bg text-status-evolving-text">Evolving</span><span class="text-muted-ink">under active discovery · still changing</span></span>
+<span class="flex items-center gap-1.5"><span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-clarification-bg text-status-clarification-text">Under Clarification</span><span class="text-muted-ink">blocked on an open question</span></span>
+<span class="flex items-center gap-1.5"><span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-validated-bg text-status-validated-text">Validated</span><span class="text-muted-ink">confirmed by evidence · locked</span></span>
+<span class="text-muted-ink">· Flow nodes tag <span class="font-mono">Proposed / New</span> as <span class="font-mono">NEW</span></span>
 </div>
 <!-- Two-Column Workspace Layout (55% Left List, 45% Right Inspector) -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start flex-1 min-h-0">
@@ -199,16 +208,19 @@
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-ink text-[16px]">search</span>
 <input class="w-full h-9 pl-9 pr-4 text-xs bg-surface border border-quiet-line rounded-lg text-ink placeholder:text-muted-ink focus:outline-none focus:ring-1 focus:ring-signal-blue focus:border-signal-blue transition-all" placeholder="Filter canonical state... (⌘K)" type="text"/>
 </div>
+<div class="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-muted-ink shrink-0">
+<span data-result-count>7 of 7 in snapshot</span>
+</div>
 <div class="flex items-center gap-1 bg-surface border border-quiet-line rounded-lg p-0.5">
-<button class="px-2 py-1 text-[11px] font-medium text-ink bg-canvas rounded">All States</button>
-<button class="px-2 py-1 text-[11px] font-medium text-muted-ink hover:text-ink rounded">Verified</button>
-<button class="px-2 py-1 text-[11px] font-medium text-muted-ink hover:text-ink rounded">Unresolved</button>
+<button data-state-filter="all" aria-pressed="true" class="state-btn px-2 py-1 text-[11px] font-medium text-ink bg-canvas rounded">All States</button>
+<button data-state-filter="validated" aria-haspopup="dialog" class="state-btn px-2 py-1 text-[11px] font-medium text-muted-ink hover:text-ink rounded">Validated</button>
+<button data-state-filter="unresolved" aria-haspopup="dialog" class="state-btn px-2 py-1 text-[11px] font-medium text-muted-ink hover:text-ink rounded">Unresolved</button>
 </div>
 </div>
 <!-- Structured Knowledge Feed (Non-ERP Card List with relationships) -->
 <div class="flex flex-col gap-2.5">
 <!-- Item 1: REQ-001 [ VALIDATED ] -->
-<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div data-cat="requirements" class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
 <div class="flex items-start justify-between gap-3">
 <div class="flex flex-col gap-1 min-w-0">
 <div class="flex items-center gap-2 flex-wrap">
@@ -233,7 +245,7 @@
 </div>
 </div>
 <!-- Item 2: REQ-002 [ EVOLVING ] -->
-<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div data-cat="requirements" class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
 <div class="flex items-start justify-between gap-3">
 <div class="flex flex-col gap-1 min-w-0">
 <div class="flex items-center gap-2 flex-wrap">
@@ -254,11 +266,11 @@
                   Linked to Q-003
                 </span>
 <span>•</span>
-<span class="font-mono text-[10px] text-zinc-500">Frappe Standard Flow</span>
+<span class="font-mono text-[10px] text-zinc-500">ERP Standard Flow</span>
 </div>
 </div>
 <!-- Item 3: REQ-003 [ PROPOSED / NEW ] (SELECTED ACTIVE CARD) -->
-<div class="group bg-surface border-2 border-signal-blue rounded-xl p-3.5 transition-all cursor-pointer shadow-sm relative">
+<div data-cat="requirements" class="group bg-surface border-2 border-signal-blue rounded-xl p-3.5 transition-all cursor-pointer shadow-sm relative">
 <div class="absolute -left-1 top-4 bottom-4 w-1 bg-signal-blue rounded-r"></div>
 <div class="flex items-start justify-between gap-3">
 <div class="flex flex-col gap-1 min-w-0">
@@ -288,7 +300,7 @@
 </div>
 </div>
 <!-- Item 4: Q-003 [ UNDER CLARIFICATION ] -->
-<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div data-cat="questions" class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
 <div class="flex items-start justify-between gap-3">
 <div class="flex flex-col gap-1 min-w-0">
 <div class="flex items-center gap-2 flex-wrap">
@@ -311,12 +323,12 @@
 </div>
 </div>
 <!-- Item 5: DEC-004 [ VALIDATED ] -->
-<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div data-cat="decisions" class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
 <div class="flex items-start justify-between gap-3">
 <div class="flex flex-col gap-1 min-w-0">
 <div class="flex items-center gap-2 flex-wrap">
 <span class="font-mono text-xs font-semibold text-emerald-800">DEC-004</span>
-<span class="text-xs font-medium text-ink">Use Frappe Standard Workflow state transitions instead of custom hooks</span>
+<span class="text-xs font-medium text-ink">Use ERP Standard Workflow state transitions instead of custom hooks</span>
 </div>
 <p class="text-xs text-muted-ink line-clamp-1">
                     Maintain upstream upgrade path by avoiding monkey-patching leave_application.py and configuring native Workflows.
@@ -335,7 +347,7 @@
 </div>
 </div>
 <!-- Item 6: BR-008 [ VALIDATED ] -->
-<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div data-cat="business-rules" class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
 <div class="flex items-start justify-between gap-3">
 <div class="flex flex-col gap-1 min-w-0">
 <div class="flex items-center gap-2 flex-wrap">
@@ -343,7 +355,7 @@
 <span class="text-xs font-medium text-ink">Maximum consecutive sick leave without medical proof is 3 days</span>
 </div>
 <p class="text-xs text-muted-ink line-clamp-1">
-                    Statutory labor rule configured into Frappe Leave Type attachment validation.
+                    Statutory labor rule configured into ERP Leave Type attachment validation.
                   </p>
 </div>
 <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-validated-bg text-status-validated-text shrink-0">
@@ -355,7 +367,7 @@
 </div>
 </div>
 <!-- Item 7: ASM-002 [ EVOLVING ] -->
-<div class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div data-cat="assumptions" class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
 <div class="flex items-start justify-between gap-3">
 <div class="flex flex-col gap-1 min-w-0">
 <div class="flex items-center gap-2 flex-wrap">
@@ -476,25 +488,67 @@
                 In instances where a reporting manager is absent or on leave, HR administrators possess permissions to act as emergency approvers to prevent payroll cutoff blockages.
               </p>
 </div>
-<!-- Transcript Evidence -->
-<div class="flex flex-col gap-1.5">
+<!-- Transcript Evidence (collapsed by default, expandable) -->
+<div class="flex flex-col gap-2">
 <div class="flex items-center justify-between">
 <span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono flex items-center gap-1">
 <span class="material-symbols-outlined text-[13px] text-zinc-500">record_voice_over</span>
-                  Evidence from Transcript
-                </span>
-<span class="font-mono text-[10px] text-muted-ink">00:42:15</span>
+Evidence from Transcript
+</span>
+<span class="font-mono text-[10px] text-muted-ink">4 sources &middot; collapsed</span>
 </div>
-<blockquote class="bg-amber-50/50 border-l-2 border-amber-400 p-2.5 rounded-r-lg text-xs text-ink italic leading-snug">
-                “HR can override the manager in such cases.”
-                <span class="block mt-1 text-[11px] font-medium not-italic text-muted-ink">
-                  — Spoken by <strong class="text-ink">Marcus Vance</strong> (Head of HR Operations)
-                </span>
-</blockquote>
+<div class="bg-amber-50/40 border-l-2 border-amber-400/70 rounded-r-lg overflow-hidden">
+<button type="button" data-ev-toggle class="w-full flex items-center gap-2 px-2.5 py-2 text-left hover:bg-amber-50/70 transition-colors" aria-expanded="false">
+<span class="inline-flex items-center gap-1 font-mono text-[10px] font-medium text-ink bg-white/70 border border-quiet-line rounded px-1.5 py-0.5 shrink-0"><span class="material-symbols-outlined text-[12px] text-muted-ink">person</span>1:1 &middot; Session #14</span>
+<span class="text-[11px] text-muted-ink truncate flex-1 min-w-0">&ldquo;HR can override the manager&hellip;&rdquo;</span>
+<span class="font-mono text-[10px] text-muted-ink shrink-0">10:42:05</span>
+<span class="material-symbols-outlined text-[16px] text-muted-ink transition-transform shrink-0" data-ev-chev>expand_more</span>
+</button>
+<div class="hidden px-2.5 pb-2.5">
+<p class="text-xs text-ink italic leading-snug pt-2 border-t border-amber-200/60">&ldquo;HR can override the manager in such cases.&rdquo;</p>
+<p class="text-[11px] font-medium text-muted-ink mt-1">&mdash; Spoken by <strong class="text-ink">Varun</strong> (Lead Architect / PM) &middot; 1:1 with BA Agent &middot; origin of rule</p>
+</div>
+</div>
+<div class="bg-amber-50/40 border-l-2 border-amber-400/70 rounded-r-lg overflow-hidden">
+<button type="button" data-ev-toggle class="w-full flex items-center gap-2 px-2.5 py-2 text-left hover:bg-amber-50/70 transition-colors" aria-expanded="false">
+<span class="inline-flex items-center gap-1 font-mono text-[10px] font-medium text-ink bg-white/70 border border-quiet-line rounded px-1.5 py-0.5 shrink-0"><span class="material-symbols-outlined text-[12px] text-muted-ink">groups</span>Joint Call &middot; Session #09</span>
+<span class="text-[11px] text-muted-ink truncate flex-1 min-w-0">&ldquo;Field workflow_state_override on Leave Application&hellip;&rdquo;</span>
+<span class="font-mono text-[10px] text-muted-ink shrink-0">11:21:30</span>
+<span class="material-symbols-outlined text-[16px] text-muted-ink transition-transform shrink-0" data-ev-chev>expand_more</span>
+</button>
+<div class="hidden px-2.5 pb-2.5">
+<p class="text-xs text-ink italic leading-snug pt-2 border-t border-amber-200/60">&ldquo;Field <span class="font-mono">workflow_state_override</span> on Leave Application, plus a new DocType <span class="font-mono">HR Approval Escalation</span>.&rdquo;</p>
+<p class="text-[11px] font-medium text-muted-ink mt-1">&mdash; Spoken by <strong class="text-ink">Brajesh</strong> (ERP Engineer) &middot; with Varun in call &middot; 2 agents live</p>
+</div>
+</div>
+<div class="bg-amber-50/40 border-l-2 border-amber-400/70 rounded-r-lg overflow-hidden">
+<button type="button" data-ev-toggle class="w-full flex items-center gap-2 px-2.5 py-2 text-left hover:bg-amber-50/70 transition-colors" aria-expanded="false">
+<span class="inline-flex items-center gap-1 font-mono text-[10px] font-medium text-ink bg-white/70 border border-quiet-line rounded px-1.5 py-0.5 shrink-0"><span class="material-symbols-outlined text-[12px] text-muted-ink">groups</span>Joint Call &middot; Session #09</span>
+<span class="text-[11px] text-muted-ink truncate flex-1 min-w-0">&ldquo;Varun added an override, Ankur an escalation&hellip;&rdquo;</span>
+<span class="font-mono text-[10px] text-muted-ink shrink-0">11:20:41</span>
+<span class="material-symbols-outlined text-[16px] text-muted-ink transition-transform shrink-0" data-ev-chev>expand_more</span>
+</button>
+<div class="hidden px-2.5 pb-2.5">
+<p class="text-xs text-ink italic leading-snug pt-2 border-t border-amber-200/60">&ldquo;Varun added an override, Ankur an escalation. Which DocTypes carry all three?&rdquo;</p>
+<p class="text-[11px] font-medium text-muted-ink mt-1">&mdash; Agent synthesis &middot; Varun + Ankur + Brajesh in call &middot; 3 agents live</p>
+</div>
+</div>
+<div class="bg-amber-50/40 border-l-2 border-amber-400/70 rounded-r-lg overflow-hidden">
+<button type="button" data-ev-toggle class="w-full flex items-center gap-2 px-2.5 py-2 text-left hover:bg-amber-50/70 transition-colors" aria-expanded="false">
+<span class="inline-flex items-center gap-1 font-mono text-[10px] font-medium text-ink bg-white/70 border border-quiet-line rounded px-1.5 py-0.5 shrink-0"><span class="material-symbols-outlined text-[12px] text-muted-ink">person</span>1:1 &middot; Session #12</span>
+<span class="text-[11px] text-muted-ink truncate flex-1 min-w-0">&ldquo;Manager approves it. HR steps in only if he rejects.&rdquo;</span>
+<span class="font-mono text-[10px] text-muted-ink shrink-0">11:03:20</span>
+<span class="material-symbols-outlined text-[16px] text-muted-ink transition-transform shrink-0" data-ev-chev>expand_more</span>
+</button>
+<div class="hidden px-2.5 pb-2.5">
+<p class="text-xs text-ink italic leading-snug pt-2 border-t border-amber-200/60">&ldquo;Manager approves it. HR steps in only if he rejects.&rdquo;</p>
+<p class="text-[11px] font-medium text-muted-ink mt-1">&mdash; Spoken by <strong class="text-ink">Ankur</strong> (HR Operations Lead) &middot; 1:1 with BA Agent &middot; corroborating</p>
+</div>
+</div>
 </div>
 <!-- Related Technical DocType Schema -->
 <div class="flex flex-col gap-1.5">
-<span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono">Related Frappe DocType</span>
+<span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono">Related ERP DocType</span>
 <div class="flex items-center justify-between bg-canvas px-3 py-2 rounded-lg border border-quiet-line">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-[16px] text-muted-ink">data_object</span>
@@ -542,4 +596,243 @@
 </div>
 </div>
 </footer>
+<script>
+(function () {
+  document.querySelectorAll('[data-ev-toggle]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var body = btn.parentElement.querySelector('[data-ev-body]') ||
+                 btn.nextElementSibling;
+      var chev = btn.querySelector('[data-ev-chev]');
+      var closed = body.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', closed ? 'false' : 'true');
+      if (chev) chev.classList.toggle('rotate-180', !closed);
+    });
+  });
+})();
+</script>
+<script>
+/* Canonical statement inventory - single source of truth.
+   Chip counts and the "nodes active" total are rendered from this table,
+   so category numbers can never drift out of sync with each other. */
+var CATEGORY_TOTALS = {
+  requirements: 42,
+  questions: 7,
+  assumptions: 12,
+  decisions: 18,
+  'business-rules': 24,
+  stakeholders: 6,
+  dependencies: 9,
+  risks: 3
+};
+(function () {
+  var sum = 0, k;
+  for (k in CATEGORY_TOTALS) sum += CATEGORY_TOTALS[k];
+  var total = document.querySelector('[data-graph-total]');
+  if (total) total.textContent = sum;
+  Object.keys(CATEGORY_TOTALS).forEach(function (key) {
+    var el = document.querySelector('[data-cat-total="' + key + '"]');
+    if (el) el.textContent = CATEGORY_TOTALS[key];
+  });
+})();
+</script>
+<div data-modal class="fixed inset-0 z-50 hidden">
+<div data-modal-backdrop class="absolute inset-0 bg-ink/40"></div>
+<div class="relative min-h-full flex items-center justify-center p-4">
+<div role="dialog" aria-modal="true" aria-labelledby="cm-title" class="w-full max-w-lg bg-surface border border-quiet-line rounded-xl shadow-lg overflow-hidden">
+<div class="px-5 py-4 border-b border-quiet-line flex items-start justify-between gap-3">
+<div class="min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span data-modal-icon class="material-symbols-outlined text-[18px] text-signal-blue">category</span>
+<h3 id="cm-title" data-modal-title class="text-[15px] font-semibold text-ink">Category</h3>
+<span data-modal-count class="font-mono text-[11px] text-muted-ink bg-canvas border border-quiet-line rounded px-1.5 py-0.5"></span>
+</div>
+<p data-modal-sub class="text-[11px] text-muted-ink font-mono mt-1">Canonical inventory</p>
+</div>
+<button data-modal-close class="p-1 rounded text-muted-ink hover:text-ink hover:bg-canvas transition-colors shrink-0" aria-label="Close dialog"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+<div class="p-5 flex flex-col gap-4 max-h-[62vh] overflow-y-auto">
+<div>
+<div class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono mb-1.5">What it means</div>
+<p data-modal-meaning class="text-[13px] text-ink leading-relaxed"></p>
+</div>
+<div>
+<div class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono mb-1.5">What it contains</div>
+<ul data-modal-contains class="flex flex-col gap-1.5"></ul>
+</div>
+<div>
+<div class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono mb-1.5">Examples in this workspace</div>
+<div data-modal-examples class="flex flex-col gap-1.5"></div>
+</div>
+</div>
+<div class="px-5 py-3 border-t border-quiet-line bg-canvas/50 flex items-center justify-between gap-3">
+<span data-modal-note class="text-[11px] text-muted-ink font-mono"></span>
+<button data-modal-close class="h-8 px-3 rounded-lg bg-signal-blue hover:bg-signal-blue-hover text-white text-xs font-medium transition-colors">Close</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+(function () {
+  var INFO = {
+    all: {
+      label: 'Canonical Inventory', icon: 'inventory_2', sub: 'All eight statement categories',
+      meaning: 'Everything the workspace treats as fact or intent lives here as a typed statement. Nothing is typed by hand at the end - each statement is synthesised from a Discover or Map session and carries its own state, evidence trail and ERP surface.',
+      contains: ['Eight categories: requirements, questions, assumptions, decisions, business rules, stakeholders, dependencies, risks',
+        'A state per statement: Proposed / New, Evolving, Under Clarification, Validated',
+        'Evidence links back to the transcript, the session and the ERP DocType'],
+      examples: ['42 Requirements', '18 Decisions', '7 Questions', '3 Risks']
+    },
+    requirements: {
+      label: 'Requirements', icon: 'checklist', sub: 'What the system must deliver',
+      meaning: 'A capability the HR and Payroll system must deliver, written from the business outcome rather than from the ERP schema so it can be accepted or rejected on its own merits.',
+      contains: ['A REQ id and a single-sentence capability statement',
+        'The business justification and the acceptance boundary',
+        'The ERP DocType and field the capability lands on',
+        'The Discover session that produced it'],
+      examples: ['REQ-001 Employees can apply for leave online', 'REQ-003 HR can override manager approval in specific cases']
+    },
+    questions: {
+      label: 'Questions', icon: 'help', sub: 'Open uncertainties',
+      meaning: 'An uncertainty that must be answered before the dependent statements can be validated. A question is never silently dropped - it either gets a clarification or it blocks.',
+      contains: ['A Q id and the open question in one line',
+        'The statements and workflows it blocks',
+        'The clarification proposed so far, and who must confirm it',
+        'A resolution path back into an assumption or requirement'],
+      examples: ['Q-003 Who approves when the manager is unavailable?', 'Q-004 Multi-currency payroll for remote consultants']
+    },
+    assumptions: {
+      label: 'Assumptions', icon: 'lightbulb', sub: 'Taken as true, not yet confirmed',
+      meaning: 'Something taken as true for now because it has not been confirmed yet. Assumptions are explicitly allowed to be wrong - each one carries the check that would prove it wrong.',
+      contains: ['An ASM id and the assumed statement', 'Who owns the verification',
+        'The trigger that forces a re-check', 'What breaks downstream if the assumption fails'],
+      examples: ['ASM-002 All managers have daily email or mobile app access']
+    },
+    decisions: {
+      label: 'Decisions', icon: 'gavel', sub: 'Ratified architecture choices',
+      meaning: 'An architecture choice that has been ratified. A decision is the terminal state for an argument - it records what was chosen, what was rejected and which requirements it binds.',
+      contains: ['A DEC id and the decision statement', 'The rationale and the alternatives that were rejected',
+        'The requirements, rules and DocTypes it affects', 'Ratification evidence'],
+      examples: ['DEC-004 Use ERP standard Workflow transitions instead of custom hooks', 'ADR-002 Adopt scheduled payroll generation on biometric cutoff']
+    },
+    'business-rules': {
+      label: 'Business Rules', icon: 'rule', sub: 'Statutory and policy constraints',
+      meaning: 'A statutory, contractual or policy constraint that the system must enforce exactly as written. Rules are not negotiable by engineering - they are encoded at a named enforcement point.',
+      contains: ['A BR id and the rule in plain language', 'The statutory or contractual source',
+        'The enforcement point: field validation, workflow state or hook', 'The exception path when the rule cannot be satisfied'],
+      examples: ['BR-008 Maximum consecutive sick leave without medical proof is 3 days']
+    },
+    stakeholders: {
+      label: 'Stakeholders', icon: 'groups', sub: 'Who holds decision rights',
+      meaning: 'The people and roles that hold decision rights on this programme. A stakeholder entry is what turns an escalation path in a workflow into an actual accountable human.',
+      contains: ['Name, role and organisation', 'Approval authority and escalation order',
+        'The sessions and statements they own', 'Escalation target when an SLA expires'],
+      examples: ['Varun - Lead Architect / PM', 'Ankur - HR Operations Lead', 'Brajesh - ERP Engineer', 'Marcus Vance - Head of HR Operations']
+    },
+    dependencies: {
+      label: 'Dependencies', icon: 'account_tree', sub: 'What must hold for this to work',
+      meaning: 'Something outside the statement itself that must hold for it to work: an ERP version behaviour, a hook contract, an upstream decision or a data feed.',
+      contains: ['A DEP id and the dependency in one line', 'Type: ERP behaviour, data feed, upstream decision',
+        'Owner and current verification status', 'What is blocked while it is unverified'],
+      examples: ['ERP v15 custom DocType hook contract for end-of-service gratuity']
+    },
+    risks: {
+      label: 'Risks', icon: 'warning', sub: 'Ways this could fail',
+      meaning: 'A way this programme could fail, recorded before it fails. A risk is only useful with a mitigation and an owner, otherwise it is just a worry.',
+      contains: ['A RSK id and the failure mode', 'Likelihood and impact', 'Mitigation and contingency',
+        'Early warning signal to watch'],
+      examples: ['Multi-currency revaluation timing across UAE and India payroll']
+    }
+  };
+
+  var cards = Array.prototype.slice.call(document.querySelectorAll('[data-cat]'));
+  var count = document.querySelector('[data-result-count]');
+  var state = 'all';
+  var LABEL = { validated: 'Validated', unresolved: 'Unresolved' };
+
+  function stateOf(card) {
+    var badge = card.querySelector('span.uppercase');
+    var t = badge ? badge.textContent.trim().toUpperCase() : '';
+    return t.indexOf('VALIDATED') === 0 ? 'validated' : 'unresolved';
+  }
+
+  function applyState() {
+    var shown = 0;
+    cards.forEach(function (card) {
+      var ok = state === 'all' || stateOf(card) === state;
+      card.classList.toggle('hidden', !ok);
+      if (ok) shown++;
+    });
+    if (count) {
+      count.textContent = (state === 'all' ? '' : LABEL[state] + ' \u00b7 ') +
+        shown + ' of ' + cards.length + ' in snapshot';
+    }
+  }
+
+  function wireState() {
+    var group = document.querySelectorAll('[data-state-filter]');
+    Array.prototype.forEach.call(group, function (b) {
+      b.addEventListener('click', function () {
+        state = b.getAttribute('data-state-filter');
+        Array.prototype.forEach.call(group, function (o) {
+          var on = o === b;
+          o.setAttribute('aria-pressed', on ? 'true' : 'false');
+          o.classList.toggle('bg-canvas', on);
+          o.classList.toggle('text-ink', on);
+          o.classList.toggle('text-muted-ink', !on);
+        });
+        applyState();
+      });
+    });
+  }
+
+  var modal = document.querySelector('[data-modal]');
+
+  function openModal(key) {
+    var info = INFO[key];
+    if (!info || !modal) return;
+    var here = { all: cards.length };
+    cards.forEach(function (card) {
+      var c = card.getAttribute('data-cat');
+      here[c] = (here[c] || 0) + 1;
+    });
+    var total = key === 'all' ? 121 : CATEGORY_TOTALS[key];
+    modal.querySelector('[data-modal-icon]').textContent = info.icon;
+    modal.querySelector('[data-modal-title]').textContent = info.label;
+    modal.querySelector('[data-modal-sub]').textContent = info.sub;
+    modal.querySelector('[data-modal-count]').textContent = total + ' in graph';
+    modal.querySelector('[data-modal-meaning]').textContent = info.meaning;
+    modal.querySelector('[data-modal-contains]').innerHTML = info.contains.map(function (t) {
+      return '<li class="flex items-start gap-2 text-[13px] text-ink leading-relaxed"><span class="mt-1.5 w-1 h-1 rounded-full bg-signal-blue shrink-0"></span><span>' + t + '</span></li>';
+    }).join('');
+    modal.querySelector('[data-modal-examples]').innerHTML = info.examples.map(function (t) {
+      return '<div class="text-[12px] font-mono text-muted-ink bg-canvas border border-quiet-line rounded px-2 py-1">' + t + '</div>';
+    }).join('');
+    modal.querySelector('[data-modal-note]').textContent = here[key] + ' of ' + total + ' shown in this snapshot';
+    modal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+    modal.querySelector('[data-modal-close]').focus();
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  document.querySelectorAll('[data-info]').forEach(function (b) {
+    b.addEventListener('click', function () { openModal(b.getAttribute('data-info')); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-modal-close]'), function (b) {
+    b.addEventListener('click', closeModal);
+  });
+  var backdrop = document.querySelector('[data-modal-backdrop]');
+  if (backdrop) backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+  wireState();
+  applyState();
+})();
+</script>
+
 </body></html>

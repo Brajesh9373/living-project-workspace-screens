@@ -61,7 +61,7 @@
 <span class="text-line text-[14px]">/</span>
 <div class="flex items-center gap-2 group cursor-pointer">
 <span class="text-[13px] font-medium text-ink">HR Transformation</span>
-<span class="text-[12px] text-ink-muted font-normal">(Frappe HR &amp; Payroll implementation)</span>
+<span class="text-[12px] text-ink-muted font-normal">(ERP &amp; Payroll implementation)</span>
 <span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
 </div>
 </div>
@@ -92,9 +92,9 @@
 <div class="flex items-center gap-2 text-[12px]">
 <span class="text-ink-muted">HR Transformation</span>
 <span class="text-ink-subtle">/</span>
-<span class="text-ink-muted">Frappe HR &amp; Payroll</span>
+<span class="text-ink-muted">ERP &amp; Payroll</span>
 <span class="text-ink-subtle">/</span>
-<span class="font-medium text-ink">Leave &amp; Attendance Domain</span>
+<a href="../discover_living_project_workspace/index.html" class="font-medium text-ink hover:text-signal-blue hover:underline underline-offset-2 decoration-line transition-colors">Leave &amp; Attendance Domain</a>
 </div>
 <div class="flex items-center gap-3">
 <span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
@@ -108,7 +108,7 @@
 </div>
 <!-- Main Canvas -->
 <main class="w-full pt-14 pb-16 flex-1">
-<div class="max-w-[1440px] mx-auto px-6 pt-8 flex flex-col gap-8">
+<div class="max-w-[1440px] mx-auto px-6 pt-8 flex flex-col gap-6">
 <!-- 1. Project Header & Implementation Lifecycle Rail -->
 <section class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-quiet-line">
 <div class="flex flex-col gap-1.5">
@@ -119,11 +119,11 @@
 </div>
 <h1 class="text-2xl font-semibold tracking-tight text-ink">Cockpit — Where are we?</h1>
 <p class="text-sm text-muted-ink">
-            Orientation &amp; continuity workspace for the Frappe HR &amp; Payroll migration. No analytics clutter, only real project state.
+            Orientation &amp; continuity workspace for the ERP &amp; Payroll migration. No analytics clutter, only real project state.
           </p>
 </div>
 <!-- Implementation Lifecycle Rail -->
-<div class="bg-surface border border-quiet-line rounded-lg p-2 flex items-center gap-1 shrink-0 self-start md:self-auto shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<div class="bg-surface border border-quiet-line rounded-lg p-2 flex items-center gap-1 shrink-0 self-start md:self-auto shadow-[0_1px_2px_rgba(0,0,0,0.02)]" title="Implementation lifecycle phases (1 Understand → 4 Execute) — not statement states">
 <!-- Understand (ACTIVE) -->
 <div class="flex items-center gap-2 px-3 py-1.5 rounded bg-signal-blue-subtle text-signal-blue">
 <span class="w-2 h-2 rounded-full bg-signal-blue animate-pulse"></span>
@@ -150,12 +150,21 @@
 </div>
 </div>
 </section>
+<!-- Living State Contract (page-level note) -->
+<div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 px-4 py-2.5 rounded-lg border border-quiet-line bg-canvas/60 text-xs text-muted-ink leading-relaxed">
+<span class="flex items-center gap-1.5 text-ink font-medium shrink-0">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>Living State Contract</span>
+</span>
+<span class="text-quiet-line shrink-0">·</span>
+<p>Changes made during Discover or Map discussions immediately mutate the node state graph and appear here. No manual dashboard updates required.</p>
+</div>
 <!-- 2. Main Orientation Grid (Asymmetric 60/40 deliberate spatial zones) -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-stretch">
 <!-- LEFT ZONE (60% / 7 cols): Orientation & Living State -->
-<div class="lg:col-span-7 flex flex-col gap-8">
+<div class="lg:col-span-7 flex flex-col gap-6">
 <!-- Recent Changes (Evidence & Mutations) -->
-<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)] flex-1">
 <div class="flex items-center justify-between border-b border-quiet-line pb-3.5">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-muted-ink text-[18px]">history_toggle_off</span>
@@ -163,12 +172,12 @@
 </div>
 <span class="font-mono text-xs text-muted-ink">Evidence &amp; State Mutations</span>
 </div>
-<div class="divide-y divide-quiet-line">
+<div class="divide-y divide-quiet-line flex-1">
 <!-- Item 1: REQ-003 -->
-<div class="py-3.5 first:pt-0 last:pb-0 flex flex-col gap-1.5">
+<div class="py-3.5 first:pt-0 last:pb-0 flex flex-col gap-1.5 flex-1">
 <div class="flex items-center justify-between gap-3">
 <div class="flex items-center gap-2 flex-wrap">
-<span class="font-mono text-[11px] font-semibold text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 rounded border border-signal-blue/20">REQ-003</span>
+<span class="font-mono text-[11px] font-semibold text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-signal-blue/20">REQ-003</span>
 <span class="text-sm font-medium text-ink">HR can override manager approval in specific cases</span>
 </div>
 <span class="text-xs text-muted-ink shrink-0 font-mono">12m ago</span>
@@ -178,11 +187,11 @@
                 </p>
 </div>
 <!-- Item 2: Flow -->
-<div class="py-3.5 flex flex-col gap-1.5">
+<div class="py-3.5 flex flex-col gap-1.5 flex-1">
 <div class="flex items-center justify-between gap-3">
 <div class="flex items-center gap-2 flex-wrap">
-<span class="font-mono text-[11px] font-semibold text-ink bg-canvas px-1.5 py-0.5 rounded border border-quiet-line">WORKFLOW</span>
-<span class="text-sm font-medium text-ink">Leave Approval Exception Path branched into Frappe HR</span>
+<span class="font-mono text-[11px] font-semibold text-ink bg-canvas px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-quiet-line">WORKFLOW</span>
+<span class="text-sm font-medium text-ink">Leave Approval Exception Path branched into ERP</span>
 </div>
 <span class="text-xs text-muted-ink shrink-0 font-mono">24m ago</span>
 </div>
@@ -191,35 +200,35 @@
                 </p>
 </div>
 <!-- Item 3: ADR-002 -->
-<div class="py-3.5 flex flex-col gap-1.5">
+<div class="py-3.5 flex flex-col gap-1.5 flex-1">
 <div class="flex items-center justify-between gap-3">
 <div class="flex items-center gap-2 flex-wrap">
-<span class="font-mono text-[11px] font-semibold text-success-ink bg-success-subtle px-1.5 py-0.5 rounded border border-green-200">ADR-002</span>
-<span class="text-sm font-medium text-ink">Adopt Frappe Salary Slip auto-generation on biometric cutoff</span>
+<span class="font-mono text-[11px] font-semibold text-success-ink bg-success-subtle px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-green-200">ADR-002</span>
+<span class="text-sm font-medium text-ink">Adopt ERP Salary Slip auto-generation on biometric cutoff</span>
 </div>
 <span class="text-xs text-muted-ink shrink-0 font-mono">1h ago</span>
 </div>
 <p class="text-xs text-muted-ink pl-0 leading-relaxed">
-                  Marked <strong class="text-ink font-medium">Validated</strong>. Frappe standard scheduled payroll generation hook will run on 25th midnight without custom script override.
+                  Marked <strong class="text-ink font-medium">Validated</strong>. ERP standard scheduled payroll generation hook will run on 25th midnight without custom script override.
                 </p>
 </div>
 <!-- Item 4: Q-003 -->
-<div class="py-3.5 last:pb-0 flex flex-col gap-1.5">
+<div class="py-3.5 last:pb-0 flex flex-col gap-1.5 flex-1">
 <div class="flex items-center justify-between gap-3">
 <div class="flex items-center gap-2 flex-wrap">
-<span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-1.5 py-0.5 rounded border border-quiet-line">Q-003</span>
+<span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-quiet-line">Q-003</span>
 <span class="text-sm font-medium text-ink">Who approves when manager is unavailable?</span>
 </div>
-<span class="text-xs text-success-ink font-mono shrink-0">Resolved</span>
+<span class="text-xs text-muted-ink font-mono shrink-0">1h ago</span>
 </div>
 <p class="text-xs text-muted-ink pl-0 leading-relaxed">
-                  Resolution documented: Settled via HR Override policy (referenced in REQ-003). Ambiguity closed.
+                  Clarification routed to REQ-003 (HR Override policy). Awaiting validation — state stays Under Clarification.
                 </p>
 </div>
 </div>
 </section>
 <!-- Needs Attention (Restrained, focused list) -->
-<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)] flex-1">
 <div class="flex items-center justify-between border-b border-quiet-line pb-3.5">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-warn-ink text-[18px]">priority_high</span>
@@ -227,25 +236,25 @@
 </div>
 <span class="text-xs font-mono text-muted-ink">3 Open Items</span>
 </div>
-<div class="flex flex-col gap-3">
+<div class="flex flex-col gap-3 flex-1">
 <!-- Attention 1 -->
-<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2">
+<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2 flex-1">
 <div class="flex items-start justify-between gap-3">
 <div class="flex items-center gap-2">
-<span class="font-mono text-[11px] font-semibold text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Q-004</span>
+<span class="font-mono text-[11px] font-semibold text-warn-ink bg-warn-subtle px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-amber-200">Q-004</span>
 <span class="text-xs font-semibold text-ink">Multi-currency payroll handling for remote consultants in UAE &amp; India</span>
 </div>
 <span class="text-[11px] font-mono text-muted-ink shrink-0">Under Clarification</span>
 </div>
 <p class="text-xs text-muted-ink leading-relaxed">
-                  Frappe multi-currency payroll requires exchange rate revaluation at disbursement date. Assigned to <strong class="text-ink font-medium">Payroll Guild</strong> for statutory ruling.
+                  ERP multi-currency payroll requires exchange rate revaluation at disbursement date. Assigned to <strong class="text-ink font-medium">Payroll Guild</strong> for statutory ruling.
                 </p>
 </div>
 <!-- Attention 2 -->
-<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2">
+<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2 flex-1">
 <div class="flex items-start justify-between gap-3">
 <div class="flex items-center gap-2">
-<span class="font-mono text-[11px] font-semibold text-ink bg-white px-1.5 py-0.5 rounded border border-quiet-line">REQ-002</span>
+<span class="font-mono text-[11px] font-semibold text-ink bg-white px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-quiet-line">REQ-002</span>
 <span class="text-xs font-semibold text-ink">Shift rotation grace period definition</span>
 </div>
 <span class="text-[11px] font-mono text-muted-ink shrink-0">Evolving</span>
@@ -255,13 +264,13 @@
                 </p>
 </div>
 <!-- Attention 3 -->
-<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2">
+<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2 flex-1">
 <div class="flex items-start justify-between gap-3">
 <div class="flex items-center gap-2">
-<span class="font-mono text-[11px] font-semibold text-ink bg-white px-1.5 py-0.5 rounded border border-quiet-line">DEPENDENCY</span>
-<span class="text-xs font-semibold text-ink">Frappe HR v15 custom doctype hooks verification</span>
+<span class="font-mono text-[11px] font-semibold text-ink bg-white px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-quiet-line">DEPENDENCY</span>
+<span class="text-xs font-semibold text-ink">ERP v15 custom doctype hooks verification</span>
 </div>
-<span class="text-[11px] font-mono text-muted-ink shrink-0">Engineering Check</span>
+<span class="text-[11px] font-mono text-muted-ink shrink-0">Under Clarification</span>
 </div>
 <p class="text-xs text-muted-ink leading-relaxed">
                   Verify if migration will rely on core hooks or custom app overlay for Saudi &amp; UAE end-of-service gratuity calculations.
@@ -273,7 +282,7 @@
 <!-- RIGHT ZONE (40% / 5 cols): Actionable Continuity -->
 <div class="lg:col-span-5 flex flex-col gap-6">
 <!-- Continue with BA Agent -->
-<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
 <div class="flex items-center justify-between border-b border-quiet-line pb-3.5">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-signal-blue text-[18px]">smart_toy</span>
@@ -301,9 +310,9 @@
 <!-- Quick prompt chips -->
 <div class="flex flex-col gap-2 pt-1 border-t border-quiet-line">
 <span class="text-[11px] font-mono text-muted-ink">Quick Inquiries to Dispatch:</span>
-<div class="flex flex-col gap-1.5">
+<div class="grid grid-cols-1 2xl:grid-cols-2 gap-1.5">
 <button class="w-full text-left px-3 py-2 rounded bg-canvas hover:bg-white hover:border-deep-line border border-quiet-line text-xs text-ink transition-colors flex items-center justify-between group">
-<span class="truncate">Review Frappe Overtime Rules</span>
+<span class="truncate">Review ERP Overtime Rules</span>
 <span class="material-symbols-outlined text-[14px] text-muted-ink group-hover:text-signal-blue group-hover:translate-x-0.5 transition-all">chevron_right</span>
 </button>
 <button class="w-full text-left px-3 py-2 rounded bg-canvas hover:bg-white hover:border-deep-line border border-quiet-line text-xs text-ink transition-colors flex items-center justify-between group">
@@ -313,26 +322,244 @@
 </div>
 </div>
 </section>
-<!-- System Orientation Note -->
-<div class="p-4 rounded-lg border border-quiet-line bg-canvas/60 text-xs text-muted-ink flex flex-col gap-1.5 leading-relaxed">
-<div class="flex items-center gap-1.5 text-ink font-medium">
-<span class="material-symbols-outlined text-[16px]">info</span>
-<span>Living State Contract</span>
+<!-- Invite People (collaboration onboarding) -->
+<section class="bg-surface rounded-lg border border-quiet-line shadow-[0_1px_2px_rgba(0,0,0,0.02)] overflow-hidden flex-1">
+<!-- Section header -->
+<div class="px-6 py-3.5 border-b border-quiet-line flex items-center justify-between gap-2">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-muted-ink text-[17px] shrink-0">group_add</span>
+<div class="min-w-0">
+<h2 class="text-sm font-semibold tracking-tight text-ink leading-tight">Invite People</h2>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">HR-TRANS-2025 · Leave &amp; Attendance</p>
 </div>
-<p>
-              Changes made during Discover or Map discussions immediately mutate the node state graph and appear here. No manual dashboard updates required.
-            </p>
+</div>
+<div class="flex items-center gap-1.5 shrink-0" title="3 of 5 seats used">
+<span class="text-[10px] font-mono text-muted-ink">3 / 5</span>
+<div class="flex items-center gap-0.5">
+<span class="w-3 h-1.5 rounded-full bg-signal-blue"></span>
+<span class="w-3 h-1.5 rounded-full bg-signal-blue"></span>
+<span class="w-3 h-1.5 rounded-full bg-signal-blue"></span>
+<span class="w-3 h-1.5 rounded-full bg-quiet-line"></span>
+<span class="w-3 h-1.5 rounded-full bg-quiet-line"></span>
 </div>
 </div>
 </div>
-<!-- 3. Current Project Scope Snapshot (Frappe Modules under active discovery) -->
+<!-- Roster -->
+<div class="px-6 py-3 flex flex-col flex-1">
+<div class="flex items-center justify-between pb-2 mb-1">
+<span class="text-[10px] uppercase font-mono tracking-wider text-muted-ink font-medium">Active collaborators</span>
+<span class="text-[10px] font-mono text-muted-ink">1 pending</span>
+</div>
+<!-- Varun -->
+<div class="flex items-center gap-2.5 py-2 border-b border-quiet-line flex-1">
+<div class="relative shrink-0">
+<svg viewBox="0 0 48 48" class="w-8 h-8 rounded-full block" role="img" aria-label="Varun">
+<circle cx="24" cy="24" r="24" fill="#EFF4FE"></circle>
+<path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#356AE6"></path>
+<path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path>
+<circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle>
+<circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle>
+<ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse>
+<path d="M13.3 21.2C12.8 14 17.7 9.4 24 9.4s11.2 4.6 10.7 11.8c-.4-2.6-1.3-4.1-2.6-5.1-2.3 1.9-5.5 2.9-9.4 2.9-3.2 0-5.8-.7-7.4-1.7-1.2 1-1.8 2.4-2 3.9z" fill="#2E2A26"></path>
+<circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle>
+<circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle>
+<path d="M18.4 18.4h3.4M26.2 18.4h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path>
+<path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path>
+<g stroke="#18181B" stroke-width="1.1" fill="none">
+<circle cx="20.3" cy="21.4" r="3.6"></circle>
+<circle cx="27.7" cy="21.4" r="3.6"></circle>
+<path d="M23.9 21.4h.2M16.7 21.2h-3.2M31.3 21.2h3.2" stroke-linecap="round"></path>
+</g>
+</svg>
+<span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-success-ink ring-2 ring-surface"></span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="text-xs font-semibold text-ink truncate">Varun</span>
+<a href="../discover_living_project_workspace/index.html" class="text-[10px] font-mono text-muted-ink hover:text-signal-blue inline-flex items-center gap-0.5 transition-colors shrink-0">
+Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
+</a>
+</div>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">Lead Architect / PM · Session #14</p>
+</div>
+</div>
+<!-- Ankur -->
+<div class="flex items-center gap-2.5 py-2 border-b border-quiet-line flex-1">
+<div class="relative shrink-0">
+<svg viewBox="0 0 48 48" class="w-8 h-8 rounded-full block" role="img" aria-label="Ankur">
+<circle cx="24" cy="24" r="24" fill="#FFFBEB"></circle>
+<path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#B45309"></path>
+<path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#B87B4E"></path>
+<circle cx="13.4" cy="21.6" r="2.3" fill="#C98F62"></circle>
+<circle cx="34.6" cy="21.6" r="2.3" fill="#C98F62"></circle>
+<ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#C98F62"></ellipse>
+<path d="M13.2 21.6c-.7-7.4 4.4-12.2 10.8-12.2s11.5 4.8 10.8 12.2c-1-1.6-1.9-4-2.4-5.9-1.6 1-4 1.6-7.6 1.6-4.6 0-7.6-1-9.6-2.7-.8 1.3-1.4 3.3-2 7z" fill="#1B1917"></path>
+<path d="M17.6 26.4c1.4 3.4 3.7 5.1 6.4 5.1s5-1.7 6.4-5.1c-1.7 1.5-3.9 2.2-6.4 2.2s-4.7-.7-6.4-2.2z" fill="#1B1917"></path>
+<path d="M18.4 18.6h3.5M26.1 18.6h3.5" stroke="#1B1917" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
+<circle cx="20.3" cy="21.5" r="1.4" fill="#1B1917"></circle>
+<circle cx="27.7" cy="21.5" r="1.4" fill="#1B1917"></circle>
+</svg>
+<span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-success-ink ring-2 ring-surface"></span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="text-xs font-semibold text-ink truncate">Ankur</span>
+<a href="../discover_living_project_workspace/index.html" class="text-[10px] font-mono text-muted-ink hover:text-signal-blue inline-flex items-center gap-0.5 transition-colors shrink-0">
+Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
+</a>
+</div>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">HR Operations Lead · Session #12</p>
+</div>
+</div>
+<!-- Brajesh -->
+<div class="flex items-center gap-2.5 py-2 border-b border-quiet-line flex-1">
+<div class="relative shrink-0">
+<svg viewBox="0 0 48 48" class="w-8 h-8 rounded-full block" role="img" aria-label="Brajesh">
+<circle cx="24" cy="24" r="24" fill="#F4F4F5"></circle>
+<path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#27272A"></path>
+<path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path>
+<circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle>
+<circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle>
+<ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse>
+<path d="M13.3 21c-.5-7.3 4.4-11.6 10.7-11.6s11.2 4.3 10.7 11.6c-.9-4-2.3-5.6-4.1-6.3-2 1.2-4.4 1.6-7 1.6-3.1 0-5.6-.5-7.6-1.7-1.3.8-2.1 2.6-2.7 6.4z" fill="#3F3F46"></path>
+<circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle>
+<circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle>
+<path d="M18.4 18.5h3.4M26.2 18.5h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path>
+<path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path>
+</svg>
+<span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-ink-subtle ring-2 ring-surface"></span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="text-xs font-semibold text-ink truncate">Brajesh</span>
+<a href="../discover_living_project_workspace/index.html" class="text-[10px] font-mono text-muted-ink hover:text-signal-blue inline-flex items-center gap-0.5 transition-colors shrink-0">
+Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
+</a>
+</div>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">ERP Solutions Eng · Session #09</p>
+</div>
+</div>
+<!-- Pending -->
+<div class="flex items-center gap-2.5 py-2 flex-1">
+<div class="w-8 h-8 rounded-full border border-dashed border-line flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px] text-ink-subtle">person_add</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="text-xs font-medium text-ink-muted truncate">Invitation pending</span>
+<span class="text-[9px] font-mono text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200 shrink-0">Pending</span>
+</div>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">Sent 2h ago · expires in 22h</p>
+</div>
+</div>
+</div>
+<!-- Invite form -->
+<div class="px-6 py-3.5 border-t border-quiet-line bg-canvas/50 flex flex-col gap-2.5">
+<div class="flex items-center gap-2">
+<span class="text-[10px] uppercase font-mono tracking-wider text-muted-ink font-medium shrink-0">Invite a collaborator</span>
+<input id="invite-email" type="email" placeholder="name@company.com" class="h-9 flex-1 min-w-0 px-2.5 rounded bg-surface border border-quiet-line text-xs text-ink placeholder:text-ink-subtle focus:border-signal-blue focus:ring-1 focus:ring-signal-blue focus:outline-none transition-colors">
+<button id="invite-send" class="h-9 px-3 rounded bg-signal-blue hover:bg-signal-blue-hover text-white text-[11px] font-medium tracking-tight flex items-center justify-center gap-1.5 transition-all shadow-sm shrink-0">
+<span id="invite-send-label">Send</span>
+<span class="material-symbols-outlined text-[15px]">send</span>
+</button>
+</div>
+<!-- Progress -->
+<div id="invite-steps" class="hidden flex-col">
+<div class="flex items-center gap-2 py-1" data-step="1">
+<span class="w-3.5 h-3.5 rounded-full border border-line flex items-center justify-center shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-ink-subtle"></span></span>
+<span class="text-[10px] font-mono text-muted-ink">Link generated</span>
+</div>
+<div class="flex items-center gap-2 py-1" data-step="2">
+<span class="w-3.5 h-3.5 rounded-full border border-line flex items-center justify-center shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-ink-subtle"></span></span>
+<span class="text-[10px] font-mono text-muted-ink">Invitation delivered</span>
+</div>
+<div class="flex items-center gap-2 py-1" data-step="3">
+<span class="w-3.5 h-3.5 rounded-full border border-line flex items-center justify-center shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-ink-subtle"></span></span>
+<span class="text-[10px] font-mono text-muted-ink">Identity verified</span>
+</div>
+<div class="flex items-center gap-2 py-1" data-step="4">
+<span class="w-3.5 h-3.5 rounded-full border border-line flex items-center justify-center shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-ink-subtle"></span></span>
+<span class="text-[10px] font-mono text-muted-ink">Joined · session opened</span>
+</div>
+</div>
+<div id="invite-idle" class="flex items-center gap-2 py-1">
+<span class="w-3.5 h-3.5 rounded-full border border-dashed border-line shrink-0"></span>
+<span class="text-[10px] font-mono text-ink-subtle">Waiting for an invite to be sent…</span>
+</div>
+<p id="invite-done" class="hidden text-[10px] font-mono text-success-ink flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+<span class="">Connected — seat 4 of 5</span>
+</p>
+</div>
+</section>
+</div>
+</div>
+<!-- 3. Latest Canonical State (summary mirrored from State tab) -->
+<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-quiet-line pb-3.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-muted-ink text-[18px]">hub</span>
+<h2 class="text-sm font-semibold tracking-tight text-ink">Latest Canonical State</h2>
+<span class="text-xs font-mono text-muted-ink">Graph sync: <strong class="text-ink font-medium">121 nodes active</strong></span>
+</div>
+<a href="../state_living_project_workspace/index.html" class="group inline-flex items-center gap-1 text-xs font-medium text-signal-blue hover:text-signal-blue-hover transition-colors shrink-0">
+<span>Open State tab</span>
+<span class="material-symbols-outlined text-[15px] group-hover:translate-x-0.5 transition-transform">arrow_outward</span>
+</a>
+</div>
+<!-- Status tally -->
+<div class="flex flex-wrap items-center gap-2 text-[11px] font-mono">
+<span class="text-muted-ink">7 canonical statements</span>
+<span class="w-px h-3 bg-quiet-line"></span>
+<span class="px-2 py-0.5 rounded border border-green-200 bg-success-subtle text-success-ink">3 Validated</span>
+<span class="px-2 py-0.5 rounded border border-amber-200 bg-warn-subtle text-warn-ink">2 Evolving</span>
+<span class="px-2 py-0.5 rounded border border-signal-blue/20 bg-signal-blue-subtle text-signal-blue">1 Proposed / New</span>
+<span class="px-2 py-0.5 rounded border border-quiet-line bg-canvas text-muted-ink">1 Under Clarification</span>
+</div>
+<!-- Canonical state key -->
+<div class="flex flex-wrap items-center gap-x-4 gap-y-2 pt-3 border-t border-quiet-line text-[11px]">
+<span class="text-ink font-medium shrink-0">State key:</span>
+<span class="flex items-center gap-1.5"><span class="px-2 py-0.5 rounded border border-signal-blue/20 bg-signal-blue-subtle text-signal-blue font-mono text-[10px] font-semibold uppercase tracking-wide">Proposed / New</span><span class="text-muted-ink">synthesized · first review pending</span></span>
+<span class="flex items-center gap-1.5"><span class="px-2 py-0.5 rounded border border-amber-200 bg-warn-subtle text-warn-ink font-mono text-[10px] font-semibold uppercase tracking-wide">Evolving</span><span class="text-muted-ink">under active discovery · still changing</span></span>
+<span class="flex items-center gap-1.5"><span class="px-2 py-0.5 rounded border border-quiet-line bg-canvas text-muted-ink font-mono text-[10px] font-semibold uppercase tracking-wide">Under Clarification</span><span class="text-muted-ink">blocked on an open question</span></span>
+<span class="flex items-center gap-1.5"><span class="px-2 py-0.5 rounded border border-green-200 bg-success-subtle text-success-ink font-mono text-[10px] font-semibold uppercase tracking-wide">Validated</span><span class="text-muted-ink">confirmed by evidence · locked</span></span>
+</div>
+<!-- Latest entries -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<a href="../state_living_project_workspace/index.html" class="p-3.5 rounded border border-quiet-line bg-canvas hover:border-deep-line hover:bg-white transition-colors flex flex-col gap-1.5">
+<div class="flex items-center justify-between gap-2">
+<span class="font-mono text-[11px] font-semibold text-signal-blue">REQ-003</span>
+<span class="font-mono text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded bg-signal-blue-subtle text-signal-blue border border-signal-blue/20 shrink-0">Proposed / New</span>
+</div>
+<span class="text-xs font-semibold text-ink leading-snug">HR can override manager approval in specific cases</span>
+<span class="text-[10px] font-mono text-muted-ink">Active in Inspector · Session #14</span>
+</a>
+<a href="../state_living_project_workspace/index.html" class="p-3.5 rounded border border-quiet-line bg-canvas hover:border-deep-line hover:bg-white transition-colors flex flex-col gap-1.5">
+<div class="flex items-center justify-between gap-2">
+<span class="font-mono text-[11px] font-semibold text-warn-ink">REQ-002</span>
+<span class="font-mono text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded bg-warn-subtle text-warn-ink border border-amber-200 shrink-0">Evolving</span>
+</div>
+<span class="text-xs font-semibold text-ink leading-snug">Managers can approve or reject leave requests</span>
+<span class="text-[10px] font-mono text-muted-ink">Linked to Q-003 · ERP Standard Flow</span>
+</a>
+<a href="../state_living_project_workspace/index.html" class="p-3.5 rounded border border-quiet-line bg-canvas hover:border-deep-line hover:bg-white transition-colors flex flex-col gap-1.5">
+<div class="flex items-center justify-between gap-2">
+<span class="font-mono text-[11px] font-semibold text-ink">Q-003</span>
+<span class="font-mono text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded bg-canvas text-muted-ink border border-quiet-line shrink-0">Under Clarification</span>
+</div>
+<span class="text-xs font-semibold text-ink leading-snug">Who approves when the manager is unavailable?</span>
+<span class="text-[10px] font-mono text-muted-ink">Clarification proposed in REQ-003</span>
+</a>
+</div>
+</section>
+<!-- 4. Current Project Scope Snapshot (ERP Modules under active discovery) -->
 <section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-quiet-line pb-3.5">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-muted-ink text-[18px]">view_module</span>
-<h2 class="text-sm font-semibold tracking-tight text-ink">Frappe HR Module Scope</h2>
+<h2 class="text-sm font-semibold tracking-tight text-ink">ERP Module Scope</h2>
 </div>
-<span class="text-xs font-mono text-muted-ink">Target Version: Frappe HR v15 (Self-Hosted on Frappe Cloud)</span>
+<span class="text-xs font-mono text-muted-ink">Target Version: ERP v15 (Self-Hosted on ERP Cloud)</span>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 <!-- Module 1 -->
@@ -347,7 +574,7 @@
               </p>
 </div>
 <div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">
-              Status: Baseline Locked
+              Phase: Baseline Locked
             </div>
 </div>
 <!-- Module 2 -->
@@ -355,14 +582,14 @@
 <div class="flex flex-col gap-1">
 <div class="flex items-center justify-between">
 <span class="text-xs font-semibold text-ink">Leave &amp; Attendance</span>
-<span class="font-mono text-[10px] text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 rounded border border-signal-blue/20">Evolving</span>
+<span class="font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Evolving</span>
 </div>
 <p class="text-xs text-muted-ink mt-1">
                 Biometric punch capture, manager approval exception path &amp; compensatory off.
               </p>
 </div>
 <div class="text-[11px] font-mono text-signal-blue border-t border-quiet-line pt-2 font-medium">
-              Active Discovery Session
+              Phase: Active Discovery Session
             </div>
 </div>
 <!-- Module 3 -->
@@ -370,14 +597,14 @@
 <div class="flex flex-col gap-1">
 <div class="flex items-center justify-between">
 <span class="text-xs font-semibold text-ink">Payroll Processing</span>
-<span class="font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Understand</span>
+<span class="font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Evolving</span>
 </div>
 <p class="text-xs text-muted-ink mt-1">
                 Salary structures, multi-currency consultant fees &amp; statutory tax deductions.
               </p>
 </div>
 <div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">
-              Status: Gathering Entities
+              Phase: Gathering Entities
             </div>
 </div>
 <!-- Module 4 -->
@@ -385,15 +612,15 @@
 <div class="flex flex-col gap-1">
 <div class="flex items-center justify-between">
 <span class="text-xs font-semibold text-ink">Performance &amp; Appraisal</span>
-<span class="font-mono text-[10px] text-muted-ink bg-white px-1.5 py-0.5 rounded border border-quiet-line">Queued</span>
+<span class="font-mono text-[10px] text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 rounded border border-signal-blue/20">Proposed / New</span>
 </div>
 <p class="text-xs text-muted-ink mt-1">
                 KRA definitions, 360-degree cycles &amp; manager rating matrices.
               </p>
 </div>
 <div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">
-              Status: Phase 2 Scope
-            </div>
+Phase: Phase 2 Scope
+                </div>
 </div>
 </div>
 </section>
@@ -410,4 +637,65 @@
 </div>
 </div>
 </footer>
-</body></html>
+<script>
+(function () {
+  var btn = document.getElementById('invite-send');
+  var input = document.getElementById('invite-email');
+  var steps = document.getElementById('invite-steps');
+  var idle = document.getElementById('invite-idle');
+  var done = document.getElementById('invite-done');
+  var label = document.getElementById('invite-send-label');
+  var rows = steps ? steps.querySelectorAll('[data-step]') : [];
+  var CIRCLE = 'w-3.5 h-3.5 rounded-full border border-line flex items-center justify-center shrink-0';
+  var CIRCLE_ON = 'w-3.5 h-3.5 rounded-full border border-signal-blue bg-signal-blue-subtle flex items-center justify-center shrink-0';
+  var DOT = 'w-1.5 h-1.5 rounded-full bg-ink-subtle';
+  var DOT_ON = 'w-1.5 h-1.5 rounded-full bg-signal-blue';
+  var TEXT = 'text-[10px] font-mono text-muted-ink';
+  var TEXT_ON = 'text-[10px] font-mono text-ink';
+
+  if (!btn) return;
+
+function paint(index) {
+rows.forEach(function (row, i) {
+var on = i <= index;
+var circle = row.firstElementChild;
+var dot = circle.firstElementChild;
+var text = row.children[1];
+circle.className = on ? CIRCLE_ON : CIRCLE;
+dot.className = on ? DOT_ON : DOT;
+text.className = on ? TEXT_ON : TEXT;
+});
+}
+
+  btn.addEventListener('click', function () {
+    if (input && !input.value.trim()) input.value = 'collaborator@company.com';
+
+    btn.disabled = true;
+    btn.classList.add('opacity-70', 'cursor-not-allowed');
+    label.textContent = 'Sending…';
+
+    if (steps) steps.classList.remove('hidden');
+    if (steps) steps.classList.add('flex');
+    if (idle) idle.classList.add('hidden');
+    if (done) { done.classList.add('hidden'); done.classList.remove('flex'); }
+    paint(-1);
+
+    rows.forEach(function (_, i) {
+      setTimeout(function () { paint(i); }, 600 * (i + 1));
+    });
+
+    setTimeout(function () {
+      label.textContent = 'Sent';
+      if (done) { done.classList.remove('hidden'); done.classList.add('flex'); }
+      btn.disabled = false;
+      btn.classList.remove('opacity-70', 'cursor-not-allowed');
+      setTimeout(function () {
+        label.textContent = 'Send';
+        if (input) input.value = '';
+      }, 2400);
+    }, 600 * rows.length + 500);
+  });
+})();
+</script>
+</body>
+</html>

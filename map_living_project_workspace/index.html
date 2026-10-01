@@ -86,7 +86,7 @@
 <span class="text-line text-[14px]">/</span>
 <div class="flex items-center gap-2 group cursor-pointer">
 <span class="text-[13px] font-medium text-ink">HR Transformation</span>
-<span class="text-[12px] text-ink-muted font-normal">(Frappe HR &amp; Payroll implementation)</span>
+<span class="text-[12px] text-ink-muted font-normal">(ERP &amp; Payroll implementation)</span>
 <span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
 </div>
 </div>
@@ -117,9 +117,9 @@
 <div class="flex items-center gap-2 text-[12px]">
 <span class="text-ink-muted">HR Transformation</span>
 <span class="text-ink-subtle">/</span>
-<span class="text-ink-muted">Frappe HR &amp; Payroll</span>
+<span class="text-ink-muted">ERP &amp; Payroll</span>
 <span class="text-ink-subtle">/</span>
-<span class="font-medium text-ink">Leave &amp; Attendance Domain</span>
+<a href="../discover_living_project_workspace/index.html" class="font-medium text-ink hover:text-signal-blue hover:underline underline-offset-2 decoration-line transition-colors">Leave &amp; Attendance Domain</a>
 </div>
 <div class="flex items-center gap-3">
 <span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
@@ -148,7 +148,7 @@
 <button class="px-2.5 py-1 rounded-[6px] text-muted-ink hover:text-ink transition-colors">Functional Flow</button>
 <button class="px-2.5 py-1 rounded-[6px] text-muted-ink hover:text-ink transition-colors">Technical Flow</button>
 <button class="px-2.5 py-1 rounded-[6px] text-muted-ink hover:text-ink transition-colors hidden xl:inline-block">Project Flow</button>
-<button class="px-2.5 py-1 rounded-[6px] text-muted-ink hover:text-ink transition-colors hidden sm:inline-block">Frappe Flow</button>
+<button class="px-2.5 py-1 rounded-[6px] text-muted-ink hover:text-ink transition-colors hidden sm:inline-block">ERP Flow</button>
 </div>
 </div>
 <!-- Minimal Viewport Controls -->
@@ -200,11 +200,11 @@
 <path d="M 940 250 C 975 250, 985 168, 1020 168" fill="none" marker-end="url(#arrow-blue)" stroke="#356AE6" stroke-width="1.5"></path>
 <!-- Branch 2: (NO) bottom right (940, 286) -> curve to [Direct Approval] left center (1020, 368) -->
 <path d="M 940 286 C 975 286, 985 368, 1020 368" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-width="1.5"></path>
-<!-- [HR Override] right center (1190, 168) -> curve down to [Frappe HR] left center (1250, 268) -->
+<!-- [HR Override] right center (1190, 168) -> curve down to [ERP] left center (1250, 268) -->
 <path d="M 1190 168 C 1220 168, 1225 250, 1250 258" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-width="1.5"></path>
-<!-- [Direct Approval] right center (1190, 368) -> curve up to [Frappe HR] left center (1250, 268) -->
+<!-- [Direct Approval] right center (1190, 368) -> curve up to [ERP] left center (1250, 268) -->
 <path d="M 1190 368 C 1220 368, 1225 286, 1250 278" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-width="1.5"></path>
-<!-- [Frappe HR: Leave Allocation Record] bottom center (1380, 308) -> down to [Frappe Payroll] top center (1380, 420) -->
+<!-- [ERP: Leave Allocation Record] bottom center (1380, 308) -> down to [ERP Payroll] top center (1380, 420) -->
 <path d="M 1380 308 L 1380 420" fill="none" marker-end="url(#arrow)" stroke="#A1A1AA" stroke-dasharray="3 3" stroke-width="1.5"></path>
 </svg>
 <!-- Connection Flow Edge Labels -->
@@ -293,12 +293,12 @@
 <div class="font-semibold text-[13px] text-ink tracking-tight">Direct Approval</div>
 <div class="text-[11px] text-muted-ink mt-0.5">Normal manager sign-off</div>
 </div>
-<!-- Node 7: [Frappe HR: Leave Allocation Record] -->
+<!-- Node 7: [ERP: Leave Allocation Record] -->
 <div class="absolute left-[1250px] top-[228px] w-[260px] bg-surface rounded-node border border-quiet-line p-3.5 shadow-xs hover:border-muted-ink transition-all cursor-pointer">
 <div class="flex items-center justify-between mb-1.5">
 <div class="flex items-center gap-1 text-[#0089FF]">
 <span class="material-symbols-outlined text-[14px]">dataset</span>
-<span class="font-mono text-[9px] font-semibold uppercase tracking-wider">Frappe HR System</span>
+<span class="font-mono text-[9px] font-semibold uppercase tracking-wider">ERP System</span>
 </div>
 <span class="px-1.5 py-0.5 rounded font-mono text-[9px] font-medium bg-state-validated-bg text-state-validated border border-state-validated-border">
             VALIDATED
@@ -311,12 +311,12 @@
 <span class="text-state-validated font-mono font-medium">Auto-approved</span>
 </div>
 </div>
-<!-- Node 8: [Frappe Payroll: Salary Slip Deduction Check] -->
+<!-- Node 8: [ERP Payroll: Salary Slip Deduction Check] -->
 <div class="absolute left-[1250px] top-[420px] w-[260px] bg-surface rounded-node border border-quiet-line p-3.5 shadow-xs hover:border-muted-ink transition-all cursor-pointer">
 <div class="flex items-center justify-between mb-1.5">
 <div class="flex items-center gap-1 text-[#6366F1]">
 <span class="material-symbols-outlined text-[14px]">payments</span>
-<span class="font-mono text-[9px] font-semibold uppercase tracking-wider">Frappe Payroll</span>
+<span class="font-mono text-[9px] font-semibold uppercase tracking-wider">ERP Payroll</span>
 </div>
 <span class="px-1.5 py-0.5 rounded font-mono text-[9px] font-medium bg-state-evolving-bg text-state-evolving border border-state-evolving-border">
             EVOLVING
@@ -397,7 +397,7 @@
             </div>
 </div>
 <div>
-<span class="block text-[10px] font-mono uppercase tracking-wider text-muted-ink">Frappe Target</span>
+<span class="block text-[10px] font-mono uppercase tracking-wider text-muted-ink">ERP Target</span>
 <code class="block mt-1 p-1.5 rounded bg-[#F4F4F5] font-mono text-[11px] text-ink border border-quiet-line/80 break-all">
               leave_application.js
             </code>

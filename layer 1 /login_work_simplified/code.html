@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_blank" name="shell-type"/><title>Work Simplified Consultant Portal - Authentication</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary":"#5d5e66","surface-container-highest":"#e4e1e6","on-primary-container":"#f9f7ff","tertiary-fixed-dim":"#79db8d","inverse-surface":"#303033","on-primary":"#ffffff","on-tertiary-fixed-variant":"#005323","surface-variant":"#e4e1e6","surface-tint":"#1555d1","inverse-on-surface":"#f3f0f4","primary-fixed-dim":"#b3c5ff","surface-container-low":"#f6f2f7","background":"#fbf8fc","primary":"#0650cc","on-primary-fixed":"#00174a","primary-container":"#356ae6","on-error":"#ffffff","secondary-fixed":"#e3e1ec","on-tertiary":"#ffffff","error":"#ba1a1a","inverse-primary":"#b3c5ff","surface":"#fbf8fc","on-surface-variant":"#434654","surface-container-lowest":"#ffffff","on-surface":"#1b1b1e","primary-fixed":"#dbe1ff","on-secondary-container":"#63646c","tertiary-fixed":"#95f8a7","on-secondary":"#ffffff","secondary-fixed-dim":"#c6c5cf","on-primary-fixed-variant":"#003ea6","tertiary-container":"#1a8340","on-secondary-fixed":"#1a1b22","secondary-container":"#e3e1ec","outline":"#737685","surface-container-high":"#eae7eb","surface-bright":"#fbf8fc","outline-variant":"#c3c6d6","tertiary":"#00682e","on-error-container":"#93000a","on-tertiary-container":"#e7ffe5","surface-dim":"#dcd9dd","on-background":"#1b1b1e","on-secondary-fixed-variant":"#46464e","on-tertiary-fixed":"#00210a","surface-container":"#f0edf1","error-container":"#ffdad6"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-xs":"0.25rem","space-xl":"2rem","space-lg":"1.25rem","space-sm":"0.5rem","gutter":"1rem","space-md":"0.75rem","margin":"1.5rem"},fontFamily:{"headline-lg":["Geist"],"body-lg":["Geist"],"body-md":["Geist"],"label-md":["JetBrains Mono"],"body-sm":["Geist"],"headline-md":["Geist"],"label-sm":["JetBrains Mono"],"headline-sm":["Geist"]},fontSize:{"headline-lg":["1.75rem",{"lineHeight":"2.25rem","letterSpacing":"-0.025em","fontWeight":"600"}],"body-lg":["1rem",{"lineHeight":"1.5rem","letterSpacing":"-0.011em","fontWeight":"400"}],"body-md":["0.875rem",{"lineHeight":"1.375rem","letterSpacing":"-0.006em","fontWeight":"400"}],"label-md":["0.75rem",{"lineHeight":"1rem","letterSpacing":"0.02em","fontWeight":"500"}],"body-sm":["0.8125rem",{"lineHeight":"1.25rem","letterSpacing":"0em","fontWeight":"400"}],"headline-md":["1.375rem",{"lineHeight":"1.875rem","letterSpacing":"-0.02em","fontWeight":"600"}],"label-sm":["0.6875rem",{"lineHeight":"0.875rem","letterSpacing":"0.04em","fontWeight":"500"}],"headline-sm":["1.125rem",{"lineHeight":"1.5rem","letterSpacing":"-0.015em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased min-h-screen flex flex-col justify-between"><main class="w-full flex-1 flex items-center justify-center bg-surface px-margin py-space-xl"><div class="flex flex-col w-full items-center justify-center relative">
+<div class="absolute -top-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="w-full max-w-md mx-auto">
+<div class="bg-surface-container-lowest rounded-xl shadow-xl shadow-on-surface/5 p-space-xl flex flex-col relative">
+<div class="flex items-center justify-between mb-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">WorkSimplified</span>
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase mt-0.5">Consultant Portal</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> v2.4.9
+        </span>
+</div>
+<div class="mb-space-lg">
+<h1 class="font-headline-md text-headline-md text-on-surface mb-space-xs">Sign in to Work Simplified</h1>
+<p class="font-body-sm text-body-sm text-secondary leading-relaxed">
+          Enter your consultant workspace to continue your persistent research journey.
+        </p>
+</div>
+<form class="flex flex-col gap-space-md" onsubmit="event.preventDefault(); window.location.href='../consultant_dashboard_work_simplified/code.html';">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface flex items-center justify-between" for="identifier">
+<span>Work Email or Mobile Number</span>
+<span class="font-label-sm text-label-sm text-secondary">Verified Domain</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-secondary text-[18px]">alternate_email</span>
+<input class="w-full h-10 pl-9 pr-3 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md placeholder:text-secondary placeholder:opacity-60 shadow-sm focus:outline-none focus:bg-surface-container-low transition-all" id="identifier" placeholder="name@consulting.io or +91..." type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface" for="credential" id="credential-label">
+              Workspace Password
+            </label>
+<button class="font-label-sm text-label-sm text-primary hover:text-primary-container transition-colors cursor-pointer" id="toggle-auth-mode" type="button">
+              Use single-use security code
+            </button>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-secondary text-[18px]" id="credential-icon">lock</span>
+<input class="w-full h-10 pl-9 pr-10 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md placeholder:text-secondary placeholder:opacity-60 shadow-sm focus:outline-none focus:bg-surface-container-low transition-all" id="credential" placeholder="••••••••••••" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-3 text-secondary hover:text-on-surface flex items-center justify-center cursor-pointer" id="toggle-visibility" type="button">
+<span class="material-symbols-outlined text-[18px]" id="visibility-icon">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded text-primary bg-surface-container-high focus:outline-none accent-primary cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-secondary">Remember this device for 30 days</span>
+</label>
+<a class="font-body-sm text-body-sm text-primary hover:underline transition-all" href="#">Forgot password?</a>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<button class="w-full h-11 bg-primary text-on-primary rounded-lg font-body-md text-body-md font-semibold flex items-center justify-center gap-space-xs shadow-md shadow-primary/20 hover:bg-primary-container active:scale-[0.99] transition-all cursor-pointer" type="submit">
+<span>Login to Workspace</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+
+</div>
+</form>
+<div class="mt-space-lg pt-space-md text-center">
+<p class="font-body-sm text-body-sm text-secondary">
+          Don't have an account? 
+          <a class="text-primary font-medium hover:underline ml-0.5" href="#">Request consultant access</a>
+</p>
+</div>
+</div>
+<div class="mt-space-lg flex flex-col items-center gap-space-xs text-center">
+<div class="flex flex-wrap items-center justify-center gap-x-space-md gap-y-1 text-secondary">
+<span class="font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary">lock</span>
+          End-to-End Encrypted
+        </span>
+<span class="font-label-sm text-label-sm text-outline-variant">·</span>
+<span class="font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary">verified_user</span>
+          SOC2 Type II Certified
+        </span>
+<span class="font-label-sm text-label-sm text-outline-variant">·</span>
+<span class="font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary">check_circle</span>
+          ISO/IEC 27001
+        </span>
+</div>
+</div>
+</div>
+<script>
+    (function() {
+      const toggleModeBtn = document.getElementById('toggle-auth-mode');
+      const credLabel = document.getElementById('credential-label');
+      const credInput = document.getElementById('credential');
+      const credIcon = document.getElementById('credential-icon');
+      const visBtn = document.getElementById('toggle-visibility');
+      const visIcon = document.getElementById('visibility-icon');
+
+      let isOtp = false;
+      let isVisible = false;
+
+      if (toggleModeBtn && credLabel && credInput && credIcon && visBtn) {
+        toggleModeBtn.addEventListener('click', () => {
+          isOtp = !isOtp;
+          if (isOtp) {
+            credLabel.textContent = 'One-Time Security Passcode';
+            toggleModeBtn.textContent = 'Use workspace password';
+            credInput.placeholder = '6-digit OTP (e.g. 849-204)';
+            credInput.type = 'text';
+            credIcon.textContent = 'pin';
+            visBtn.classList.add('hidden');
+          } else {
+            credLabel.textContent = 'Workspace Password';
+            toggleModeBtn.textContent = 'Use single-use security code';
+            credInput.placeholder = '••••••••••••';
+            credInput.type = isVisible ? 'text' : 'password';
+            credIcon.textContent = 'lock';
+            visBtn.classList.remove('hidden');
+          }
+        });
+
+        visBtn.addEventListener('click', () => {
+          if (isOtp) return;
+          isVisible = !isVisible;
+          credInput.type = isVisible ? 'text' : 'password';
+          visIcon.textContent = isVisible ? 'visibility_off' : 'visibility';
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="w-full py-space-md"><div class="max-w-7xl mx-auto px-margin flex flex-col sm:flex-row items-center justify-between gap-space-xs text-center sm:text-left"><span class="font-body-sm text-body-sm text-on-surface-variant">© 2025 WorkSimplified Platform · All rights reserved</span><div class="flex items-center gap-space-md"><span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-space-xs"><span class="material-symbols-outlined text-[14px] text-tertiary">shield</span> SOC2 Type II</span><span class="font-label-sm text-label-sm text-on-surface-variant">Zero-Knowledge Audio Encryption</span></div></div></footer></body></html>

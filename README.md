@@ -14,7 +14,11 @@ A set of interconnected HTML screens for the WorkSimplified Living Project Works
 
 ## Navigation
 
-The root `index.html` is the entry point. Each screen links to every other screen via the shared top chrome header navigation.
+The root `index.html` opens the consultant login. The connected flow is:
+
+Login → Research Dashboard → Voice Conversation → Research Dashboard → Project Workspace (Cockpit) → Discover / Map / State / Outputs.
+
+The dashboard's **Project Workspace** button opens Cockpit. Each project screen includes a **Research Dashboard** return link and shared project navigation. Layer 1 and the Living Project Workspace remain distinct areas connected through this navigation; backend data integration is not implemented by these links.
 
 ## Development
 

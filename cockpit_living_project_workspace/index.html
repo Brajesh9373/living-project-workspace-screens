@@ -47,6 +47,25 @@
       }
     };
   </script>
+
+<style>
+/* Recent Changes timeline feed */
+#recentEmpty{border:1px dashed #D9DEE9;border-radius:10px;padding:18px !important;text-align:center;background:#FBFCFF}
+[id^="recent-"]{position:relative;padding:15px 10px 15px 30px !important;border-bottom:1px solid #EFF1F5}
+[id^="recent-"]:last-of-type{border-bottom:0}
+[id^="recent-"]::before{content:'';position:absolute;left:7px;top:21px;width:9px;height:9px;border-radius:50%;background:#356AE6;box-shadow:0 0 0 3px #E4EBFD;z-index:1}
+[id^="recent-"]::after{content:'';position:absolute;left:11px;top:34px;bottom:-2px;width:1.5px;background:#E6EAF2}
+[id^="recent-"]:last-of-type::after{display:none}
+#recent-balances::before{background:#177245;box-shadow:0 0 0 3px #DDF0E3}
+#recent-question::before{background:#B98A12;box-shadow:0 0 0 3px #F6EBCB}
+[id^="recent-"]>div:first-child{align-items:flex-start !important}
+[id^="recent-"] span.text-sm,[id^="recent-"] .text-sm.font-medium{font-size:13.5px !important;font-weight:620;letter-spacing:-.01em;line-height:1.45}
+[id^="recent-"] p{font-size:12px !important;color:#5F6B7F !important;line-height:1.7 !important;max-width:62ch;margin-top:1px}
+[id^="recent-"] .font-mono.text-\[11px\]{border-radius:6px !important;padding:2px 7px !important}
+[id^="recent-"]>div:first-child>span:last-child{font-size:10.5px !important;background:#F4F6FA;border:1px solid #E6EAF2;border-radius:999px;padding:2.5px 8px;color:#68738A !important}
+.recent-source{display:flex;align-items:center;gap:7px;font-size:10.5px;font-weight:600;color:#68738A;margin-top:5px}
+.recent-source-dot{width:5px;height:5px;border-radius:50%;background:#9DB2D8;flex-shrink:0}
+</style>
 </head>
 <body class="min-h-screen flex flex-col font-sans bg-canvas text-ink antialiased selection:bg-signal-blue selection:text-white">
 <!-- Top Chrome Navigation -->
@@ -60,17 +79,16 @@
 </div>
 <span class="text-line text-[14px]">/</span>
 <div class="flex items-center gap-2 group cursor-pointer">
-<span class="text-[13px] font-medium text-ink">HR Transformation</span>
-<span class="text-[12px] text-ink-muted font-normal">(ERP &amp; Payroll implementation)</span>
+<span class="text-[13px] font-medium text-ink" data-project>LeaveFlow</span>
+<span class="text-[12px] text-ink-muted font-normal">(Leave Management System)</span>
 <span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
 </div>
 </div>
 <!-- App Tabs -->
-<a href="../layer%201%20/consultant_dashboard_work_simplified/code.html" class="inline-flex items-center gap-1 px-2 py-1.5 rounded text-[12px] font-medium text-ink-muted hover:text-ink hover:bg-canvas transition-colors" aria-label="Return to Research Dashboard"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_back</span><span>Research Dashboard</span></a>
+<a href="http://127.0.0.1:3000/portal" class="inline-flex items-center gap-1 px-2 py-1.5 rounded text-[12px] font-medium text-ink-muted hover:text-ink hover:bg-canvas transition-colors" aria-label="Back to Project Team"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_back</span><span>Project Team</span></a>
 <nav class="hidden md:flex items-center gap-1 text-[13px]">
 <a class="px-3 py-1.5 rounded font-semibold text-ink bg-canvas border border-line text-[13px]" href="index.html">Cockpit</a>
 <a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../discover_living_project_workspace/index.html">Discover</a>
-<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../map_living_project_workspace/index.html">Map</a>
 <a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../state_living_project_workspace/index.html">State</a>
 <a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../outputs_living_project_workspace/index.html">Outputs</a>
 </nav>
@@ -91,11 +109,11 @@
 <!-- Subheader / Context Strip -->
 <div class="bg-surface border-b border-line px-6 py-2.5 flex items-center justify-between">
 <div class="flex items-center gap-2 text-[12px]">
-<span class="text-ink-muted">HR Transformation</span>
+<span class="text-ink-muted">LeaveFlow</span>
 <span class="text-ink-subtle">/</span>
-<span class="text-ink-muted">ERP &amp; Payroll</span>
+<span class="text-ink-muted">Leave Management</span>
 <span class="text-ink-subtle">/</span>
-<a href="../discover_living_project_workspace/index.html" class="font-medium text-ink hover:text-signal-blue hover:underline underline-offset-2 decoration-line transition-colors">Leave &amp; Attendance Domain</a>
+<a href="../discover_living_project_workspace/index.html" class="font-medium text-ink hover:text-signal-blue hover:underline underline-offset-2 decoration-line transition-colors">Leave Management Domain</a>
 </div>
 <div class="flex items-center gap-3">
 <span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
@@ -116,11 +134,11 @@
 <div class="flex items-center gap-2">
 <span class="text-xs uppercase font-mono tracking-wider text-muted-ink font-medium">Project Orientation</span>
 <span class="text-quiet-line">•</span>
-<span class="text-xs text-muted-ink font-mono">Workspace: HR-TRANS-2025</span>
+<span class="text-xs text-muted-ink font-mono">Workspace: LEAVEFLOW-2026</span>
 </div>
 <h1 class="text-2xl font-semibold tracking-tight text-ink">Cockpit — Where are we?</h1>
 <p class="text-sm text-muted-ink">
-            Orientation &amp; continuity workspace for the ERP &amp; Payroll migration. No analytics clutter, only real project state.
+            Orientation &amp; continuity workspace for the LeaveFlow build. Every invited member works with their own BA agent — and their conflicts surface here as they happen.
           </p>
 </div>
 <!-- Implementation Lifecycle Rail -->
@@ -158,8 +176,138 @@
 <span>Living State Contract</span>
 </span>
 <span class="text-quiet-line shrink-0">·</span>
-<p>Changes made during Discover or Map discussions immediately mutate the node state graph and appear here. No manual dashboard updates required.</p>
+<p>Changes made during Discover discussions immediately mutate the node state graph and appear here. No manual dashboard updates required.</p>
 </div>
+
+<div id="discoveryBar" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#fff;border:1px solid #E4E4E7;border-radius:10px;padding:13px 16px;margin-bottom:20px">
+  <span id="discDot" style="width:9px;height:9px;border-radius:50%;background:#356AE6;flex-shrink:0;animation:discPulse 1.4s ease-in-out infinite"></span>
+  <div style="display:flex;flex-direction:column;gap:2px;margin-right:auto">
+    <strong id="discTitle" style="font-size:12.5px">Discovery is running</strong>
+    <span id="discText" style="font-size:11.5px;color:#71717A">BA agents are talking with your invited members. Changes and conflicts will land here as they happen.</span>
+  </div>
+  <span id="discSessions" style="display:flex;gap:7px;flex-wrap:wrap"></span>
+</div>
+<style>@keyframes discPulse{0%,100%{opacity:1}50%{opacity:.25}}@keyframes seqIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}.seq-in{animation:seqIn .45s ease}@media(prefers-reduced-motion:reduce){#discDot{animation:none}.seq-in{animation:none}}</style>
+<!-- ERP Module Scope (Functional + Technical dimensions) — shown after Discovery -->
+<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-quiet-line pb-3.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-muted-ink text-[18px]">view_module</span>
+<h2 class="text-sm font-semibold tracking-tight text-ink">ERP Module Scope</h2>
+</div>
+<span class="text-xs font-mono text-muted-ink">Target Version: ERP v15 (Self-Hosted on ERP Cloud)</span>
+</div>
+<span class="text-[10px] uppercase font-mono tracking-wider text-muted-ink font-medium">Functional dimensions</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold text-ink">Employee Lifecycle</span><span class="font-mono text-[10px] text-success-ink bg-success-subtle px-1.5 py-0.5 rounded border border-green-200">Validated</span></div>
+<p class="text-xs text-muted-ink mt-1">Onboarding, staff designations, department branches &amp; exit handoffs.</p>
+</div>
+<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">Phase: Baseline Locked</div>
+<div class="flex items-center gap-2"><span class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-amber-700 text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-canvas">A</span><span class="w-5 h-5 rounded-full bg-zinc-800 text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-canvas">B</span></span><span class="text-[10px] font-mono text-muted-ink">2 on this module</span></div>
+</div>
+<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold text-ink">Leave Management</span><span class="font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Evolving</span></div>
+<p class="text-xs text-muted-ink mt-1">Biometric punch capture, manager approval exception path &amp; compensatory off.</p>
+</div>
+<div class="text-[11px] font-mono text-signal-blue border-t border-quiet-line pt-2 font-medium"><span id="leavePhase">Phase: Waiting for discovery</span></div>
+<div class="flex items-center gap-2"><span class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-signal-blue text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-canvas">V</span><span class="w-5 h-5 rounded-full bg-amber-700 text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-canvas">A</span><span class="w-5 h-5 rounded-full bg-zinc-800 text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-canvas">B</span></span><span class="text-[10px] font-mono text-muted-ink" id="leaveSessions">0 live sessions</span></div>
+</div>
+<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold text-ink">Payroll Processing</span><span class="font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Evolving</span></div>
+<p class="text-xs text-muted-ink mt-1">Salary structures, multi-currency consultant fees &amp; statutory tax deductions.</p>
+</div>
+<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">Phase: Gathering Entities</div>
+<div class="flex items-center gap-2"><span class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-amber-700 text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-canvas">A</span><span class="w-5 h-5 rounded-full bg-zinc-800 text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-canvas">B</span></span><span class="text-[10px] font-mono text-muted-ink">2 on this module</span></div>
+</div>
+<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold text-ink">Performance &amp; Appraisal</span><span class="font-mono text-[10px] text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 rounded border border-signal-blue/20">Proposed / New</span></div>
+<p class="text-xs text-muted-ink mt-1">KRA definitions, 360-degree cycles &amp; manager rating matrices.</p>
+</div>
+<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">Phase: Phase 2 Scope</div>
+<div class="flex items-center gap-2"><span class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-signal-blue text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-canvas">V</span></span><span class="text-[10px] font-mono text-muted-ink">owner only</span></div>
+</div>
+</div>
+<span class="text-[10px] uppercase font-mono tracking-wider text-muted-ink font-medium">Technical dimensions</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-4 rounded border border-quiet-line bg-white flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold text-ink">Integrations &amp; APIs</span><span class="font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Evolving</span></div>
+<p class="text-xs text-muted-ink mt-1">ERPNext REST APIs, biometric device sync &amp; email notifications.</p>
+</div>
+<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">Phase: Gathering Interfaces</div>
+<div class="flex items-center gap-2"><span class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-zinc-800 text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-white" title="Brajesh · ERP Engineer">B</span></span><span class="text-[10px] font-mono text-muted-ink">1 on this module</span></div>
+</div>
+<div class="p-4 rounded border border-quiet-line bg-white flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold text-ink">Data Model &amp; Migration</span><span class="font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Evolving</span></div>
+<p class="text-xs text-muted-ink mt-1">DocTypes, legacy leave-data import &amp; balance seeding rules.</p>
+</div>
+<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">Phase: Mapping Entities</div>
+<div class="flex items-center gap-2"><span class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-zinc-800 text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-white" title="Brajesh · ERP Engineer">B</span></span><span class="text-[10px] font-mono text-muted-ink">1 on this module</span></div>
+</div>
+<div class="p-4 rounded border border-quiet-line bg-white flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold text-ink">Security &amp; Access Control</span><span class="font-mono text-[10px] text-success-ink bg-success-subtle px-1.5 py-0.5 rounded border border-green-200">Validated</span></div>
+<p class="text-xs text-muted-ink mt-1">Role-based access, HR override audit trail &amp; session policies.</p>
+</div>
+<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">Phase: Baseline Locked</div>
+<div class="flex items-center gap-2"><span class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-amber-700 text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-white" title="Ankur · Permissions">A</span></span><span class="text-[10px] font-mono text-muted-ink">1 on this module</span></div>
+</div>
+<div class="p-4 rounded border border-quiet-line bg-white flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold text-ink">Platform &amp; Infrastructure</span><span class="font-mono text-[10px] text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 rounded border border-signal-blue/20">Proposed / New</span></div>
+<p class="text-xs text-muted-ink mt-1">ERP v15 self-hosted on ERP Cloud, backups &amp; staging environment.</p>
+</div>
+<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">Phase: Phase 2 Scope</div>
+<div class="flex items-center gap-2"><span class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-signal-blue text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-white" title="Varun · Lead Architect">V</span></span><span class="text-[10px] font-mono text-muted-ink">owner only</span></div>
+</div>
+</div>
+</section>
+<!-- Team Resources (documents uploaded by joined members) -->
+<section class="bg-surface rounded-lg border border-quiet-line px-5 py-4 flex flex-col gap-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-quiet-line pb-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-muted-ink text-[18px]">folder_open</span>
+<h2 class="text-sm font-semibold tracking-tight text-ink">Team Resources — Uploaded Documents</h2>
+<span class="text-xs font-mono text-muted-ink">Graph sync: <strong class="text-ink font-medium" id="graphNodes">0 nodes active</strong></span>
+</div>
+<span class="text-xs font-mono text-muted-ink">8 documents · 4 members joined</span>
+</div>
+<div class="flex flex-wrap items-center gap-2 text-[11px] font-mono">
+<span class="text-muted-ink">Uploaded by members who joined with their agents</span>
+<span class="w-px h-3 bg-quiet-line"></span>
+<span class="px-2 py-0.5 rounded border border-quiet-line bg-canvas text-muted-ink">4 PDF</span>
+<span class="px-2 py-0.5 rounded border border-quiet-line bg-canvas text-muted-ink">2 DOCX</span>
+<span class="px-2 py-0.5 rounded border border-quiet-line bg-canvas text-muted-ink">2 XLSX</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+<div class="py-2.5 flex flex-col border-t border-quiet-line first:border-t-0 md:border-t-0 md:[&:nth-child(n+3)]:border-t">
+<div class="flex items-center justify-between gap-2"><span class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-signal-blue text-white flex items-center justify-center shrink-0 font-semibold text-[12px]" role="img" aria-label="Varun">V</span><span class="text-xs font-semibold text-ink">Varun <span class="font-normal text-muted-ink">· Workflows (Functional) · Session #14</span></span></span><span class="font-mono text-[10px] text-success-ink">Joined</span></div>
+<div class="flex items-center justify-between gap-3 py-1 pl-[36px]"><span class="min-w-0 flex items-baseline"><span class="text-xs font-medium text-ink truncate">Leave-Approval-Workflow.pdf</span><span class="text-[10px] font-mono text-muted-ink ml-2 whitespace-nowrap">PDF · 240 KB · 24m ago</span></span><span class="flex gap-1.5 shrink-0"><button type="button" class="px-1.5 py-1 rounded hover:bg-canvas text-[11px] font-medium text-signal-blue">Preview</button><button type="button" class="px-2 py-1 rounded bg-ink text-white text-[11px] font-medium">Download</button></span></div>
+<div class="flex items-center justify-between gap-3 py-1 pl-[36px]"><span class="min-w-0 flex items-baseline"><span class="text-xs font-medium text-ink truncate">Exception-Routing-Notes.docx</span><span class="text-[10px] font-mono text-muted-ink ml-2 whitespace-nowrap">DOCX · 86 KB · 24m ago</span></span><span class="flex gap-1.5 shrink-0"><button type="button" class="px-1.5 py-1 rounded hover:bg-canvas text-[11px] font-medium text-signal-blue">Preview</button><button type="button" class="px-2 py-1 rounded bg-ink text-white text-[11px] font-medium">Download</button></span></div>
+</div>
+<div class="py-2.5 flex flex-col border-t border-quiet-line first:border-t-0 md:border-t-0 md:[&:nth-child(n+3)]:border-t">
+<div class="flex items-center justify-between gap-2"><span class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-amber-700 text-white flex items-center justify-center shrink-0 font-semibold text-[12px]" role="img" aria-label="Ankur">A</span><span class="text-xs font-semibold text-ink">Ankur <span class="font-normal text-muted-ink">· Permissions (Technical) · Session #12</span></span></span><span class="font-mono text-[10px] text-success-ink">Joined</span></div>
+<div class="flex items-center justify-between gap-3 py-1 pl-[36px]"><span class="min-w-0 flex items-baseline"><span class="text-xs font-medium text-ink truncate">Current-Leave-Policy.pdf</span><span class="text-[10px] font-mono text-muted-ink ml-2 whitespace-nowrap">PDF · 1.2 MB · 1h ago</span></span><span class="flex gap-1.5 shrink-0"><button type="button" class="px-1.5 py-1 rounded hover:bg-canvas text-[11px] font-medium text-signal-blue">Preview</button><button type="button" class="px-2 py-1 rounded bg-ink text-white text-[11px] font-medium">Download</button></span></div>
+<div class="flex items-center justify-between gap-3 py-1 pl-[36px]"><span class="min-w-0 flex items-baseline"><span class="text-xs font-medium text-ink truncate">Role-Access-Matrix.xlsx</span><span class="text-[10px] font-mono text-muted-ink ml-2 whitespace-nowrap">XLSX · 64 KB · 1h ago</span></span><span class="flex gap-1.5 shrink-0"><button type="button" class="px-1.5 py-1 rounded hover:bg-canvas text-[11px] font-medium text-signal-blue">Preview</button><button type="button" class="px-2 py-1 rounded bg-ink text-white text-[11px] font-medium">Download</button></span></div>
+</div>
+<div class="py-2.5 flex flex-col border-t border-quiet-line first:border-t-0 md:border-t-0 md:[&:nth-child(n+3)]:border-t">
+<div class="flex items-center justify-between gap-2"><span class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-zinc-800 text-white flex items-center justify-center shrink-0 font-semibold text-[12px]" role="img" aria-label="Brajesh">B</span><span class="text-xs font-semibold text-ink">Brajesh <span class="font-normal text-muted-ink">· Roles &amp; profiles (Functional) · Session #09</span></span></span><span class="font-mono text-[10px] text-success-ink">Joined</span></div>
+<div class="flex items-center justify-between gap-3 py-1 pl-[36px]"><span class="min-w-0 flex items-baseline"><span class="text-xs font-medium text-ink truncate">Org-Structure-and-Reporting.pdf</span><span class="text-[10px] font-mono text-muted-ink ml-2 whitespace-nowrap">PDF · 480 KB · 12m ago</span></span><span class="flex gap-1.5 shrink-0"><button type="button" class="px-1.5 py-1 rounded hover:bg-canvas text-[11px] font-medium text-signal-blue">Preview</button><button type="button" class="px-2 py-1 rounded bg-ink text-white text-[11px] font-medium">Download</button></span></div>
+<div class="flex items-center justify-between gap-3 py-1 pl-[36px]"><span class="min-w-0 flex items-baseline"><span class="text-xs font-medium text-ink truncate">Leave-Balances-2026.xlsx</span><span class="text-[10px] font-mono text-muted-ink ml-2 whitespace-nowrap">XLSX · 58 KB · 1h ago</span></span><span class="flex gap-1.5 shrink-0"><button type="button" class="px-1.5 py-1 rounded hover:bg-canvas text-[11px] font-medium text-signal-blue">Preview</button><button type="button" class="px-2 py-1 rounded bg-ink text-white text-[11px] font-medium">Download</button></span></div>
+</div>
+<div class="py-2.5 flex flex-col border-t border-quiet-line first:border-t-0 md:border-t-0 md:[&:nth-child(n+3)]:border-t">
+<div class="flex items-center justify-between gap-2"><span class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-[#0F766E] text-white flex items-center justify-center shrink-0 font-semibold text-[12px]" role="img" aria-label="Omesh">O</span><span class="text-xs font-semibold text-ink">Omesh <span class="font-normal text-muted-ink">· Delivery expectations (Functional) · Session #11</span></span></span><span class="font-mono text-[10px] text-success-ink">Joined</span></div>
+<div class="flex items-center justify-between gap-3 py-1 pl-[36px]"><span class="min-w-0 flex items-baseline"><span class="text-xs font-medium text-ink truncate">Client-Expectations-Note.docx</span><span class="text-[10px] font-mono text-muted-ink ml-2 whitespace-nowrap">DOCX · 92 KB · 1h ago</span></span><span class="flex gap-1.5 shrink-0"><button type="button" class="px-1.5 py-1 rounded hover:bg-canvas text-[11px] font-medium text-signal-blue">Preview</button><button type="button" class="px-2 py-1 rounded bg-ink text-white text-[11px] font-medium">Download</button></span></div>
+<div class="flex items-center justify-between gap-3 py-1 pl-[36px]"><span class="min-w-0 flex items-baseline"><span class="text-xs font-medium text-ink truncate">Carry-Forward-Clarification.pdf</span><span class="text-[10px] font-mono text-muted-ink ml-2 whitespace-nowrap">PDF · 150 KB · 1h ago</span></span><span class="flex gap-1.5 shrink-0"><button type="button" class="px-1.5 py-1 rounded hover:bg-canvas text-[11px] font-medium text-signal-blue">Preview</button><button type="button" class="px-2 py-1 rounded bg-ink text-white text-[11px] font-medium">Download</button></span></div>
+</div>
+</div>
+</section>
 <!-- 2. Main Orientation Grid (Asymmetric 60/40 deliberate spatial zones) -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-stretch">
 <!-- LEFT ZONE (60% / 7 cols): Orientation & Living State -->
@@ -171,11 +319,12 @@
 <span class="material-symbols-outlined text-muted-ink text-[18px]">history_toggle_off</span>
 <h2 class="text-sm font-semibold tracking-tight text-ink">Recent Changes</h2>
 </div>
-<span class="font-mono text-xs text-muted-ink">Evidence &amp; State Mutations</span>
+<span class="font-mono text-xs text-muted-ink" id="recentMeta">0 state mutations</span>
 </div>
 <div class="divide-y divide-quiet-line flex-1">
+<p id="recentEmpty" class="py-6 text-xs text-muted-ink leading-relaxed">Nothing yet. When members talk with their agents, changes will appear here one by one.</p>
 <!-- Item 1: REQ-003 -->
-<div class="py-3.5 first:pt-0 last:pb-0 flex flex-col gap-1.5 flex-1">
+<div id="recent-override" style="display:none" class="py-3.5 first:pt-0 last:pb-0 flex flex-col gap-1.5 flex-1">
 <div class="flex items-center justify-between gap-3">
 <div class="flex items-center gap-2 flex-wrap">
 <span class="font-mono text-[11px] font-semibold text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-signal-blue/20">REQ-003</span>
@@ -186,9 +335,10 @@
 <p class="text-xs text-muted-ink pl-0 leading-relaxed">
                   Newly synthesized from active Discover session. Added exception condition to standard line-manager approval chain.
                 </p>
+<div class="recent-source"><span class="recent-source-dot"></span>Brajesh’s BA session · Roles &amp; profiles</div>
 </div>
 <!-- Item 2: Flow -->
-<div class="py-3.5 flex flex-col gap-1.5 flex-1">
+<div id="recent-workflow" style="display:none" class="py-3.5 flex flex-col gap-1.5 flex-1">
 <div class="flex items-center justify-between gap-3">
 <div class="flex items-center gap-2 flex-wrap">
 <span class="font-mono text-[11px] font-semibold text-ink bg-canvas px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-quiet-line">WORKFLOW</span>
@@ -197,24 +347,26 @@
 <span class="text-xs text-muted-ink shrink-0 font-mono">24m ago</span>
 </div>
 <p class="text-xs text-muted-ink pl-0 leading-relaxed">
-                  Routing rule injected: if employee leave exceeds statutory allowance or manager inactive for &gt;48h, route directly to Central HR Guild.
+                  Routing rule injected: if employee leave exceeds statutory allowance or manager inactive for &gt;48h, route directly to HR.
                 </p>
+<div class="recent-source"><span class="recent-source-dot"></span>Varun’s BA session · Workflows</div>
 </div>
 <!-- Item 3: ADR-002 -->
-<div class="py-3.5 flex flex-col gap-1.5 flex-1">
+<div id="recent-balances" style="display:none" class="py-3.5 flex flex-col gap-1.5 flex-1">
 <div class="flex items-center justify-between gap-3">
 <div class="flex items-center gap-2 flex-wrap">
 <span class="font-mono text-[11px] font-semibold text-success-ink bg-success-subtle px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-green-200">ADR-002</span>
-<span class="text-sm font-medium text-ink">Adopt ERP Salary Slip auto-generation on biometric cutoff</span>
+<span class="text-sm font-medium text-ink">Leave balances seeded: Casual 12 · Sick 10 · Earned 15</span>
 </div>
 <span class="text-xs text-muted-ink shrink-0 font-mono">1h ago</span>
 </div>
 <p class="text-xs text-muted-ink pl-0 leading-relaxed">
-                  Marked <strong class="text-ink font-medium">Validated</strong>. ERP standard scheduled payroll generation hook will run on 25th midnight without custom script override.
+                  Marked <strong class="text-ink font-medium">Validated</strong>. Calendar-year allocations, full-day only, Saturday/Sunday excluded, no carry-forward.
                 </p>
+<div class="recent-source"><span class="recent-source-dot"></span>Phase 1 agreement · Project Initiation</div>
 </div>
 <!-- Item 4: Q-003 -->
-<div class="py-3.5 last:pb-0 flex flex-col gap-1.5 flex-1">
+<div id="recent-question" style="display:none" class="py-3.5 last:pb-0 flex flex-col gap-1.5 flex-1">
 <div class="flex items-center justify-between gap-3">
 <div class="flex items-center gap-2 flex-wrap">
 <span class="font-mono text-[11px] font-semibold text-muted-ink bg-canvas px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-quiet-line">Q-003</span>
@@ -225,6 +377,7 @@
 <p class="text-xs text-muted-ink pl-0 leading-relaxed">
                   Clarification routed to REQ-003 (HR Override policy). Awaiting validation — state stays Under Clarification.
                 </p>
+<div class="recent-source"><span class="recent-source-dot"></span>Ankur’s BA session · Permissions</div>
 </div>
 </div>
 </section>
@@ -235,46 +388,47 @@
 <span class="material-symbols-outlined text-warn-ink text-[18px]">priority_high</span>
 <h2 class="text-sm font-semibold tracking-tight text-ink">Needs Attention</h2>
 </div>
-<span class="text-xs font-mono text-muted-ink">3 Open Items</span>
+<span class="text-xs font-mono text-muted-ink" id="needsCount">0 Open Items</span>
 </div>
 <div class="flex flex-col gap-3 flex-1">
+<p id="needsEmpty" class="py-6 text-xs text-muted-ink leading-relaxed">No conflicts yet. If members disagree with each other or with Phase 1, the conflict will appear here.</p>
 <!-- Attention 1 -->
-<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2 flex-1">
+<div data-conf="conf-01" style="display:none" class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2 flex-1">
 <div class="flex items-start justify-between gap-3">
 <div class="flex items-center gap-2">
 <span class="font-mono text-[11px] font-semibold text-warn-ink bg-warn-subtle px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-amber-200">Q-004</span>
-<span class="text-xs font-semibold text-ink">Multi-currency payroll handling for remote consultants in UAE &amp; India</span>
+<span class="text-xs font-semibold text-ink">CONF-01 · Half-day leave proposed vs agreed full-day only</span>
 </div>
-<span class="text-[11px] font-mono text-muted-ink shrink-0">Under Clarification</span>
+<span class="conf-badge text-[11px] font-mono font-semibold text-warn-ink shrink-0">Conflict</span>
 </div>
 <p class="text-xs text-muted-ink leading-relaxed">
-                  ERP multi-currency payroll requires exchange rate revaluation at disbursement date. Assigned to <strong class="text-ink font-medium">Payroll Guild</strong> for statutory ruling.
+                  Varun proposed half-day leave with his BA agent. Phase 1 agreed <strong class="text-ink font-medium">full-day only</strong>. Needs a decision before REQ-001 can validate.
                 </p>
 </div>
 <!-- Attention 2 -->
-<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2 flex-1">
+<div data-conf="conf-02" style="display:none" class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2 flex-1">
 <div class="flex items-start justify-between gap-3">
 <div class="flex items-center gap-2">
 <span class="font-mono text-[11px] font-semibold text-ink bg-white px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-quiet-line">REQ-002</span>
-<span class="text-xs font-semibold text-ink">Shift rotation grace period definition</span>
+<span class="text-xs font-semibold text-ink">CONF-02 · Manager-only approval vs HR override</span>
 </div>
-<span class="text-[11px] font-mono text-muted-ink shrink-0">Evolving</span>
+<span class="conf-badge text-[11px] font-mono font-semibold text-warn-ink shrink-0">Conflict</span>
 </div>
 <p class="text-xs text-muted-ink leading-relaxed">
-                  Needs numerical threshold confirmation from Plant Operations Lead (15m vs 30m before marking half-day absence).
+                  Ankur set <strong class="text-ink font-medium">manager-only approval</strong> in Permissions. Brajesh added an <strong class="text-ink font-medium">HR override after 48h</strong>. Approval authority must be reconciled.
                 </p>
 </div>
 <!-- Attention 3 -->
-<div class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2 flex-1">
+<div data-conf="conf-03" style="display:none" class="p-3.5 rounded border border-quiet-line bg-canvas flex flex-col gap-2 flex-1">
 <div class="flex items-start justify-between gap-3">
 <div class="flex items-center gap-2">
 <span class="font-mono text-[11px] font-semibold text-ink bg-white px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-quiet-line">DEPENDENCY</span>
-<span class="text-xs font-semibold text-ink">ERP v15 custom doctype hooks verification</span>
+<span class="text-xs font-semibold text-ink">CONF-03 · Earned Leave carry-forward expected vs agreed none</span>
 </div>
-<span class="text-[11px] font-mono text-muted-ink shrink-0">Under Clarification</span>
+<span class="conf-badge text-[11px] font-mono font-semibold text-warn-ink shrink-0">Conflict</span>
 </div>
 <p class="text-xs text-muted-ink leading-relaxed">
-                  Verify if migration will rely on core hooks or custom app overlay for Saudi &amp; UAE end-of-service gratuity calculations.
+                  Omesh recorded a client expectation to carry forward unused Earned Leave. Phase 1 agreed <strong class="text-ink font-medium">no carry-forward</strong>. Flagged for client confirmation.
                 </p>
 </div>
 </div>
@@ -294,32 +448,32 @@
 <div class="flex flex-col gap-2">
 <div class="text-xs uppercase font-mono tracking-wider text-muted-ink font-medium">Domain Active</div>
 <div class="text-sm font-semibold text-ink">
-                BA Agent ready in <span class="text-signal-blue">Leave &amp; Attendance Domain</span>
+                BA Agent ready in <span class="text-signal-blue">Leave Management Domain</span>
 </div>
 <div class="p-3 rounded bg-canvas border border-quiet-line mt-1">
 <div class="text-[11px] font-mono text-muted-ink mb-1">Last query context:</div>
 <p class="text-xs text-ink leading-relaxed">
-                  "Reviewing attendance deduction rules against statutory leave quotas and HR manager override exceptions."
+                  "Four members are live with their agents. Three conflicts are open: half-day leave, approval authority, and Earned Leave carry-forward."
                 </p>
 </div>
 </div>
 <!-- Action Button (42px tactile Signal Blue) -->
-<a class="h-[42px] px-4 rounded bg-signal-blue hover:bg-signal-blue-hover text-white text-xs font-medium tracking-tight flex items-center justify-center gap-2 transition-all shadow-sm" href="../discover_living_project_workspace/index.html">
-<span>Resume Discovery Session</span>
+<a class="h-[42px] px-4 rounded bg-signal-blue hover:bg-signal-blue-hover text-white text-xs font-medium tracking-tight flex items-center justify-center gap-2 transition-all shadow-sm" href="../conflict_chat_room/index.html" target="_blank" rel="noopener" id="solveBtn" style="opacity:.45;pointer-events:none">
+<span>Solve Conflicts</span>
 <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
 </a>
 <!-- Quick prompt chips -->
 <div class="flex flex-col gap-2 pt-1 border-t border-quiet-line">
 <span class="text-[11px] font-mono text-muted-ink">Quick Inquiries to Dispatch:</span>
 <div class="grid grid-cols-1 2xl:grid-cols-2 gap-1.5">
-<button class="w-full text-left px-3 py-2 rounded bg-canvas hover:bg-white hover:border-deep-line border border-quiet-line text-xs text-ink transition-colors flex items-center justify-between group">
-<span class="truncate">Review ERP Overtime Rules</span>
+<a href="../conflict_chat_room/index.html#conf-02" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded bg-canvas hover:bg-white hover:border-deep-line border border-quiet-line text-xs text-ink transition-colors flex items-center justify-between group">
+<span class="truncate">Resolve CONF-02 approval authority</span>
 <span class="material-symbols-outlined text-[14px] text-muted-ink group-hover:text-signal-blue group-hover:translate-x-0.5 transition-all">chevron_right</span>
-</button>
-<button class="w-full text-left px-3 py-2 rounded bg-canvas hover:bg-white hover:border-deep-line border border-quiet-line text-xs text-ink transition-colors flex items-center justify-between group">
-<span class="truncate">Verify Tax Slab Mapping (India &amp; UAE)</span>
+</a>
+<a href="../conflict_chat_room/index.html#conf-01" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded bg-canvas hover:bg-white hover:border-deep-line border border-quiet-line text-xs text-ink transition-colors flex items-center justify-between group">
+<span class="truncate">Decide CONF-01 half-day leave</span>
 <span class="material-symbols-outlined text-[14px] text-muted-ink group-hover:text-signal-blue group-hover:translate-x-0.5 transition-all">chevron_right</span>
-</button>
+</a>
 </div>
 </div>
 </section>
@@ -331,11 +485,11 @@
 <span class="material-symbols-outlined text-muted-ink text-[17px] shrink-0">group_add</span>
 <div class="min-w-0">
 <h2 class="text-sm font-semibold tracking-tight text-ink leading-tight">Invite People</h2>
-<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">HR-TRANS-2025 · Leave &amp; Attendance</p>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">LEAVEFLOW-2026 · Leave Management</p>
 </div>
 </div>
 <div class="flex items-center gap-1.5 shrink-0" title="3 of 5 seats used">
-<span class="text-[10px] font-mono text-muted-ink">3 / 5</span>
+<span class="text-[10px] font-mono text-muted-ink">4 / 5</span>
 <div class="flex items-center gap-0.5">
 <span class="w-3 h-1.5 rounded-full bg-signal-blue"></span>
 <span class="w-3 h-1.5 rounded-full bg-signal-blue"></span>
@@ -349,7 +503,7 @@
 <div class="px-6 py-3 flex flex-col flex-1">
 <div class="flex items-center justify-between pb-2 mb-1">
 <span class="text-[10px] uppercase font-mono tracking-wider text-muted-ink font-medium">Active collaborators</span>
-<span class="text-[10px] font-mono text-muted-ink">1 pending</span>
+<span class="text-[10px] font-mono text-muted-ink">4 live with agents</span></div><div id="ws-invited"></div><div>
 </div>
 <!-- Varun -->
 <div class="flex items-center gap-2.5 py-2 border-b border-quiet-line flex-1">
@@ -381,7 +535,7 @@
 Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 </a>
 </div>
-<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">Lead Architect / PM · Session #14</p>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">Workflows (Functional) · Session #14</p>
 </div>
 </div>
 <!-- Ankur -->
@@ -409,7 +563,7 @@ Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 </a>
 </div>
-<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">HR Operations Lead · Session #12</p>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">Permissions (Technical) · Session #12</p>
 </div>
 </div>
 <!-- Brajesh -->
@@ -437,20 +591,18 @@ Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 </a>
 </div>
-<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">ERP Solutions Eng · Session #09</p>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">Roles &amp; profiles (Functional) · Session #09</p>
 </div>
 </div>
 <!-- Pending -->
 <div class="flex items-center gap-2.5 py-2 flex-1">
-<div class="w-8 h-8 rounded-full border border-dashed border-line flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[14px] text-ink-subtle">person_add</span>
-</div>
+<div class="w-8 h-8 rounded-full bg-[#0F766E] text-white flex items-center justify-center shrink-0 font-semibold text-[13px]" role="img" aria-label="Omesh">O</div>
 <div class="min-w-0 flex-1">
 <div class="flex items-center justify-between gap-2">
-<span class="text-xs font-medium text-ink-muted truncate">Invitation pending</span>
-<span class="text-[9px] font-mono text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200 shrink-0">Pending</span>
+<span class="text-xs font-semibold text-ink truncate">Omesh</span>
+<span class="text-[9px] font-mono text-valid bg-valid-bg px-1.5 py-0.5 rounded border border-green-200 shrink-0">Live</span>
 </div>
-<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">Sent 2h ago · expires in 22h</p>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">Delivery expectations (Functional) · Session #11</p>
 </div>
 </div>
 </div>
@@ -495,152 +647,8 @@ Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 </section>
 </div>
 </div>
-<!-- 3. Latest Canonical State (summary mirrored from State tab) -->
-<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-quiet-line pb-3.5">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-muted-ink text-[18px]">hub</span>
-<h2 class="text-sm font-semibold tracking-tight text-ink">Latest Canonical State</h2>
-<span class="text-xs font-mono text-muted-ink">Graph sync: <strong class="text-ink font-medium">121 nodes active</strong></span>
-</div>
-<a href="../state_living_project_workspace/index.html" class="group inline-flex items-center gap-1 text-xs font-medium text-signal-blue hover:text-signal-blue-hover transition-colors shrink-0">
-<span>Open State tab</span>
-<span class="material-symbols-outlined text-[15px] group-hover:translate-x-0.5 transition-transform">arrow_outward</span>
-</a>
-</div>
-<!-- Status tally -->
-<div class="flex flex-wrap items-center gap-2 text-[11px] font-mono">
-<span class="text-muted-ink">7 canonical statements</span>
-<span class="w-px h-3 bg-quiet-line"></span>
-<span class="px-2 py-0.5 rounded border border-green-200 bg-success-subtle text-success-ink">3 Validated</span>
-<span class="px-2 py-0.5 rounded border border-amber-200 bg-warn-subtle text-warn-ink">2 Evolving</span>
-<span class="px-2 py-0.5 rounded border border-signal-blue/20 bg-signal-blue-subtle text-signal-blue">1 Proposed / New</span>
-<span class="px-2 py-0.5 rounded border border-quiet-line bg-canvas text-muted-ink">1 Under Clarification</span>
-</div>
-<!-- Canonical state key -->
-<div class="flex flex-wrap items-center gap-x-4 gap-y-2 pt-3 border-t border-quiet-line text-[11px]">
-<span class="text-ink font-medium shrink-0">State key:</span>
-<span class="flex items-center gap-1.5"><span class="px-2 py-0.5 rounded border border-signal-blue/20 bg-signal-blue-subtle text-signal-blue font-mono text-[10px] font-semibold uppercase tracking-wide">Proposed / New</span><span class="text-muted-ink">synthesized · first review pending</span></span>
-<span class="flex items-center gap-1.5"><span class="px-2 py-0.5 rounded border border-amber-200 bg-warn-subtle text-warn-ink font-mono text-[10px] font-semibold uppercase tracking-wide">Evolving</span><span class="text-muted-ink">under active discovery · still changing</span></span>
-<span class="flex items-center gap-1.5"><span class="px-2 py-0.5 rounded border border-quiet-line bg-canvas text-muted-ink font-mono text-[10px] font-semibold uppercase tracking-wide">Under Clarification</span><span class="text-muted-ink">blocked on an open question</span></span>
-<span class="flex items-center gap-1.5"><span class="px-2 py-0.5 rounded border border-green-200 bg-success-subtle text-success-ink font-mono text-[10px] font-semibold uppercase tracking-wide">Validated</span><span class="text-muted-ink">confirmed by evidence · locked</span></span>
-</div>
-<!-- Latest entries -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-<a href="../state_living_project_workspace/index.html" class="p-3.5 rounded border border-quiet-line bg-canvas hover:border-deep-line hover:bg-white transition-colors flex flex-col gap-1.5">
-<div class="flex items-center justify-between gap-2">
-<span class="font-mono text-[11px] font-semibold text-signal-blue">REQ-003</span>
-<span class="font-mono text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded bg-signal-blue-subtle text-signal-blue border border-signal-blue/20 shrink-0">Proposed / New</span>
-</div>
-<span class="text-xs font-semibold text-ink leading-snug">HR can override manager approval in specific cases</span>
-<span class="text-[10px] font-mono text-muted-ink">Active in Inspector · Session #14</span>
-</a>
-<a href="../state_living_project_workspace/index.html" class="p-3.5 rounded border border-quiet-line bg-canvas hover:border-deep-line hover:bg-white transition-colors flex flex-col gap-1.5">
-<div class="flex items-center justify-between gap-2">
-<span class="font-mono text-[11px] font-semibold text-warn-ink">REQ-002</span>
-<span class="font-mono text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded bg-warn-subtle text-warn-ink border border-amber-200 shrink-0">Evolving</span>
-</div>
-<span class="text-xs font-semibold text-ink leading-snug">Managers can approve or reject leave requests</span>
-<span class="text-[10px] font-mono text-muted-ink">Linked to Q-003 · ERP Standard Flow</span>
-</a>
-<a href="../state_living_project_workspace/index.html" class="p-3.5 rounded border border-quiet-line bg-canvas hover:border-deep-line hover:bg-white transition-colors flex flex-col gap-1.5">
-<div class="flex items-center justify-between gap-2">
-<span class="font-mono text-[11px] font-semibold text-ink">Q-003</span>
-<span class="font-mono text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded bg-canvas text-muted-ink border border-quiet-line shrink-0">Under Clarification</span>
-</div>
-<span class="text-xs font-semibold text-ink leading-snug">Who approves when the manager is unavailable?</span>
-<span class="text-[10px] font-mono text-muted-ink">Clarification proposed in REQ-003</span>
-</a>
-</div>
-</section>
-<!-- 4. Current Project Scope Snapshot (ERP Modules under active discovery) -->
-<section class="bg-surface rounded-lg border border-quiet-line p-6 flex flex-col gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-quiet-line pb-3.5">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-muted-ink text-[18px]">view_module</span>
-<h2 class="text-sm font-semibold tracking-tight text-ink">ERP Module Scope</h2>
-</div>
-<span class="text-xs font-mono text-muted-ink">Target Version: ERP v15 (Self-Hosted on ERP Cloud)</span>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-<!-- Module 1 -->
-<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between">
-<span class="text-xs font-semibold text-ink">Employee Lifecycle</span>
-<span class="font-mono text-[10px] text-success-ink bg-success-subtle px-1.5 py-0.5 rounded border border-green-200">Validated</span>
-</div>
-<p class="text-xs text-muted-ink mt-1">
-                Onboarding, staff designations, department branches &amp; exit handoffs.
-              </p>
-</div>
-<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">
-              Phase: Baseline Locked
-            </div>
-<div class="flex items-center gap-2">
-<div class="flex items-center -space-x-1.5"><span class="w-5 h-5 rounded-full ring-2 ring-canvas overflow-hidden block shrink-0" title="Ankur · HR Operations Lead" role="img" aria-label="Ankur"><svg viewBox="0 0 48 48" class="w-full h-full rounded-full block" role="img" aria-label="Ankur"> <circle cx="24" cy="24" r="24" fill="#FFFBEB"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#B45309"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#B87B4E"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#C98F62"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#C98F62"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#C98F62"></ellipse> <path d="M13.2 21.6c-.7-7.4 4.4-12.2 10.8-12.2s11.5 4.8 10.8 12.2c-1-1.6-1.9-4-2.4-5.9-1.6 1-4 1.6-7.6 1.6-4.6 0-7.6-1-9.6-2.7-.8 1.3-1.4 3.3-2 7z" fill="#1B1917"></path> <path d="M17.6 26.4c1.4 3.4 3.7 5.1 6.4 5.1s5-1.7 6.4-5.1c-1.7 1.5-3.9 2.2-6.4 2.2s-4.7-.7-6.4-2.2z" fill="#1B1917"></path> <path d="M18.4 18.6h3.5M26.1 18.6h3.5" stroke="#1B1917" stroke-width="1.4" stroke-linecap="round" fill="none"></path> <circle cx="20.3" cy="21.5" r="1.4" fill="#1B1917"></circle> <circle cx="27.7" cy="21.5" r="1.4" fill="#1B1917"></circle> </svg></span><span class="w-5 h-5 rounded-full ring-2 ring-canvas overflow-hidden block shrink-0" title="Brajesh · ERP Engineer" role="img" aria-label="Brajesh"><svg viewBox="0 0 48 48" class="w-full h-full rounded-full block" role="img" aria-label="Brajesh"> <circle cx="24" cy="24" r="24" fill="#F4F4F5"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#27272A"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse> <path d="M13.3 21c-.5-7.3 4.4-11.6 10.7-11.6s11.2 4.3 10.7 11.6c-.9-4-2.3-5.6-4.1-6.3-2 1.2-4.4 1.6-7 1.6-3.1 0-5.6-.5-7.6-1.7-1.3.8-2.1 2.6-2.7 6.4z" fill="#3F3F46"></path> <circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle> <circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle> <path d="M18.4 18.5h3.4M26.2 18.5h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path> <path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path> </svg></span></div>
-<span class="text-[10px] font-mono text-muted-ink">2 on this module</span>
-</div>
-</div>
-<!-- Module 2 -->
-<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between">
-<span class="text-xs font-semibold text-ink">Leave &amp; Attendance</span>
-<span class="font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Evolving</span>
-</div>
-<p class="text-xs text-muted-ink mt-1">
-                Biometric punch capture, manager approval exception path &amp; compensatory off.
-              </p>
-</div>
-<div class="text-[11px] font-mono text-signal-blue border-t border-quiet-line pt-2 font-medium">
-              Phase: Active Discovery Session
-            </div>
-<div class="flex items-center gap-2">
-<div class="flex items-center -space-x-1.5"><span class="w-5 h-5 rounded-full ring-2 ring-canvas overflow-hidden block shrink-0" title="Varun · Lead Architect / PM" role="img" aria-label="Varun"><svg viewBox="0 0 48 48" class="w-full h-full rounded-full block" role="img" aria-label="Varun"> <circle cx="24" cy="24" r="24" fill="#EFF4FE"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#356AE6"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse> <path d="M13.3 21.2C12.8 14 17.7 9.4 24 9.4s11.2 4.6 10.7 11.8c-.4-2.6-1.3-4.1-2.6-5.1-2.3 1.9-5.5 2.9-9.4 2.9-3.2 0-5.8-.7-7.4-1.7-1.2 1-1.8 2.4-2 3.9z" fill="#2E2A26"></path> <circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle> <circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle> <path d="M18.4 18.4h3.4M26.2 18.4h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path> <path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path> <g stroke="#18181B" stroke-width="1.1" fill="none"> <circle cx="20.3" cy="21.4" r="3.6"></circle> <circle cx="27.7" cy="21.4" r="3.6"></circle> <path d="M23.9 21.4h.2M16.7 21.2h-3.2M31.3 21.2h3.2" stroke-linecap="round"></path> </g> </svg></span><span class="w-5 h-5 rounded-full ring-2 ring-canvas overflow-hidden block shrink-0" title="Ankur · HR Operations Lead" role="img" aria-label="Ankur"><svg viewBox="0 0 48 48" class="w-full h-full rounded-full block" role="img" aria-label="Ankur"> <circle cx="24" cy="24" r="24" fill="#FFFBEB"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#B45309"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#B87B4E"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#C98F62"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#C98F62"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#C98F62"></ellipse> <path d="M13.2 21.6c-.7-7.4 4.4-12.2 10.8-12.2s11.5 4.8 10.8 12.2c-1-1.6-1.9-4-2.4-5.9-1.6 1-4 1.6-7.6 1.6-4.6 0-7.6-1-9.6-2.7-.8 1.3-1.4 3.3-2 7z" fill="#1B1917"></path> <path d="M17.6 26.4c1.4 3.4 3.7 5.1 6.4 5.1s5-1.7 6.4-5.1c-1.7 1.5-3.9 2.2-6.4 2.2s-4.7-.7-6.4-2.2z" fill="#1B1917"></path> <path d="M18.4 18.6h3.5M26.1 18.6h3.5" stroke="#1B1917" stroke-width="1.4" stroke-linecap="round" fill="none"></path> <circle cx="20.3" cy="21.5" r="1.4" fill="#1B1917"></circle> <circle cx="27.7" cy="21.5" r="1.4" fill="#1B1917"></circle> </svg></span><span class="w-5 h-5 rounded-full ring-2 ring-canvas overflow-hidden block shrink-0" title="Brajesh · ERP Engineer" role="img" aria-label="Brajesh"><svg viewBox="0 0 48 48" class="w-full h-full rounded-full block" role="img" aria-label="Brajesh"> <circle cx="24" cy="24" r="24" fill="#F4F4F5"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#27272A"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse> <path d="M13.3 21c-.5-7.3 4.4-11.6 10.7-11.6s11.2 4.3 10.7 11.6c-.9-4-2.3-5.6-4.1-6.3-2 1.2-4.4 1.6-7 1.6-3.1 0-5.6-.5-7.6-1.7-1.3.8-2.1 2.6-2.7 6.4z" fill="#3F3F46"></path> <circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle> <circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle> <path d="M18.4 18.5h3.4M26.2 18.5h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path> <path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path> </svg></span></div>
-<span class="text-[10px] font-mono text-muted-ink">3 live sessions</span>
-</div>
-</div>
-<!-- Module 3 -->
-<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between">
-<span class="text-xs font-semibold text-ink">Payroll Processing</span>
-<span class="font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200">Evolving</span>
-</div>
-<p class="text-xs text-muted-ink mt-1">
-                Salary structures, multi-currency consultant fees &amp; statutory tax deductions.
-              </p>
-</div>
-<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">
-              Phase: Gathering Entities
-            </div>
-<div class="flex items-center gap-2">
-<div class="flex items-center -space-x-1.5"><span class="w-5 h-5 rounded-full ring-2 ring-canvas overflow-hidden block shrink-0" title="Ankur · HR Operations Lead" role="img" aria-label="Ankur"><svg viewBox="0 0 48 48" class="w-full h-full rounded-full block" role="img" aria-label="Ankur"> <circle cx="24" cy="24" r="24" fill="#FFFBEB"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#B45309"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#B87B4E"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#C98F62"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#C98F62"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#C98F62"></ellipse> <path d="M13.2 21.6c-.7-7.4 4.4-12.2 10.8-12.2s11.5 4.8 10.8 12.2c-1-1.6-1.9-4-2.4-5.9-1.6 1-4 1.6-7.6 1.6-4.6 0-7.6-1-9.6-2.7-.8 1.3-1.4 3.3-2 7z" fill="#1B1917"></path> <path d="M17.6 26.4c1.4 3.4 3.7 5.1 6.4 5.1s5-1.7 6.4-5.1c-1.7 1.5-3.9 2.2-6.4 2.2s-4.7-.7-6.4-2.2z" fill="#1B1917"></path> <path d="M18.4 18.6h3.5M26.1 18.6h3.5" stroke="#1B1917" stroke-width="1.4" stroke-linecap="round" fill="none"></path> <circle cx="20.3" cy="21.5" r="1.4" fill="#1B1917"></circle> <circle cx="27.7" cy="21.5" r="1.4" fill="#1B1917"></circle> </svg></span><span class="w-5 h-5 rounded-full ring-2 ring-canvas overflow-hidden block shrink-0" title="Brajesh · ERP Engineer" role="img" aria-label="Brajesh"><svg viewBox="0 0 48 48" class="w-full h-full rounded-full block" role="img" aria-label="Brajesh"> <circle cx="24" cy="24" r="24" fill="#F4F4F5"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#27272A"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse> <path d="M13.3 21c-.5-7.3 4.4-11.6 10.7-11.6s11.2 4.3 10.7 11.6c-.9-4-2.3-5.6-4.1-6.3-2 1.2-4.4 1.6-7 1.6-3.1 0-5.6-.5-7.6-1.7-1.3.8-2.1 2.6-2.7 6.4z" fill="#3F3F46"></path> <circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle> <circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle> <path d="M18.4 18.5h3.4M26.2 18.5h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path> <path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path> </svg></span></div>
-<span class="text-[10px] font-mono text-muted-ink">2 on this module</span>
-</div>
-</div>
-<!-- Module 4 -->
-<div class="p-4 rounded border border-quiet-line bg-canvas flex flex-col justify-between gap-3">
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between">
-<span class="text-xs font-semibold text-ink">Performance &amp; Appraisal</span>
-<span class="font-mono text-[10px] text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 rounded border border-signal-blue/20">Proposed / New</span>
-</div>
-<p class="text-xs text-muted-ink mt-1">
-                KRA definitions, 360-degree cycles &amp; manager rating matrices.
-              </p>
-</div>
-<div class="text-[11px] font-mono text-muted-ink border-t border-quiet-line pt-2">
-Phase: Phase 2 Scope
-                </div>
-<div class="flex items-center gap-2">
-<div class="flex items-center -space-x-1.5"><span class="w-5 h-5 rounded-full ring-2 ring-canvas overflow-hidden block shrink-0" title="Varun · Lead Architect / PM" role="img" aria-label="Varun"><svg viewBox="0 0 48 48" class="w-full h-full rounded-full block" role="img" aria-label="Varun"> <circle cx="24" cy="24" r="24" fill="#EFF4FE"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#356AE6"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse> <path d="M13.3 21.2C12.8 14 17.7 9.4 24 9.4s11.2 4.6 10.7 11.8c-.4-2.6-1.3-4.1-2.6-5.1-2.3 1.9-5.5 2.9-9.4 2.9-3.2 0-5.8-.7-7.4-1.7-1.2 1-1.8 2.4-2 3.9z" fill="#2E2A26"></path> <circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle> <circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle> <path d="M18.4 18.4h3.4M26.2 18.4h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path> <path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path> <g stroke="#18181B" stroke-width="1.1" fill="none"> <circle cx="20.3" cy="21.4" r="3.6"></circle> <circle cx="27.7" cy="21.4" r="3.6"></circle> <path d="M23.9 21.4h.2M16.7 21.2h-3.2M31.3 21.2h3.2" stroke-linecap="round"></path> </g> </svg></span></div>
-<span class="text-[10px] font-mono text-muted-ink">owner only</span>
-</div>
-</div>
-</div>
-</section>
+
+
 </div>
 </main>
 <!-- Calm Minimal Footer -->
@@ -712,6 +720,86 @@ text.className = on ? TEXT_ON : TEXT;
       }, 2400);
     }, 600 * rows.length + 500);
   });
+})();
+</script>
+
+<script>
+(()=>{const q=new URLSearchParams(location.search);const p=q.get('project');
+if(p)document.querySelectorAll('[data-project]').forEach(e=>{e.textContent=p;});
+document.querySelectorAll('a[href*="living_project_workspace/index.html"]').forEach(a=>{if(!a.search)a.search=location.search;});
+try{const inv=JSON.parse(q.get('invites')||'{}');
+const dim={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+const rows=Object.entries(inv).flatMap(([d,ms])=>(ms||[]).map(m=>`<div style="display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>${m}</span><span style="color:#666">${dim[d]||d} · invited</span></div>`));
+const el=document.getElementById('ws-invited');
+if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin:8px 0 2px">Invited in Project Team</div>`+rows.join('');
+}catch(e){}})();
+</script>
+
+<script>
+(()=>{ 
+ const $=id=>document.getElementById(id);
+ const q=new URLSearchParams(location.search);
+ if(q.get('fresh')==='1'){try{localStorage.removeItem('leaveflow_decisions');sessionStorage.removeItem('ws_seq_done');}catch(e){}}
+ const doneSeq = sessionStorage.getItem('ws_seq_done')==='1';
+ const recentIds=['recent-balances','recent-workflow','recent-override','recent-question'];
+ const confIds=['conf-01','conf-02','conf-03'];
+ let recentShown=0, confShown=0;
+ const members=['Varun','Ankur','Brajesh','Omesh'];
+ $('discSessions').innerHTML=members.map((m,i)=>`<span data-member="${i}" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#71717A;border:1px solid #E4E4E7;border-radius:999px;padding:5px 10px"><span class="mdot" style="width:7px;height:7px;border-radius:50%;background:#D4D4D8"></span>${m} · with agent</span>`).join('');
+ let litCount=0;
+function lightMember(i){const el=document.querySelector(`[data-member="${i}"] .mdot`); if(el&&el.dataset.lit!=='1'){el.dataset.lit='1'; el.style.background='#1F9D55'; litCount++; const n=Math.min(litCount,3); const ls=$('leaveSessions'); if(ls) ls.textContent=`${n} live session${n===1?'':'s'}`;}}
+const STAGES=[{total:2,V:2,E:0,P:0,U:0,nodes:38},{total:4,V:2,E:2,P:0,U:0,nodes:74},{total:6,V:3,E:2,P:1,U:0,nodes:103},{total:7,V:3,E:2,P:1,U:1,nodes:121}];
+function showStmt(id){const el=$(id); if(el&&el.style.display==='none'){el.style.display=''; el.classList.add('seq-in');} const e=$('stmtEmpty'); if(e) e.style.display='none';}
+function applyStage(i){const s=STAGES[i]; if(!s) return;
+ const gn=$('graphNodes'); if(gn) gn.textContent=`${s.nodes} nodes active`;
+ if(i>=1){ showStmt('stmt-req002'); const lp=$('leavePhase'); if(lp) lp.textContent='Phase: Active Discovery Session'; }
+ if(i>=2) showStmt('stmt-req003');
+ if(i>=3) showStmt('stmt-q003');
+}
+ function decisions(){ try{return JSON.parse(localStorage.getItem('leaveflow_decisions')||'{}');}catch(e){return{};} }
+ function applyDecisions(){
+   const d=decisions(); let resolved=0;
+   confIds.forEach(cid=>{
+     const card=document.querySelector(`[data-conf="${cid}"]`); if(!card||card.style.display==='none') return;
+     const badge=card.querySelector('.conf-badge');
+     if(d[cid]){ resolved++;
+       if(badge){badge.textContent='Resolved'; badge.style.color='#177245';}
+       card.style.borderColor='#BFE6CC'; card.style.background='#F4FBF6';
+       if(!card.querySelector('.decision-line')){const p=document.createElement('p'); p.className='decision-line'; p.style.cssText='font-size:11.5px;color:#177245'; p.textContent='Decision: '+d[cid]; card.appendChild(p);}
+     } else if(badge){ badge.textContent='Conflict'; badge.style.color=''; }
+   });
+   const open=confShown-resolved;
+   $('needsCount').textContent = confShown===0 ? '0 Open Items' : open===0 ? 'All resolved' : `${open} Open Item${open===1?'':'s'}`;
+   return resolved;
+ }
+ function reveal(id,isConf,animate){
+   const el=$(id)||document.querySelector(`[data-conf="${id}"]`); if(!el||el.style.display!=='none') return;
+   el.style.display=''; if(animate!==false) el.classList.add('seq-in');
+   if(isConf){confShown++; $('needsEmpty').style.display='none';} else {recentShown++; $('recentEmpty').style.display='none';}
+   $('recentMeta').textContent=`${recentShown} state mutation${recentShown===1?'':'s'}`;
+   applyDecisions();
+ }
+ function finishDiscovery(){
+   const dot=$('discDot'); dot.style.animation='none'; dot.style.background='#1F9D55';
+   $('discTitle').textContent='Discovery complete';
+   const open=confShown-applyDecisions();
+   $('discText').textContent= open>0 ? `${confShown} conflicts need your decisions. Solve them with your BA agent.` : 'No open conflicts. The project model is consistent.';
+   const btn=$('solveBtn'); if(btn){btn.style.opacity=''; btn.style.pointerEvents='';}
+   try{sessionStorage.setItem('ws_seq_done','1');}catch(e){}
+ }
+ const plan=[ [1800,()=>{lightMember(0); reveal('recent-balances',false); applyStage(0);}],
+   [4000,()=>{lightMember(1); reveal('recent-workflow',false); applyStage(1);}],
+   [6200,()=>{lightMember(2); reveal('recent-override',false); reveal('conf-02',true); applyStage(2);}],
+   [8400,()=>{ reveal('conf-01',true);}],
+   [10400,()=>{lightMember(3); reveal('recent-question',false); reveal('conf-03',true); applyStage(3);}],
+   [12200,finishDiscovery] ];
+ if(doneSeq){
+   members.forEach((_,i)=>lightMember(i));
+   recentIds.forEach(id=>reveal(id,false,false)); confIds.forEach(id=>reveal(id,true,false)); applyStage(3); ['stmt-req002','stmt-req003','stmt-q003'].forEach(id=>{const el=$(id); if(el){el.style.display='';}}); const le=$('stmtEmpty'); if(le) le.style.display='none';
+   finishDiscovery();
+ } else { plan.forEach(([t,fn])=>setTimeout(fn,t)); }
+ window.addEventListener('focus',applyDecisions);
+ window.addEventListener('storage',e=>{if(e.key==='leaveflow_decisions') applyDecisions();});
 })();
 </script>
 </body>

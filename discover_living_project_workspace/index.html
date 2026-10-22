@@ -76,17 +76,16 @@
 </div>
 <span class="text-line text-[14px]">/</span>
 <div class="flex items-center gap-2 group cursor-pointer">
-<span class="text-[13px] font-medium text-ink">HR Transformation</span>
-<span class="text-[12px] text-ink-muted font-normal">(ERP &amp; Payroll implementation)</span>
+<span class="text-[13px] font-medium text-ink" data-project>LeaveFlow</span>
+<span class="text-[12px] text-ink-muted font-normal">(Leave Management System)</span>
 <span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
 </div>
 </div>
 <!-- App Tabs -->
-<a href="../layer%201%20/consultant_dashboard_work_simplified/code.html" class="inline-flex items-center gap-1 px-2 py-1.5 rounded text-[12px] font-medium text-ink-muted hover:text-ink hover:bg-canvas transition-colors" aria-label="Return to Research Dashboard"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_back</span><span>Research Dashboard</span></a>
+<a href="http://127.0.0.1:3000/portal" class="inline-flex items-center gap-1 px-2 py-1.5 rounded text-[12px] font-medium text-ink-muted hover:text-ink hover:bg-canvas transition-colors" aria-label="Back to Project Team"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_back</span><span>Project Team</span></a>
 <nav class="hidden md:flex items-center gap-1 text-[13px]">
 <a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../cockpit_living_project_workspace/index.html">Cockpit</a>
 <a class="px-3 py-1.5 rounded font-semibold text-ink bg-canvas border border-line text-[13px]" href="index.html">Discover</a>
-<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../map_living_project_workspace/index.html">Map</a>
 <a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../state_living_project_workspace/index.html">State</a>
 <a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../outputs_living_project_workspace/index.html">Outputs</a>
 </nav>
@@ -109,17 +108,17 @@
 <!-- Subheader / Context Strip -->
 <div class="bg-surface border-b border-line px-6 py-2.5 flex items-center justify-between">
 <div class="flex items-center gap-2 text-[12px]">
-<span class="text-ink-muted">HR Transformation</span>
+<span class="text-ink-muted">LeaveFlow</span>
 <span class="text-ink-subtle">/</span>
-<span class="text-ink-muted">ERP &amp; Payroll</span>
+<span class="text-ink-muted">Leave Management</span>
 <span class="text-ink-subtle">/</span>
-<a href="../discover_living_project_workspace/index.html" class="font-medium text-ink hover:text-signal hover:underline underline-offset-2 decoration-line transition-colors">Leave &amp; Attendance Domain</a>
+<a href="../discover_living_project_workspace/index.html" class="font-medium text-ink hover:text-signal hover:underline underline-offset-2 decoration-line transition-colors">Leave Management Domain</a>
 <span class="text-ink-subtle">/</span>
-<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-line bg-canvas text-[11px] font-mono text-ink"><span class="w-1.5 h-1.5 rounded-full bg-signal animate-pulse"></span>3 Live BA Agent Sessions</span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-line bg-canvas text-[11px] font-mono text-ink"><span class="w-1.5 h-1.5 rounded-full bg-signal animate-pulse"></span><span><span id="sessCount">0</span> Live BA Agent Sessions</span></span>
 </div>
 <div class="flex items-center gap-3">
 <span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
-<span class="hidden lg:inline text-[11px] font-mono text-ink-muted">0 conflicts · reconciling live</span>
+<span id="confCount" class="hidden lg:inline text-[11px] font-mono text-ink-muted">3 conflicts · decisions needed</span>
 <div class="flex items-center -space-x-1.5">
 <span class="w-5 h-5 rounded-full ring-2 ring-surface overflow-hidden block shrink-0"><svg viewBox="0 0 48 48" class="w-full h-full rounded-full block" role="img" aria-label="Varun"> <circle cx="24" cy="24" r="24" fill="#EFF4FE"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#356AE6"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse> <path d="M13.3 21.2C12.8 14 17.7 9.4 24 9.4s11.2 4.6 10.7 11.8c-.4-2.6-1.3-4.1-2.6-5.1-2.3 1.9-5.5 2.9-9.4 2.9-3.2 0-5.8-.7-7.4-1.7-1.2 1-1.8 2.4-2 3.9z" fill="#2E2A26"></path> <circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle> <circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle> <path d="M18.4 18.4h3.4M26.2 18.4h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path> <path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path> <g stroke="#18181B" stroke-width="1.1" fill="none"> <circle cx="20.3" cy="21.4" r="3.6"></circle> <circle cx="27.7" cy="21.4" r="3.6"></circle> <path d="M23.9 21.4h.2M16.7 21.2h-3.2M31.3 21.2h3.2" stroke-linecap="round"></path> </g> </svg></span>
 <span class="w-5 h-5 rounded-full ring-2 ring-surface overflow-hidden block shrink-0"><svg viewBox="0 0 48 48" class="w-full h-full rounded-full block" role="img" aria-label="Ankur"> <circle cx="24" cy="24" r="24" fill="#FFFBEB"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#B45309"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#B87B4E"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#C98F62"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#C98F62"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#C98F62"></ellipse> <path d="M13.2 21.6c-.7-7.4 4.4-12.2 10.8-12.2s11.5 4.8 10.8 12.2c-1-1.6-1.9-4-2.4-5.9-1.6 1-4 1.6-7.6 1.6-4.6 0-7.6-1-9.6-2.7-.8 1.3-1.4 3.3-2 7z" fill="#1B1917"></path> <path d="M17.6 26.4c1.4 3.4 3.7 5.1 6.4 5.1s5-1.7 6.4-5.1c-1.7 1.5-3.9 2.2-6.4 2.2s-4.7-.7-6.4-2.2z" fill="#1B1917"></path> <path d="M18.4 18.6h3.5M26.1 18.6h3.5" stroke="#1B1917" stroke-width="1.4" stroke-linecap="round" fill="none"></path> <circle cx="20.3" cy="21.5" r="1.4" fill="#1B1917"></circle> <circle cx="27.7" cy="21.5" r="1.4" fill="#1B1917"></circle> </svg></span>
@@ -134,17 +133,22 @@
 </div>
 </div>
 <!-- Main Split Workbench Container -->
+<div id="discTicker" style="display:flex;align-items:center;gap:10px;margin:10px 12px 0;background:#fff;border:1px solid #E4E4E7;border-radius:9px;padding:10px 14px">
+<span id="discDot" style="width:8px;height:8px;border-radius:50%;background:#356AE6;flex-shrink:0;animation:discPulse 1.4s ease-in-out infinite"></span>
+<strong style="font-size:12px">Discovery</strong><span id="discText" style="font-size:12px;color:#71717A">Starting discovery… members are joining their BA sessions.</span></div>
+<style>@keyframes discPulse{0%,100%{opacity:1}50%{opacity:.25}}@keyframes seqIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}.seq-in{animation:seqIn .45s ease}@media(prefers-reduced-motion:reduce){#discDot{animation:none}.seq-in{animation:none}}</style>
 <main class="flex-1 w-full max-w-[1440px] mx-auto p-3 overflow-hidden">
 <!-- Stage: Varun (left, large) | Ankur + Brajesh (right, stacked) -->
 <div class="h-full grid grid-cols-1 xl:grid-cols-[1.45fr_1fr] gap-3">
+<div id="stageEmpty" class="xl:col-span-2" style="display:grid;place-items:center;border:1.5px dashed #D9DEE9;border-radius:12px;background:#FBFCFF;color:#71717A;font-size:13px;padding:70px 20px;text-align:center">Waiting for members to join their BA sessions…</div>
 <!-- ================= SESSION 1 · VARUN ================= -->
-<section class="flex flex-col bg-surface border border-line rounded-xl shadow-xs overflow-hidden min-h-0">
+<section id="session-varun" style="display:none" class="flex flex-col bg-surface border border-line rounded-xl shadow-xs overflow-hidden min-h-0">
 <div class="px-4 py-2.5 border-b border-line flex items-center justify-between bg-surface shrink-0">
 <div class="flex items-center gap-2.5 min-w-0">
 <svg viewBox="0 0 48 48" class="w-7 h-7 rounded-full block shrink-0" role="img" aria-label="Varun"> <circle cx="24" cy="24" r="24" fill="#EFF4FE"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#356AE6"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse> <path d="M13.3 21.2C12.8 14 17.7 9.4 24 9.4s11.2 4.6 10.7 11.8c-.4-2.6-1.3-4.1-2.6-5.1-2.3 1.9-5.5 2.9-9.4 2.9-3.2 0-5.8-.7-7.4-1.7-1.2 1-1.8 2.4-2 3.9z" fill="#2E2A26"></path> <circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle> <circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle> <path d="M18.4 18.4h3.4M26.2 18.4h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path> <path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path> <g stroke="#18181B" stroke-width="1.1" fill="none"> <circle cx="20.3" cy="21.4" r="3.6"></circle> <circle cx="27.7" cy="21.4" r="3.6"></circle> <path d="M23.9 21.4h.2M16.7 21.2h-3.2M31.3 21.2h3.2" stroke-linecap="round"></path> </g> </svg>
 <div class="min-w-0">
 <h2 class="text-[13px] font-semibold text-ink leading-tight truncate">Varun · BA Working Session</h2>
-<p class="text-[11px] text-ink-muted font-mono truncate">Session #14 · Lead Architect / PM · Leave Management</p>
+<p class="text-[11px] text-ink-muted font-mono truncate">Session #14 · Workflows (Functional) · Leave Management</p>
 </div>
 </div>
 <div class="flex items-center gap-2 shrink-0">
@@ -394,13 +398,13 @@ NO (Standard)
 <!-- ================= RIGHT COLUMN: ANKUR + BRAJESH ================= -->
 <div class="grid grid-rows-2 gap-3 min-h-0">
 <!-- ================= SESSION 2 · ANKUR ================= -->
-<section class="flex flex-col bg-surface border border-line rounded-xl shadow-xs overflow-hidden min-h-0">
+<section id="session-ankur" style="display:none" class="flex flex-col bg-surface border border-line rounded-xl shadow-xs overflow-hidden min-h-0">
 <div class="px-3 py-2 border-b border-line flex items-center justify-between bg-surface shrink-0 gap-2">
 <div class="flex items-center gap-2 min-w-0">
 <svg viewBox="0 0 48 48" class="w-6 h-6 rounded-full block shrink-0" role="img" aria-label="Ankur"> <circle cx="24" cy="24" r="24" fill="#FFFBEB"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#B45309"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#B87B4E"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#C98F62"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#C98F62"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#C98F62"></ellipse> <path d="M13.2 21.6c-.7-7.4 4.4-12.2 10.8-12.2s11.5 4.8 10.8 12.2c-1-1.6-1.9-4-2.4-5.9-1.6 1-4 1.6-7.6 1.6-4.6 0-7.6-1-9.6-2.7-.8 1.3-1.4 3.3-2 7z" fill="#1B1917"></path> <path d="M17.6 26.4c1.4 3.4 3.7 5.1 6.4 5.1s5-1.7 6.4-5.1c-1.7 1.5-3.9 2.2-6.4 2.2s-4.7-.7-6.4-2.2z" fill="#1B1917"></path> <path d="M18.4 18.6h3.5M26.1 18.6h3.5" stroke="#1B1917" stroke-width="1.4" stroke-linecap="round" fill="none"></path> <circle cx="20.3" cy="21.5" r="1.4" fill="#1B1917"></circle> <circle cx="27.7" cy="21.5" r="1.4" fill="#1B1917"></circle> </svg>
 <div class="min-w-0">
 <h2 class="text-[12px] font-semibold text-ink leading-tight truncate">Ankur · BA Working Session</h2>
-<p class="text-[10px] text-ink-muted font-mono truncate">Session #12 · HR Ops Lead · Attendance &amp; Payroll Cut-off</p>
+<p class="text-[10px] text-ink-muted font-mono truncate">Session #12 · Permissions (Technical) · Approval authority</p>
 </div>
 </div>
 <span class="px-1.5 py-0.5 rounded bg-valid-bg text-valid font-mono text-[9px] font-medium uppercase tracking-wider shrink-0">Live</span>
@@ -415,7 +419,7 @@ NO (Standard)
 <span class="text-[10px] font-mono text-ink-subtle">11:02:14</span>
 </div>
 <div class="bg-canvas border border-line rounded-lg p-2 text-[11px] leading-relaxed text-ink">
-Missed punch — how is it fixed before the 25th cut-off?
+Who can approve a leave request in LeaveFlow?
 </div>
 </div>
 <div class="space-y-1 pl-4">
@@ -425,7 +429,7 @@ Missed punch — how is it fixed before the 25th cut-off?
 <svg viewBox="0 0 48 48" class="w-4 h-4 rounded-full block shrink-0" role="img" aria-label="Ankur"> <circle cx="24" cy="24" r="24" fill="#FFFBEB"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#B45309"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#B87B4E"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#C98F62"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#C98F62"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#C98F62"></ellipse> <path d="M13.2 21.6c-.7-7.4 4.4-12.2 10.8-12.2s11.5 4.8 10.8 12.2c-1-1.6-1.9-4-2.4-5.9-1.6 1-4 1.6-7.6 1.6-4.6 0-7.6-1-9.6-2.7-.8 1.3-1.4 3.3-2 7z" fill="#1B1917"></path> <path d="M17.6 26.4c1.4 3.4 3.7 5.1 6.4 5.1s5-1.7 6.4-5.1c-1.7 1.5-3.9 2.2-6.4 2.2s-4.7-.7-6.4-2.2z" fill="#1B1917"></path> <path d="M18.4 18.6h3.5M26.1 18.6h3.5" stroke="#1B1917" stroke-width="1.4" stroke-linecap="round" fill="none"></path> <circle cx="20.3" cy="21.5" r="1.4" fill="#1B1917"></circle> <circle cx="27.7" cy="21.5" r="1.4" fill="#1B1917"></circle> </svg>
 </div>
 <div class="bg-surface border border-line rounded-lg p-2 text-[11px] leading-relaxed text-ink text-left">
-Manager approves it. HR steps in only if he rejects.
+Only the reporting manager. Nobody else should be able to approve.
 </div>
 </div>
 <div class="space-y-2">
@@ -436,16 +440,16 @@ Manager approves it. HR steps in only if he rejects.
 </div>
 <div class="bg-canvas border border-line rounded-lg p-2.5 space-y-2">
 <p class="text-[12px] leading-relaxed text-ink">
-Split the path at rejection; both branches bind to the cut-off.
+That conflicts with the HR override Brajesh just added in his session. Flagged as CONF-02 — manager-only vs HR override. Both agents have paused this rule.
 </p>
 <div class="pt-2 border-t border-line/80 space-y-1">
 <span class="text-[9px] font-mono uppercase tracking-wider text-ink-muted block font-semibold">Graph Delta Applied</span>
 <div class="flex flex-wrap gap-1">
 <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface border border-line text-[10px] font-mono text-ink">
-<span class="text-signal font-bold">+</span> Rule: Rejection escalates to HR
+<span class="text-signal font-bold">+</span> Rule: Manager-only approval
 </span>
 <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface border border-line text-[10px] font-mono text-ink">
-<span class="text-signal font-bold">+</span> Node: Manager rejected?
+<span class="text-signal font-bold">+</span> Conflict: HR override?
 </span>
 <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface border border-line text-[10px] font-mono text-ink">
 <span class="text-proposed font-bold">ATT-002</span> Proposed
@@ -473,7 +477,7 @@ Split the path at rejection; both branches bind to the cut-off.
 <div class="px-2.5 py-1.5 border-b border-line bg-surface flex items-center justify-between shrink-0 z-10 gap-1.5">
 <div class="flex items-center gap-1.5 min-w-0">
 <h3 class="text-[11px] font-semibold text-ink shrink-0">Process Flow</h3>
-<span class="text-[10px] text-ink-muted truncate">Punch Regularization</span>
+<span class="text-[10px] text-ink-muted truncate">Approval Authority</span>
 </div>
 <div class="flex items-center gap-0.5 border border-line rounded bg-surface px-0.5 shrink-0">
 <button class="w-5 h-5 flex items-center justify-center text-ink-muted hover:text-ink text-[11px] font-mono">−</button>
@@ -632,13 +636,13 @@ NO
 </div>
 </section>
 <!-- ================= SESSION 3 · BRAJESH ================= -->
-<section class="flex flex-col bg-surface border border-line rounded-xl shadow-xs overflow-hidden min-h-0">
+<section id="session-brajesh" style="display:none" class="flex flex-col bg-surface border border-line rounded-xl shadow-xs overflow-hidden min-h-0">
 <div class="px-3 py-2 border-b border-line flex items-center justify-between bg-surface shrink-0 gap-2">
 <div class="flex items-center gap-2 min-w-0">
 <svg viewBox="0 0 48 48" class="w-6 h-6 rounded-full block shrink-0" role="img" aria-label="Brajesh"> <circle cx="24" cy="24" r="24" fill="#F4F4F5"></circle> <path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#27272A"></path> <path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path> <circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle> <circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle> <ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse> <path d="M13.3 21c-.5-7.3 4.4-11.6 10.7-11.6s11.2 4.3 10.7 11.6c-.9-4-2.3-5.6-4.1-6.3-2 1.2-4.4 1.6-7 1.6-3.1 0-5.6-.5-7.6-1.7-1.3.8-2.1 2.6-2.7 6.4z" fill="#3F3F46"></path> <circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle> <circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle> <path d="M18.4 18.5h3.4M26.2 18.5h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path> <path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path> </svg>
 <div class="min-w-0">
 <h2 class="text-[12px] font-semibold text-ink leading-tight truncate">Brajesh · BA Working Session</h2>
-<p class="text-[10px] text-ink-muted font-mono truncate">Session #09 · ERP Engineer · Technical Integration</p>
+<p class="text-[10px] text-ink-muted font-mono truncate">Session #09 · Roles &amp; profiles (Functional) · HR override</p>
 </div>
 </div>
 <span class="px-1.5 py-0.5 rounded bg-valid-bg text-valid font-mono text-[9px] font-medium uppercase tracking-wider shrink-0">Live</span>
@@ -653,7 +657,7 @@ NO
 <span class="text-[10px] font-mono text-ink-subtle">11:20:41</span>
 </div>
 <div class="bg-canvas border border-line rounded-lg p-2 text-[11px] leading-relaxed text-ink">
-Varun added an override, Ankur an escalation. Which DocTypes carry all three?
+Varun's workflow routes to HR when the manager is unavailable. Ankur just made approval manager-only. Which rule should LeaveFlow keep?
 </div>
 </div>
 <div class="space-y-1 pl-4">
@@ -874,14 +878,83 @@ NO
 </main>
 
 <!-- Quiet Tool Footer -->
+
+
 <footer class="h-9 bg-surface border-t border-line px-6 flex items-center justify-between text-[11px] font-mono text-ink-muted">
 <div class="">WorkSimplified · Discover Living Project Engine</div>
 <div class="flex items-center gap-4">
-<span class="text-ink">Leave &amp; Attendance Discovery · ADR-042 Ready</span>
+<span class="text-ink">Leave Management Discovery · ADR-042 Ready</span>
 <span class="text-ink-subtle">|</span>
 <span class="">Model revision #04</span>
 </div>
 </footer>
 
 
+
+<script>
+(()=>{const q=new URLSearchParams(location.search);const p=q.get('project');
+if(p)document.querySelectorAll('[data-project]').forEach(e=>{e.textContent=p;});
+document.querySelectorAll('a[href*="living_project_workspace/index.html"]').forEach(a=>{if(!a.search)a.search=location.search;});
+try{const inv=JSON.parse(q.get('invites')||'{}');
+const dim={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+const rows=Object.entries(inv).flatMap(([d,ms])=>(ms||[]).map(m=>`<div style="display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>${m}</span><span style="color:#666">${dim[d]||d} · invited</span></div>`));
+const el=document.getElementById('ws-invited');
+if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin:8px 0 2px">Invited in Project Team</div>`+rows.join('');
+}catch(e){}})();
+</script>
+
+<script>
+(()=>{ 
+ const q=new URLSearchParams(location.search);
+ if(q.get('fresh')==='1'){try{sessionStorage.removeItem('discover_seq_done');}catch(e){}}
+ const doneSeq=sessionStorage.getItem('discover_seq_done')==='1';
+ let shown=0;
+ const ids=['session-varun','session-ankur','session-brajesh'];
+ function show(id,text,instant){
+   const el=document.getElementById(id); if(!el||el.style.display!=='none') return;
+   el.style.display=''; if(!instant) el.classList.add('seq-in');
+   shown++; document.getElementById('sessCount').textContent=shown;
+   const e=document.getElementById('stageEmpty'); if(e) e.style.display='none';
+   if(text) document.getElementById('discText').textContent=text;
+   startPlayback(el, instant);
+ }
+ function startPlayback(sec, instant){
+   if(sec.dataset.played) return; sec.dataset.played='1';
+   const chatBox=sec.querySelector('.overflow-y-auto');
+   const msgs=chatBox?[...chatBox.children].filter(e=>!/Listening for/.test(e.innerText||'')):[];
+   const listening=chatBox?[...chatBox.children].find(e=>/Listening for/.test(e.innerText||'')):null;
+   let canvas=null;
+   sec.querySelectorAll('div').forEach(d=>{ if(/Start (Actor|Event)/i.test(d.textContent||'') && d.children.length>=3 && [...d.children].some(c=>/Start/i.test(c.textContent||'')) && (!canvas || d.children.length>canvas.children.length)) canvas=d; });
+   let flows=[], arrows=[];
+   if(canvas){ [...canvas.children].forEach(c=>{ ((c.textContent||'').trim().length>2 ? flows : arrows).push(c); }); }
+   if(instant){ return; }
+   [...msgs, ...flows, ...arrows].forEach(e=>{ e.dataset.prevDisplay=e.style.display; e.style.display='none'; });
+   if(listening) listening.style.display='none';
+   const queue=[]; const max=Math.max(msgs.length, flows.length);
+   for(let i=0;i<max;i++){ if(msgs[i]) queue.push(msgs[i]); if(flows[i]) queue.push(flows[i]); }
+   queue.forEach((el,i)=> setTimeout(()=>{
+     el.style.display='';
+     el.classList.add('seq-in');
+     const ai=flows.indexOf(el); if(ai>0 && arrows[ai-1]) arrows[ai-1].style.display='';
+     if(chatBox) chatBox.scrollTop=chatBox.scrollHeight;
+   }, 500+i*1450));
+   if(listening) setTimeout(()=>{ listening.style.display=''; }, 500+queue.length*1450);
+ }
+ function finish(instant){
+   document.getElementById('confCount').textContent='3 conflicts · decisions needed';
+   document.getElementById('discText').textContent='Discovery complete. Changes and conflicts are now in Cockpit.';
+   const d=document.getElementById('discDot'); d.style.animation='none'; d.style.background='#1F9D55';
+   try{sessionStorage.setItem('discover_seq_done','1');}catch(e){}
+ }
+ if(doneSeq){ ids.forEach(id=>show(id,null,true)); finish(true); }
+ else{
+   setTimeout(()=>show('session-varun','Varun is live with his BA agent (Workflows). The approval flow is being drawn.'),900);
+   setTimeout(()=>show('session-ankur','Ankur joined (Permissions). Approval authority is being defined.'),3800);
+   setTimeout(()=>show('session-brajesh','Brajesh joined (Roles & profiles). HR override is being added.'),6600);
+   setTimeout(()=>{ document.getElementById('confCount').textContent='1 conflict flagged · CONF-02';
+     document.getElementById('discText').textContent='Conflict detected: Ankur’s manager-only rule clashes with Brajesh’s HR override. Flagged as CONF-02 in Cockpit.'; },9200);
+   setTimeout(()=>finish(false),11400);
+ }
+})();
+</script>
 </body></html>

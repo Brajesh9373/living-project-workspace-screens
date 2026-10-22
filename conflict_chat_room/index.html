@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Solve Conflicts — BA Chat Room · LeaveFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--canvas:#F7F7F5;--surface:#fff;--ink:#18181B;--muted:#5F5F66;--faint:#8B8B93;--line:#E4E4E7;--line-strong:#D4D4D8;--blue:#356AE6;--blue-hover:#2553C7;--blue-subtle:#EFF4FE;--warn:#9A5B00;--warn-bg:#FFFBEB;--warn-line:#EFD9A7;--ok:#177245;--ok-bg:#EEF9F1;--ok-line:#BFE6CC}
+*{box-sizing:border-box} html,body{margin:0}
+body{font-family:"Geist",system-ui,sans-serif;background:var(--canvas);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.top{height:54px;background:var(--surface);border-bottom:1px solid var(--line);padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40}
+.top-left{display:flex;align-items:center;gap:16px;min-width:0}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.02em}
+.divider{color:var(--line-strong)}
+.proj{font-size:13px;white-space:nowrap}.proj span{color:var(--muted)}
+.back{font-size:12px;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:5px}
+.back:hover{color:var(--ink)}
+.live{display:flex;align-items:center;gap:7px;font-family:"Geist Mono",monospace;font-size:11px;color:var(--muted)}
+.live i{width:8px;height:8px;border-radius:50%;background:#1F9D55;display:inline-block}
+main{max-width:1180px;width:100%;margin:0 auto;padding:30px 24px 44px;flex:1}
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.page-head h1{font-size:25px;font-weight:650;letter-spacing:-.03em;margin:0}
+.page-head p{font-size:13px;color:var(--muted);line-height:1.7;margin:8px 0 0;max-width:60ch}
+.progress{min-width:230px}
+.progress-meta{display:flex;justify-content:space-between;font-family:"Geist Mono",monospace;font-size:11px;color:var(--warn);margin-bottom:7px}
+.progress-meta b{color:var(--ink);font-weight:600}
+.progress-track{height:6px;border-radius:99px;background:#ECECF0;overflow:hidden}
+.progress-fill{height:100%;width:0;background:var(--blue);border-radius:99px;transition:width .45s ease}
+.layout{display:grid;grid-template-columns:308px 1fr;gap:16px;margin-top:22px;align-items:start}
+.queue{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.queue h2{font-size:12px;font-weight:650;margin:0}
+.queue-sub{font-size:11px;color:var(--faint);line-height:1.6;margin:5px 0 14px}
+.queue ol{list-style:none;margin:0;padding:0;position:relative}
+.queue ol::before{content:'';position:absolute;left:13px;top:14px;bottom:14px;width:1px;background:var(--line)}
+.qitem{position:relative;width:100%;text-align:left;background:none;border:0;padding:0 0 14px 38px;cursor:pointer;font:inherit}
+.qitem:last-child{padding-bottom:2px}
+.qdot{position:absolute;left:5px;top:2px;width:17px;height:17px;border-radius:50%;border:1.5px solid var(--line-strong);background:#fff;display:grid;place-items:center;font-size:9px;font-weight:700;color:var(--faint);z-index:1}
+.qitem.current .qdot{border-color:var(--blue);background:var(--blue);color:#fff}
+.qitem.resolved .qdot{border-color:var(--ok);background:var(--ok);color:#fff}
+.qcard{display:block;border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff}
+.qitem.current .qcard{border-color:#B9CCF7;background:var(--blue-subtle)}
+.qitem.resolved .qcard{border-color:var(--ok-line);background:var(--ok-bg)}
+.qtop{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.qtop strong{font-size:12px}
+.qstate{font-family:"Geist Mono",monospace;font-size:9.5px;color:var(--warn);white-space:nowrap}
+.qitem.resolved .qstate{color:var(--ok)}
+.qfrom{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.55}
+.qimpact{font-size:10.5px;color:var(--faint);margin-top:7px;line-height:1.55;border-top:1px dashed var(--line);padding-top:7px;display:none}
+.qitem.current .qimpact,.qitem.resolved .qimpact{display:block}
+.qdecision{font-size:11px;color:var(--ok);margin-top:7px;line-height:1.55;display:none}
+.qitem.resolved .qdecision{display:block}
+.queue-note{margin-top:12px;font-size:10.5px;color:var(--faint);line-height:1.65;border-top:1px solid var(--line);padding-top:11px}
+.chat{background:var(--surface);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;min-height:600px;overflow:hidden}
+.chat-head{display:flex;align-items:center;gap:11px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;flex-shrink:0}
+.avatar.you{background:#3F3F46}
+.chat-head strong{font-size:13px;display:block}
+.chat-head small{font-size:11px;color:var(--ok)}
+.chat-state{margin-left:auto;font-family:"Geist Mono",monospace;font-size:10px;color:var(--muted);text-align:right}
+#chatLog{flex:1;overflow-y:auto;padding:20px 18px;display:flex;flex-direction:column;gap:16px;max-height:560px}
+.msg{display:flex;gap:10px;max-width:82%}
+.msg.me{align-self:flex-end;flex-direction:row-reverse}
+.msg-body{display:flex;flex-direction:column;gap:4px}
+.msg.me .msg-body{align-items:flex-end}
+.msg-meta{font-size:10px;font-family:"Geist Mono",monospace;color:var(--faint)}
+.bubble{padding:11px 14px;border-radius:13px;font-size:13px;line-height:1.7;background:#F6F6F4;border:1px solid var(--line);border-top-left-radius:5px}
+.msg.me .bubble{background:var(--blue);color:#fff;border-color:var(--blue);border-top-left-radius:13px;border-top-right-radius:5px}
+.bubble strong{font-weight:650}
+.decision{border:1px solid #C7D6FA;background:#FBFCFF;border-radius:12px;padding:13px;max-width:82%}
+.decision h3{font-size:11px;font-family:"Geist Mono",monospace;font-weight:600;color:var(--blue);margin:0 0 9px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;flex-direction:column;gap:2px;text-align:left;border:1px solid var(--line-strong);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer;font:inherit}
+.opt:hover{border-color:var(--blue)}
+.opt:focus-visible,.qitem:focus-visible{outline:2px solid #8EA9FF;outline-offset:2px}
+.opt b{font-size:12.5px}
+.opt span{font-size:11px;color:var(--muted);line-height:1.55}
+.receipt{border:1px solid var(--ok-line);background:var(--ok-bg);border-radius:12px;padding:11px 13px;font-size:12px;line-height:1.65;max-width:82%;color:#14532D}
+.summary{border-top:1px solid var(--line);padding:16px 18px;background:#FCFCFA;display:none}
+.summary.show{display:block}
+.summary h3{font-size:13px;margin:0 0 10px}
+.summary table{width:100%;border-collapse:collapse;font-size:12px}
+.summary td{padding:7px 8px;border-top:1px solid var(--line);vertical-align:top;line-height:1.55}
+.summary td:first-child{font-family:"Geist Mono",monospace;font-size:10.5px;color:var(--muted);white-space:nowrap;width:86px}
+.summary-actions{display:flex;gap:9px;margin-top:13px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 16px;border-radius:9px;background:var(--blue);color:#fff;font-size:12px;font-weight:600;text-decoration:none;border:0;cursor:pointer}
+.btn:hover{background:var(--blue-hover)}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line-strong)}
+.composer{display:flex;gap:10px;padding:12px 18px 16px;border-top:1px solid var(--line);background:#fff}
+.composer input{flex:1;min-height:43px;border:1px solid var(--line-strong);border-radius:10px;padding:9px 12px;font-size:13px;font:inherit}
+.composer input:focus-visible{outline:2px solid #8EA9FF;outline-offset:1px}
+.foot{padding:14px 24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-family:"Geist Mono",monospace;font-size:10.5px;color:var(--faint)}
+@media(max-width:840px){.layout{grid-template-columns:1fr}.msg,.decision,.receipt{max-width:94%}.progress{min-width:180px}}
+@media(max-width:640px){.top{padding:0 14px;gap:10px}.top-left{gap:9px}.proj span{display:none}.back{font-size:11px}.live{font-size:10px}main{padding:20px 14px 30px}.page-head h1{font-size:21px}.progress{width:100%;min-width:0}.progress-meta{gap:12px}.chat-head{padding:12px 14px}#chatLog{padding:16px 12px}.composer{padding:10px 12px 12px}.foot{padding:12px 14px}}
+@media(prefers-reduced-motion:reduce){.progress-fill{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-left">
+    <span class="brand">WorkSimplified</span><span class="divider">|</span>
+    <span class="proj"><span data-project>LeaveFlow</span> <span>(Leave Management System)</span></span>
+    <a class="back" href="../cockpit_living_project_workspace/index.html">← Back to Cockpit</a>
+  </div>
+  <span class="live"><i></i> BA Agent · Live</span>
+</header>
+
+<main>
+  <div class="page-head">
+    <div>
+      <h1>Solve Conflicts</h1>
+      <p>Your BA agent walks you through each conflict your team raised, one decision at a time. Every decision updates the project model and notifies the members' agents.</p>
+    </div>
+    <div class="progress" aria-label="Resolution progress">
+      <div class="progress-meta"><b>Resolution progress</b><span id="progressLabel">0 of 3 resolved</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="queue" aria-label="Resolution queue">
+      <h2>Resolution queue</h2>
+      <p class="queue-sub">In the order the build is blocked. Select any open conflict to take it next.</p>
+      <ol id="conflictList"></ol>
+      <p class="queue-note">Decisions sync to Cockpit and State, and are sent to each member's agent.</p>
+    </aside>
+
+    <section class="chat" aria-label="BA chat room">
+      <div class="chat-head">
+        <span class="avatar">BA</span>
+        <div><strong>WorkSimplified BA Agent</strong><small>Online · conflict resolution session</small></div>
+        <span class="chat-state" id="sessionState">3 OPEN</span>
+      </div>
+      <div id="chatLog" aria-live="polite"></div>
+      <div class="summary" id="summary">
+        <h3>Decisions recorded</h3>
+        <table id="summaryTable"></table>
+        <div class="summary-actions">
+          <a class="btn" href="../cockpit_living_project_workspace/index.html">Back to Cockpit</a>
+          <a class="btn ghost" href="../state_living_project_workspace/index.html">View in State</a>
+        </div>
+      </div>
+      <form class="composer" id="chatForm">
+        <label for="chatInput" style="position:absolute;left:-9999px">Message the BA agent</label>
+        <input id="chatInput" type="text" placeholder="Ask about a conflict, or type your decision…" autocomplete="off"/>
+        <button class="btn" type="submit">Send</button>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer class="foot"><span>WorkSimplified · Conflict Chat Room</span><span><span data-project>LeaveFlow</span> · Leave Management</span></footer>
+<script>
+const CONFLICTS=[
+ {id:'conf-01',code:'CONF-01',title:'Half-day leave',from:'Varun · Workflows',against:'Phase 1 agreement',impact:'Blocks REQ-001 validation',
+  question:'Varun proposed half-day leave in his session. Phase 1 agreed full-day only, to keep balance maths simple. Which should LeaveFlow keep?',
+  options:[['Keep full-day only','Stays with the Phase 1 agreement. Varun\u2019s agent drops the half-day node.'],['Allow half-day leave','Adds a half-day leave type. Balances are tracked in half-day units.']],
+  decided:d=>`Decided: ${d}. REQ-001 is updated and Varun\u2019s agent has been notified.`},
+ {id:'conf-02',code:'CONF-02',title:'Who can approve',from:'Ankur · Permissions vs Brajesh · Roles & profiles',against:'Approval authority',impact:'Blocks the approval workflow build',
+  question:'Ankur made approval manager-only. Brajesh added an HR override when the manager is unavailable for 48 hours. Both cannot be true. Your call?',
+  options:[['Manager only','Requests wait for the reporting manager. No HR override.'],['HR override after 48h','Manager approves first; HR can override after 48 hours of no response.']],
+  decided:d=>`Decided: ${d}. The approval workflow and permissions are synced for Ankur and Brajesh.`},
+ {id:'conf-03',code:'CONF-03',title:'Earned Leave carry-forward',from:'Omesh · Delivery expectations',against:'Phase 1 agreement',impact:'Blocks the delivery plan sign-off',
+  question:'Omesh recorded that the client expects unused Earned Leave to carry forward. Phase 1 agreed no carry-forward. What should delivery promise?',
+  options:[['No carry-forward','Unused leave lapses on 31 December, as agreed in Phase 1.'],['Carry forward Earned Leave','Unused Earned Leave moves to next year. Delivery plan and balances change.']],
+  decided:d=>`Decided: ${d}. Omesh\u2019s delivery plan and the leave policy are updated.`},
+];
+let idx=0; const done={};
+const log=document.getElementById('chatLog'), list=document.getElementById('conflictList'),
+ prog=document.getElementById('progressLabel'), fill=document.getElementById('progressFill'),
+ state=document.getElementById('sessionState'), summary=document.getElementById('summary');
+const startAt=CONFLICTS.findIndex(c=>('#'+c.id)===location.hash);
+if(startAt>0) idx=startAt;
+function esc(s){return s.replace(/</g,'&lt;');}
+function renderQueue(){
+ list.innerHTML=CONFLICTS.map((c,i)=>`
+  <li><button type="button" class="qitem ${done[c.id]?'resolved':i===idx?'current':''}" data-open="${i}" aria-current="${i===idx&&!done[c.id]}">
+    <span class="qdot">${done[c.id]?'✓':i+1}</span>
+    <span class="qcard"><span class="qtop"><strong>${c.code} · ${c.title}</strong><span class="qstate">${done[c.id]?'RESOLVED':i===idx?'CURRENT':'OPEN'}</span></span>
+    <span class="qfrom">${c.from}</span>
+    <span class="qimpact">${c.impact} · against ${c.against.toLowerCase()}.</span>
+    ${done[c.id]?`<span class="qdecision">Decision: ${esc(done[c.id])}</span>`:''}
+    </span></button></li>`).join('');
+ list.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.open; if(!done[CONFLICTS[i].id]&&i!==idx){idx=i; present();}}));
+ const n=Object.keys(done).length;
+ prog.textContent=`${n} of 3 resolved`; fill.style.width=(n/3*100)+'%';
+ state.innerHTML = n===3 ? 'ALL RESOLVED' : `${3-n} OPEN<br>CONFLICT ${Math.min(idx+1,3)} OF 3`;
+}
+function msg(who,text,me){
+ const row=document.createElement('div'); row.className='msg'+(me?' me':'');
+ row.innerHTML=`<span class="avatar ${me?'you':''}">${me?'You':'BA'}</span><div class="msg-body"><span class="msg-meta">${who}</span><div class="bubble">${text}</div></div>`;
+ log.appendChild(row); log.scrollTop=log.scrollHeight; return row;
+}
+function present(){
+ renderQueue();
+ const c=CONFLICTS[idx];
+ msg('BA Agent',`<strong>${c.code} — ${c.title}.</strong> ${c.question}`);
+ const card=document.createElement('div'); card.className='decision';
+ card.innerHTML=`<h3>YOUR DECISION · ${c.code}</h3><div class="opts">${c.options.map(([l,n])=>`<button type="button" class="opt" data-choice="${l}"><b>${l}</b><span>${n}</span></button>`).join('')}</div>`;
+ log.appendChild(card); log.scrollTop=log.scrollHeight;
+ card.querySelectorAll('[data-choice]').forEach(b=>b.addEventListener('click',()=>{card.remove(); decide(b.dataset.choice);}));
+}
+function decide(label){
+ const c=CONFLICTS[idx];
+ msg('You',esc(label),true);
+ done[c.id]=label; try{localStorage.setItem('leaveflow_decisions',JSON.stringify(done));}catch(e){}
+ setTimeout(()=>{
+   msg('BA Agent',c.decided(label));
+   const receipt=document.createElement('div'); receipt.className='receipt';
+   receipt.textContent=`Decision recorded for ${c.code}: ${label}. Cockpit and State are updated; the members' agents have been notified.`;
+   log.appendChild(receipt); log.scrollTop=log.scrollHeight;
+   const next=CONFLICTS.findIndex(x=>!done[x.id]);
+   if(next===-1){
+     setTimeout(()=>{
+       msg('BA Agent','<strong>All conflicts resolved.</strong> The project model is consistent again — the build is unpaused.');
+       document.getElementById('summaryTable').innerHTML=CONFLICTS.map(c=>`<tr><td>${c.code}</td><td><b>${c.title}</b></td><td>${esc(done[c.id])}</td></tr>`).join('');
+       summary.classList.add('show'); renderQueue();
+     },500);
+   } else { idx=next; setTimeout(present,700); }
+   renderQueue();
+ },420);
+}
+document.getElementById('chatForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const input=document.getElementById('chatInput'); const v=input.value.trim(); if(!v) return;
+ input.value=''; msg('You',esc(v),true);
+ setTimeout(()=>msg('BA Agent','Noted. To lock this in, choose one of the two options in the decision card above — that is what updates the model.'),350);
+});
+msg('BA Agent','Hi, I am your BA agent. Your team raised <strong>3 conflicts</strong> across their sessions. Let\u2019s solve them one by one — each decision updates LeaveFlow immediately.');
+setTimeout(present,450);
+</script>
+<script>
+(()=>{const q=new URLSearchParams(location.search);const p=q.get('project');
+if(p)document.querySelectorAll('[data-project]').forEach(e=>{e.textContent=p;});
+document.querySelectorAll('a[href*="living_project_workspace/index.html"]').forEach(a=>{if(!a.search)a.search=location.search;});})();
+</script>
+</body></html>

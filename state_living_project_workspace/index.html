@@ -79,17 +79,16 @@
 </div>
 <span class="text-line text-[14px]">/</span>
 <div class="flex items-center gap-2 group cursor-pointer">
-<span class="text-[13px] font-medium text-ink">HR Transformation</span>
-<span class="text-[12px] text-ink-muted font-normal">(ERP &amp; Payroll implementation)</span>
+<span class="text-[13px] font-medium text-ink" data-project>LeaveFlow</span>
+<span class="text-[12px] text-ink-muted font-normal">(Leave Management System)</span>
 <span class="material-symbols-outlined text-[16px] text-ink-muted group-hover:text-ink transition-colors">unfold_more</span>
 </div>
 </div>
 <!-- App Tabs -->
-<a href="../layer%201%20/consultant_dashboard_work_simplified/code.html" class="inline-flex items-center gap-1 px-2 py-1.5 rounded text-[12px] font-medium text-ink-muted hover:text-ink hover:bg-canvas transition-colors" aria-label="Return to Research Dashboard"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_back</span><span>Research Dashboard</span></a>
+<a href="http://127.0.0.1:3000/portal" class="inline-flex items-center gap-1 px-2 py-1.5 rounded text-[12px] font-medium text-ink-muted hover:text-ink hover:bg-canvas transition-colors" aria-label="Back to Project Team"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_back</span><span>Project Team</span></a>
 <nav class="hidden md:flex items-center gap-1 text-[13px]">
 <a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../cockpit_living_project_workspace/index.html">Cockpit</a>
 <a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../discover_living_project_workspace/index.html">Discover</a>
-<a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../map_living_project_workspace/index.html">Map</a>
 <a class="px-3 py-1.5 rounded font-semibold text-ink bg-canvas border border-line text-[13px]" href="index.html">State</a>
 <a class="px-3 py-1.5 rounded text-ink-muted hover:text-ink hover:bg-canvas transition-colors font-medium" href="../outputs_living_project_workspace/index.html">Outputs</a>
 </nav>
@@ -110,11 +109,11 @@
 <!-- Subheader / Context Strip -->
 <div class="bg-surface border-b border-line px-6 py-2.5 flex items-center justify-between">
 <div class="flex items-center gap-2 text-[12px]">
-<span class="text-ink-muted">HR Transformation</span>
+<span class="text-ink-muted">LeaveFlow</span>
 <span class="text-ink-subtle">/</span>
-<span class="text-ink-muted">ERP &amp; Payroll</span>
+<span class="text-ink-muted">Leave Management</span>
 <span class="text-ink-subtle">/</span>
-<a href="../discover_living_project_workspace/index.html" class="font-medium text-ink hover:text-signal-blue hover:underline underline-offset-2 decoration-line transition-colors">Leave &amp; Attendance Domain</a>
+<a href="../discover_living_project_workspace/index.html" class="font-medium text-ink hover:text-signal-blue hover:underline underline-offset-2 decoration-line transition-colors">Leave Management Domain</a>
 </div>
 <div class="flex items-center gap-3">
 <span class="text-[12px] text-ink-muted italic hidden lg:inline">"What I say changes the project model."</span>
@@ -210,7 +209,7 @@
 <input class="w-full h-9 pl-9 pr-4 text-xs bg-surface border border-quiet-line rounded-lg text-ink placeholder:text-muted-ink focus:outline-none focus:ring-1 focus:ring-signal-blue focus:border-signal-blue transition-all" placeholder="Filter canonical state... (⌘K)" type="text"/>
 </div>
 <div class="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-muted-ink shrink-0">
-<span data-result-count>7 of 7 in snapshot</span>
+<span data-result-count>10 of 10 in snapshot</span>
 </div>
 <div class="flex items-center gap-1 bg-surface border border-quiet-line rounded-lg p-0.5">
 <button data-state-filter="all" aria-pressed="true" class="state-btn px-2 py-1 text-[11px] font-medium text-ink bg-canvas rounded">All States</button>
@@ -270,7 +269,7 @@
 <span class="font-mono text-[10px] text-zinc-500">ERP Standard Flow</span>
 </div>
 </div>
-<!-- Item 3: REQ-003 [ PROPOSED / NEW ] (SELECTED ACTIVE CARD) -->
+<!-- Item 3: REQ-003 [ CONFLICT ] (SELECTED ACTIVE CARD) -->
 <div data-cat="requirements" class="group bg-surface border-2 border-signal-blue rounded-xl p-3.5 transition-all cursor-pointer shadow-sm relative">
 <div class="absolute -left-1 top-4 bottom-4 w-1 bg-signal-blue rounded-r"></div>
 <div class="flex items-start justify-between gap-3">
@@ -284,7 +283,7 @@
                   </p>
 </div>
 <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-semibold tracking-wide uppercase bg-blue-50 text-signal-blue border border-blue-200 shrink-0">
-                  PROPOSED / NEW
+                  CONFLICT
                 </span>
 </div>
 <div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/70 text-[11px]">
@@ -306,7 +305,7 @@
 <div class="flex flex-col gap-1 min-w-0">
 <div class="flex items-center gap-2 flex-wrap">
 <span class="font-mono text-xs font-semibold text-slate-700">Q-003</span>
-<span class="text-xs font-medium text-ink">Who approves when the manager is unavailable?</span>
+<span class="text-xs font-medium text-ink">Who approves when the manager is unavailable? — CONFLICT (CONF-02)</span>
 </div>
 <p class="text-xs text-muted-ink line-clamp-1">
                     Unresolved edge case regarding delegation matrices during sudden medical leave of department heads.
@@ -386,6 +385,72 @@
 <div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink">
 <span class="text-amber-700 flex items-center gap-1">
 <span class="material-symbols-outlined text-[13px]">pending</span> Pending Warehouse Site Lead feedback
+                </span>
+</div>
+</div>
+<!-- Item 8: STK-001 [ VALIDATED ] -->
+<div data-cat="stakeholders" class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-xs font-semibold text-emerald-800">STK-001</span>
+<span class="text-xs font-medium text-ink">Marcus Vance — Head of HR Operations holds final policy sign-off</span>
+</div>
+<p class="text-xs text-muted-ink line-clamp-1">
+                    Final approver for leave-policy exceptions and Earned Leave carry-forward decisions.
+                  </p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-validated-bg text-status-validated-text shrink-0">
+                  VALIDATED
+                </span>
+</div>
+<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">groups</span> Decision rights: policy sign-off · Escalation order: 1
+                </span>
+</div>
+</div>
+<!-- Item 9: DEP-003 [ EVOLVING ] -->
+<div data-cat="dependencies" class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-xs font-semibold text-amber-800">DEP-003</span>
+<span class="text-xs font-medium text-ink">Biometric attendance feed must sync before leave balances update</span>
+</div>
+<p class="text-xs text-muted-ink line-clamp-1">
+                    Punch data from warehouse devices feeds ERP attendance; stale sync blocks balance checks on REQ-001.
+                  </p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-evolving-bg text-status-evolving-text shrink-0">
+                  EVOLVING
+                </span>
+</div>
+<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink">
+<span class="text-amber-700 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">account_tree</span> Owner: Brajesh · Blocks balance verification
+                </span>
+</div>
+</div>
+<!-- Item 10: RSK-002 [ EVOLVING ] -->
+<div data-cat="risks" class="group bg-surface border border-quiet-line hover:border-deep-line rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-xs font-semibold text-amber-800">RSK-002</span>
+<span class="text-xs font-medium text-ink">Approvals may breach SLA during payroll cutoff week</span>
+</div>
+<p class="text-xs text-muted-ink line-clamp-1">
+                    Manager absence near cutoff can delay decisions and affect payroll processing for the cycle.
+                  </p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase bg-status-evolving-bg text-status-evolving-text shrink-0">
+                  EVOLVING
+                </span>
+</div>
+<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink">
+<span class="text-amber-700 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">warning</span> Mitigation: HR override in REQ-003 · Owner: Ankur
                 </span>
 </div>
 </div>
@@ -617,14 +682,10 @@ Both lines describe the same trigger &mdash; the line manager being unavailable.
 <span class="material-symbols-outlined text-[16px]">verified</span>
 <span>Validate Requirement</span>
 </button>
-<div class="grid grid-cols-2 gap-2">
+<div class="grid grid-cols-1 gap-2">
 <a href="../discover_living_project_workspace/index.html" class="h-8 bg-surface hover:bg-canvas border border-quiet-line text-ink rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors">
 <span class="material-symbols-outlined text-[14px] text-muted-ink">chat</span>
 <span>Open in Discover</span>
-</a>
-<a href="../map_living_project_workspace/index.html" class="h-8 bg-surface hover:bg-canvas border border-quiet-line text-ink rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors">
-<span class="material-symbols-outlined text-[14px] text-muted-ink">account_tree</span>
-<span>Trace in Map</span>
 </a>
 </div>
 </div>
@@ -731,7 +792,7 @@ var CATEGORY_TOTALS = {
   var INFO = {
     all: {
       label: 'Canonical Inventory', icon: 'inventory_2', sub: 'All eight statement categories',
-      meaning: 'Everything the workspace treats as fact or intent lives here as a typed statement. Nothing is typed by hand at the end - each statement is synthesised from a Discover or Map session and carries its own state, evidence trail and ERP surface.',
+      meaning: 'Everything the workspace treats as fact or intent lives here as a typed statement. Nothing is typed by hand at the end - each statement is synthesised from a Discover session and carries its own state, evidence trail and ERP surface.',
       contains: ['Eight categories: requirements, questions, assumptions, decisions, business rules, stakeholders, dependencies, risks',
         'A state per statement: Proposed / New, Evolving, Under Clarification, Validated',
         'Evidence links back to the transcript, the session and the ERP DocType'],
@@ -753,7 +814,7 @@ var CATEGORY_TOTALS = {
         'The statements and workflows it blocks',
         'The clarification proposed so far, and who must confirm it',
         'A resolution path back into an assumption or requirement'],
-      examples: ['Q-003 Who approves when the manager is unavailable?', 'Q-004 Multi-currency payroll for remote consultants']
+      examples: ['Q-003 Who approves when the manager is unavailable? — CONFLICT (CONF-02)', 'Q-004 Multi-currency payroll for remote consultants']
     },
     assumptions: {
       label: 'Assumptions', icon: 'lightbulb', sub: 'Taken as true, not yet confirmed',
@@ -975,5 +1036,17 @@ document.querySelectorAll('[data-dl]').forEach(function (btn) {
     URL.revokeObjectURL(url);
   });
 });
+</script>
+
+<script>
+(()=>{const q=new URLSearchParams(location.search);const p=q.get('project');
+if(p)document.querySelectorAll('[data-project]').forEach(e=>{e.textContent=p;});
+document.querySelectorAll('a[href*="living_project_workspace/index.html"]').forEach(a=>{if(!a.search)a.search=location.search;});
+try{const inv=JSON.parse(q.get('invites')||'{}');
+const dim={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+const rows=Object.entries(inv).flatMap(([d,ms])=>(ms||[]).map(m=>`<div style="display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>${m}</span><span style="color:#666">${dim[d]||d} · invited</span></div>`));
+const el=document.getElementById('ws-invited');
+if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin:8px 0 2px">Invited in Project Team</div>`+rows.join('');
+}catch(e){}})();
 </script>
 </body></html>

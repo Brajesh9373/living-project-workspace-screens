@@ -61,8 +61,23 @@
       background: #D4D4D8;
     }
   </style>
+
+<style id="ws-chat-fix">
+#session-varun,#session-ankur,#session-brajesh{height:calc(100vh - 216px);min-height:540px}
+#session-varun .overflow-y-auto,#session-ankur .overflow-y-auto,#session-brajesh .overflow-y-auto{scrollbar-width:thin;scrollbar-color:#D4D4D8 transparent;overscroll-behavior:contain}
+#session-varun .overflow-y-auto::-webkit-scrollbar,#session-ankur .overflow-y-auto::-webkit-scrollbar,#session-brajesh .overflow-y-auto::-webkit-scrollbar{width:5px}
+#session-varun .overflow-y-auto::-webkit-scrollbar-thumb,#session-ankur .overflow-y-auto::-webkit-scrollbar-thumb,#session-brajesh .overflow-y-auto::-webkit-scrollbar-thumb{background:#D4D4D8;border-radius:99px}
+#session-varun textarea,#session-ankur textarea,#session-brajesh textarea{resize:none;max-height:110px}
+@media(max-width:900px){#session-varun,#session-ankur,#session-brajesh{height:calc(100vh - 190px);min-height:480px}}
+.ws-flow-node{background:#fff;border:1px solid #E4E4E7;border-radius:10px;padding:9px 11px;width:230px;box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.ws-flow-node .fid{font-family:"Geist Mono",monospace;font-size:9px;color:#8B8B93;text-transform:uppercase;letter-spacing:.07em}
+.ws-flow-node .ft{font-size:12px;font-weight:600;margin-top:2px}
+.ws-flow-node .fd{font-size:10.5px;color:#5F5F66;line-height:1.5;margin-top:2px}
+.ws-flow-arrow{display:flex;justify-content:center;color:#B9B9C0;font-size:13px;line-height:1;padding:3px 0}
+</style>
 </head>
 <body class="h-screen overflow-hidden flex flex-col font-sans">
+<script src="../ws-auth.js"></script>
 <!-- Top Chrome Navigation -->
 <header class="h-13 bg-surface border-b border-line px-6 flex items-center justify-between sticky top-0 z-40">
 <div class="flex items-center gap-6">
@@ -904,6 +919,140 @@ if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:upper
 </script>
 
 <script>
+/* Live project data: when opened with ?projectId= (and #pt= token), each
+   panel shows the real member's dimension session and transcript. */
+(async()=>{
+ try{
+  const q=new URLSearchParams(location.search); const pid=q.get('projectId'); if(!pid) return;
+  const m=location.hash.match(/pt=([^&]+)/); const tok=m?decodeURIComponent(m[1]):'';
+  if(m) history.replaceState(null,'',location.pathname+location.search);
+  await window.__authReady;
+  const snap=window.__authSnap; if(!snap) return;
+  window.__liveSnap=snap;
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const members={}; (snap.members||[]).forEach(x=>{members[x.id]=x;});
+  const dimLabel={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+  const PANELS={workflows:'session-varun',permissions:'session-ankur',roles:'session-brajesh'};
+  const me=snap.current_member||{};
+  const PANELDIMS=['workflows','permissions','roles'];
+  const own=(snap.sessions||[]).filter(s=>me.id&&s.member_id===me.id);
+  const ownSession=own.slice().sort((a,b)=>((PANELDIMS.includes(b.dimension_id)?1:0)-(PANELDIMS.includes(a.dimension_id)?1:0))||(b.messages||[]).length-(a.messages||[]).length)[0]||null;
+  window.__ownSession=ownSession; window.__projAuth={pid,tok};
+  if(ownSession){
+    const ownSecEl=document.getElementById(PANELS[ownSession.dimension_id]||'')||document.getElementById('session-varun'); const ownSec0=ownSecEl?ownSecEl.id:'';
+    const grid=document.querySelector('main .grid');
+    if(grid)grid.style.gridTemplateColumns='1fr';
+    const empty=document.getElementById('stageEmpty'); if(empty)empty.style.display='none';
+    const sc=document.getElementById('sessCount'); if(sc)sc.textContent='1';
+    const dt=document.getElementById('discText'); if(dt)dt.textContent='Your discovery session \u2014 talk with your BA agent here. Everything else updates from this.';
+    Object.values(PANELS).forEach(id=>{
+      const sec=document.getElementById(id); if(!sec) return;
+      if(!ownSec0||sec.id!==ownSec0){ sec.style.display='none'; sec.dataset.hiddenByScope='1'; }
+    });
+    const ownSec=document.getElementById(PANELS[ownSession.dimension_id]||'')||document.getElementById('session-varun');
+    if(ownSec){ ownSec.style.display=''; ownSec.dataset.own='1'; }
+    if(ownSec&&window.__renderFlow)window.__renderFlow(ownSec,ownSession);
+  }
+  for(const s of (snap.sessions||[])){
+    const sec=document.getElementById(PANELS[s.dimension_id]||''); if(!sec) continue;
+    const member=members[s.member_id]||{}; const full=member.name||member.email||'Member'; const first=full.split(' ')[0];
+    sec.dataset.live='1';
+    const h2=sec.querySelector('h2'); if(h2)h2.textContent=`${first} \u00b7 BA Working Session`;
+    const sub=sec.querySelector('p.text-ink-muted'); if(sub)sub.textContent=`Session \u00b7 ${dimLabel[s.dimension_id]||s.dimension_id} \u00b7 ${snap.project?.name||''}`;
+    const chat=sec.querySelector('.overflow-y-auto'); if(!chat) continue;
+    const msgs=(s.messages||[]);
+    if(!msgs.length) continue;
+    chat.innerHTML=msgs.map(x=>x.role==='system'
+      ? `<div class="space-y-1.5"><div class="bg-signal-blue-subtle border border-signal-blue/20 rounded-lg p-3 text-[12px] leading-relaxed text-ink"><span class="font-mono font-medium">Project update</span> · ${esc(x.content)}</div></div>`
+      : x.role==='user'
+      ? `<div class="space-y-1.5 pl-6"><div class="flex items-center justify-end gap-2"><span class="text-[11px] font-mono font-medium text-ink">${esc(first)}</span></div><div class="bg-surface border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink text-left">${esc(x.content)}</div></div>`
+      : `<div class="space-y-1.5"><div class="flex items-center gap-2"><span class="text-[11px] font-mono font-medium text-ink">BA Agent</span></div><div class="bg-canvas border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink">${esc(x.content)}</div></div>`).join('');
+  }
+  if(ownSession&&!PANELS[ownSession.dimension_id]){
+    const sec=document.getElementById('session-varun');
+    if(sec&&window.__renderOwnMessages){
+      const member=(snap.members||[]).find(x=>x.id===ownSession.member_id)||{};
+      const full=member.name||member.email||'Member';
+      const h2=sec.querySelector('h2'); if(h2)h2.textContent=`${full.split(' ')[0]} \u00b7 BA Working Session`;
+      const sub=sec.querySelector('p.text-ink-muted'); if(sub)sub.textContent=`Session \u00b7 ${(typeof dimLabel!=='undefined'&&dimLabel[ownSession.dimension_id])||ownSession.dimension_id} \u00b7 ${snap.project?.name||''}`;
+      window.__renderOwnMessages(sec,ownSession,full.split(' ')[0]);
+    }
+  }
+ }catch(e){}
+})();
+
+/* Working chat for the scoped (own) session: real dimension-agent turns. */
+(function(){
+  function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function renderMessages(sec,session,first){
+    const chat=sec.querySelector('.overflow-y-auto'); if(!chat)return;
+    const msgs=(session.messages||[]);
+    chat.innerHTML=msgs.map(x=>x.role==='system'
+      ? `<div class="space-y-1.5"><div class="bg-signal-blue-subtle border border-signal-blue/20 rounded-lg p-3 text-[12px] leading-relaxed text-ink"><span class="font-mono font-medium">Project update</span> · ${esc(x.content)}</div></div>`
+      : x.role==='user'
+      ? `<div class="space-y-1.5 pl-6"><div class="flex items-center justify-end gap-2"><span class="text-[11px] font-mono font-medium text-ink">${esc(first)}</span></div><div class="bg-surface border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink text-left">${esc(x.content)}</div></div>`
+      : `<div class="space-y-1.5"><div class="flex items-center gap-2"><span class="text-[11px] font-mono font-medium text-ink">BA Agent</span></div><div class="bg-canvas border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink">${esc(x.content)}</div></div>`).join('')
+      + '<div data-typing class="space-y-1.5" style="display:none"><div class="flex items-center gap-2"><span class="text-[11px] font-mono font-medium text-ink">BA Agent</span><span class="text-[11px] font-mono text-ink-subtle">is typing\u2026</span></div></div>';
+    chat.scrollTop=chat.scrollHeight;
+  }
+  window.__renderOwnMessages=renderMessages;
+  function renderFlow(sec,session){
+    const nodes=session?.flow_nodes||[];
+    let canvas=null;
+    sec.querySelectorAll('div').forEach(d=>{ if(/Start/i.test(d.textContent||'') && d.children.length>=3 && [...d.children].some(c=>/Start/i.test(c.textContent||'')) && (!canvas || d.children.length>canvas.children.length)) canvas=d; });
+    if(!canvas) return;
+    if(!nodes.length){
+      // Live session with no flow yet: never present the demo canvas as data.
+      canvas.innerHTML='<div style="max-width:300px;margin:48px auto;text-align:center;color:#8B8B93;font-size:12px;line-height:1.7">'
+        +'<div style="font-size:22px;margin-bottom:6px">\uD83E\uDDED</div>'
+        +'No process flow yet.<br/>Describe your process in the chat \u2014 steps, approvals, handoffs \u2014 and it will be drawn here from your session.</div>';
+      return;
+    }
+    canvas.innerHTML=nodes.map((n,i)=>`
+      ${i?'<div class="ws-flow-arrow">\u2193</div>':''}
+      <div class="ws-flow-node"><div class="fid">${esc(n.id||'')}</div><div class="ft">${esc(n.title||'')}</div>${n.detail?`<div class="fd">${esc(n.detail)}</div>`:''}</div>`).join('');
+  }
+  window.__renderFlow=renderFlow;
+  document.addEventListener('click',async(ev)=>{
+    const btn=ev.target.closest('button'); if(!btn||!/^Send\b/.test(btn.textContent.trim()))return;
+    const sec=btn.closest('section'); if(!sec||sec.dataset.own!=='1')return;
+    const auth=window.__projAuth, session=window.__ownSession; if(!auth||!session)return;
+    const ta=sec.querySelector('textarea'); const text=(ta?.value||'').trim(); if(!text)return;
+    const chat=sec.querySelector('.overflow-y-auto');
+    btn.disabled=true; ta.disabled=true;
+    session.messages=[...(session.messages||[]),{role:'user',content:text}];
+    const meName=(window.__liveSnap?.current_member?.name||'You').split(' ')[0];
+    renderMessages(sec,session,meName);
+    const typing=chat?.querySelector('[data-typing]'); if(typing)typing.style.display='';
+    if(chat)chat.scrollTop=chat.scrollHeight;
+    try{
+      const res=await fetch(`http://127.0.0.1:8020/api/projects/${encodeURIComponent(auth.pid)}/dimensions/${encodeURIComponent(session.dimension_id)}/session/messages`,{
+        method:'POST',headers:{'Content-Type':'application/json','X-Project-Token':(window.__wsTok||auth.tok)},
+        body:JSON.stringify({message:text,revision:session.revision??0,request_id:(crypto.randomUUID?crypto.randomUUID():String(Date.now()))})});
+      const data=await res.json().catch(()=>({}));
+      if(!res.ok)throw new Error(data.detail||'Could not send. Try again.');
+      if(data.session){window.__ownSession=data.session; renderMessages(sec,data.session,meName); renderFlow(sec,data.session);}
+      ta.value='';
+      const open=(data.conflicts||[]).filter(c=>c.status==='open').length;
+      const dt=document.getElementById('discText');
+      if(dt&&open)dt.textContent=`${open} open conflict${open===1?'':'s'} flagged from discovery \u2014 see Cockpit.`;
+    }catch(err){
+      if(typing)typing.style.display='none';
+      const div=document.createElement('div');
+      div.className='space-y-1.5'; div.innerHTML=`<div class="bg-canvas border border-line rounded-lg p-3 text-[13px]" style="color:#B3261E">${esc(err.message)}</div>`;
+      chat?.appendChild(div);
+    }finally{ btn.disabled=false; ta.disabled=false; ta.focus(); }
+  });
+  document.addEventListener('keydown',ev=>{
+    if(ev.key!=='Enter'||ev.shiftKey)return;
+    const ta=ev.target.closest?.('textarea'); if(!ta)return;
+    const sec=ta.closest('section'); if(!sec||sec.dataset.own!=='1')return;
+    ev.preventDefault();
+    const btn=[...sec.querySelectorAll('button')].find(b=>/^Send\b/.test(b.textContent.trim())); btn?.click();
+  });
+})();
+</script>
+<script>
 (()=>{ 
  const q=new URLSearchParams(location.search);
  if(q.get('fresh')==='1'){try{sessionStorage.removeItem('discover_seq_done');}catch(e){}}
@@ -911,7 +1060,7 @@ if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:upper
  let shown=0;
  const ids=['session-varun','session-ankur','session-brajesh'];
  function show(id,text,instant){
-   const el=document.getElementById(id); if(!el||el.style.display!=='none') return;
+   const el=document.getElementById(id); if(!el||el.style.display!=='none'||el.dataset.hiddenByScope) return;
    el.style.display=''; if(!instant) el.classList.add('seq-in');
    shown++; document.getElementById('sessCount').textContent=shown;
    const e=document.getElementById('stageEmpty'); if(e) e.style.display='none';
@@ -941,6 +1090,7 @@ if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:upper
    if(listening) setTimeout(()=>{ listening.style.display=''; }, 500+queue.length*1450);
  }
  function finish(instant){
+   if(window.__ownSession) return;
    document.getElementById('confCount').textContent='3 conflicts · decisions needed';
    document.getElementById('discText').textContent='Discovery complete. Changes and conflicts are now in Cockpit.';
    const d=document.getElementById('discDot'); d.style.animation='none'; d.style.background='#1F9D55';
@@ -951,10 +1101,79 @@ if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:upper
    setTimeout(()=>show('session-varun','Varun is live with his BA agent (Workflows). The approval flow is being drawn.'),900);
    setTimeout(()=>show('session-ankur','Ankur joined (Permissions). Approval authority is being defined.'),3800);
    setTimeout(()=>show('session-brajesh','Brajesh joined (Roles & profiles). HR override is being added.'),6600);
-   setTimeout(()=>{ document.getElementById('confCount').textContent='1 conflict flagged · CONF-02';
+   setTimeout(()=>{ if(window.__ownSession) return; document.getElementById('confCount').textContent='1 conflict flagged · CONF-02';
      document.getElementById('discText').textContent='Conflict detected: Ankur’s manager-only rule clashes with Brajesh’s HR override. Flagged as CONF-02 in Cockpit.'; },9200);
    setTimeout(()=>finish(false),11400);
  }
+})();
+</script>
+
+<script>
+/* Composer tools for the live (own) session: document sharing + voice input. */
+(function(){
+  function wire(sec){
+    if(sec.dataset.toolsWired) return; sec.dataset.toolsWired='1';
+    const ta=sec.querySelector('textarea'); if(!ta) return;
+    const composer=ta.closest('div');
+    const bar=document.createElement('div');
+    bar.style.cssText='display:flex;align-items:center;gap:8px;padding:6px 2px 0';
+    bar.innerHTML='<button type="button" data-attach title="Share a document (PDF, DOCX, XLSX, text)" style="border:1px solid #E4E4E7;background:#fff;border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer">\uD83D\uDCCE Attach</button>'
+      +'<button type="button" data-mic title="Speak instead of typing" style="border:1px solid #E4E4E7;background:#fff;border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer">\uD83C\uDFA4 Speak</button>'
+      +'<span data-tool-status style="font-size:11px;color:#8B8B93"></span>'
+      +'<input type="file" data-file accept=".pdf,.docx,.xlsx,.txt,.md,.csv" style="display:none"/>';
+    composer.appendChild(bar);
+    const status=bar.querySelector('[data-tool-status]');
+    const fileInput=bar.querySelector('[data-file]');
+    bar.querySelector('[data-attach]').addEventListener('click',()=>fileInput.click());
+    fileInput.addEventListener('change', async ()=>{
+      const file=fileInput.files[0]; if(!file) return;
+      const auth=window.__projAuth, session=window.__ownSession;
+      if(!auth||!session){ status.textContent='Session not ready yet.'; return; }
+      status.textContent='Uploading '+file.name+'\u2026';
+      try{
+        const fd=new FormData(); fd.append('file',file);
+        const res=await fetch('http://127.0.0.1:8020/api/projects/'+encodeURIComponent(auth.pid)+'/dimensions/'+encodeURIComponent(session.dimension_id)+'/session/documents',
+          {method:'POST',headers:{'X-Project-Token':(window.__wsTok||auth.tok)},body:fd});
+        const data=await res.json().catch(()=>({}));
+        if(!res.ok) throw new Error(data.detail||'Upload failed.');
+        status.textContent='Shared '+data.document.name+' \u2713';
+        ta.value='I shared a document: '+data.document.name+'. Please review it and tell me what it means for this dimension.';
+        const btn=[...sec.querySelectorAll('button')].find(b=>/^Send\b/.test(b.textContent.trim()));
+        if(btn) btn.click();
+      }catch(err){ status.textContent=err.message; }
+      fileInput.value='';
+    });
+    /* Voice input: browser speech recognition, transcript lands in the composer. */
+    const micBtn=bar.querySelector('[data-mic]');
+    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    let recog=null, listening=false;
+    function stopMic(){ if(recog){ try{recog.stop();}catch(e){} } listening=false; micBtn.textContent='\uD83C\uDFA4 Speak'; micBtn.style.background='#fff'; }
+    micBtn.addEventListener('click', ()=>{
+      if(listening){ stopMic(); return; }
+      if(!SR){ status.textContent='Voice input is not supported in this browser \u2014 typing works as usual.'; return; }
+      recog=new SR(); recog.lang='en-IN'; recog.interimResults=true; recog.continuous=false;
+      const base=ta.value ? ta.value.replace(/\s+$/,'')+' ' : '';
+      recog.onresult=(ev)=>{
+        let text='';
+        for(const result of ev.results) text+=result[0].transcript;
+        ta.value=base+text; ta.dispatchEvent(new Event('input',{bubbles:true}));
+      };
+      recog.onerror=(ev)=>{
+        stopMic();
+        status.textContent = ev.error==='not-allowed'
+          ? 'Microphone is blocked \u2014 allow mic access in the browser, or type instead.'
+          : 'Could not hear that \u2014 try again, or type instead.';
+      };
+      recog.onend=()=>{ listening=false; micBtn.textContent='\uD83C\uDFA4 Speak'; micBtn.style.background='#fff'; ta.focus(); };
+      try{ recog.start(); listening=true; micBtn.textContent='\u23F9 Listening\u2026'; micBtn.style.background='#FDECEA'; status.textContent='Listening \u2014 speak now.'; }
+      catch(e){ status.textContent='Voice input could not start \u2014 type instead.'; }
+    });
+  }
+  const timer=setInterval(()=>{
+    const sec=document.querySelector('section[data-own="1"]');
+    if(sec){ wire(sec); clearInterval(timer); }
+  },600);
+  setTimeout(()=>clearInterval(timer),30000);
 })();
 </script>
 </body></html>

@@ -67,6 +67,7 @@
   </script>
 </head>
 <body class="min-h-screen flex flex-col font-sans bg-canvas text-ink antialiased">
+<script src="../ws-auth.js"></script>
 <!-- Top Chrome Navigation -->
 <header class="h-13 bg-surface border-b border-line px-6 flex items-center justify-between sticky top-0 z-40">
 <div class="flex items-center gap-6">
@@ -488,4 +489,178 @@ const el=document.getElementById('ws-invited');
 if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin:8px 0 2px">Invited in Project Team</div>`+rows.join('');
 }catch(e){}})();
 </script>
+<script>
+(function(){
+  function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  var API='http://127.0.0.1:8020';
+  var FALLBACK={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+  function tok(){ return window.__wsTok || (window.__wsAuth && window.__wsAuth.token) || ''; }
+  function pid(){ return new URLSearchParams(location.search).get('projectId'); }
+  window.__authReady.then(function(a){
+    if(!a||!a.snap) return;
+    var snap=a.snap;
+    var items=(snap.state_items||[]).filter(function(i){ return i.status!=='superseded'; });
+    var dims={}; (snap.dimensions||[]).forEach(function(d){ dims[d.id||d.dimension_id]=d.label||FALLBACK[d.id||d.dimension_id]||d.id; });
+    var byKind=function(k){ return items.filter(function(i){ return i.kind===k; }); };
+    var openConf=(snap.conflicts||[]).filter(function(c){ return String(c.status).indexOf('resolved')!==0; });
+    var openTopics={}; openConf.forEach(function(c){ openTopics[c.topic_key]=true; });
+    var validated=items.filter(function(i){ return i.status==='validated'; });
+    function line(i){ return '- **'+(i.title||i.topic_key)+'** ['+i.kind+' \u00b7 '+(dims[i.dimension_id]||i.dimension_id)+' \u00b7 '+i.status+'] \u2014 '+i.statement; }
+    function section(title, list){ return '## '+title+'\n\n'+(list.length?list.map(line).join('\n'):'_None recorded yet._'); }
+    function cleanSum(raw){
+      var t=(raw||'').trim(); var marks=(t.match(/\?/g)||[]).length;
+      if(!t || marks>=12 || (marks>4 && marks/t.length>0.02)) return 'Discovery in progress';
+      return t;
+    }
+    var brief=(snap.project&&snap.project.brief)||{};
+    var BUILDERS={
+      'Project Brief': function(){
+        var out=['# '+(snap.project.name||'Project')+' \u2014 Project Brief',''];
+        if(brief.system_name) out.push('System: '+brief.system_name,'');
+        ['features','roles','business_rules','success_criteria'].forEach(function(k){
+          if((brief[k]||[]).length) out.push('## '+k.replace('_',' '), brief[k].map(function(x){ return '- '+x; }).join('\n'), '');
+        });
+        out.push(section('Dimension summaries', []));
+        (snap.dimensions||[]).forEach(function(d){ out.push('- **'+(dims[d.id||d.dimension_id])+'**: '+cleanSum(d.summary)+' ('+(d.coverage_status||'discovery')+')'); });
+        return out.join('\n');
+      },
+      'Requirements & Scope': function(){ return ['# Requirements & Scope','', section('Requirements', byKind('requirement')), '', section('Business Rules', byKind('business_rule'))].join('\n'); },
+      'Stakeholder Matrix': function(){
+        var out=['# Stakeholder Matrix','', section('Stakeholders', byKind('stakeholder')), '', '## Project Members',''];
+        (snap.members||[]).forEach(function(m){ out.push('- **'+(m.name||m.email)+'** \u2014 '+((m.dimension_ids||[]).map(function(d){ return dims[d]||d; }).join(', ')||'Owner')); });
+        return out.join('\n');
+      },
+      'Process Flow': function(){
+        var out=['# Process Flow',''];
+        (snap.sessions||[]).forEach(function(s){
+          out.push('## '+(dims[s.dimension_id]||s.dimension_id)+' \u2014 '+(s.member_name||'Member'),'');
+          var nodes=s.flow_nodes||[];
+          out.push(nodes.length?nodes.map(function(n,i){ return (i+1)+'. **'+(n.title||n.id)+'**'+(n.detail?' \u2014 '+n.detail:''); }).join('\n'):'_No flow captured yet._','');
+        });
+        return out.join('\n');
+      },
+      'Project Plan': function(){
+        var out=['# Project Plan',''];
+        (snap.dimensions||[]).forEach(function(d){ out.push('- **'+(dims[d.id||d.dimension_id])+'**: '+(d.coverage_status||'discovery')+' \u2014 '+(d.summary||'')); });
+        out.push('', section('Delivery Statements', items.filter(function(i){ return i.dimension_id==='delivery'; })));
+        return out.join('\n');
+      },
+      'Issues & Decisions': function(){
+        var out=['# Issues & Decisions','', section('Decisions', byKind('decision')), '', section('Open Questions', byKind('question')), '', '## Conflicts',''];
+        (snap.conflicts||[]).forEach(function(c){
+          var isOpen=String(c.status).indexOf('resolved')!==0;
+          out.push('- **'+(c.title||c.topic_key)+'** ['+(isOpen?'OPEN':'RESOLVED')+'] '+((c.options||[]).map(function(o){ return o.title||''; }).filter(Boolean).join(' vs ')));
+          if(!isOpen&&c.decision) out.push('  Decision: '+(c.decision.decision_text||'Resolved'));
+        });
+        if(!(snap.conflicts||[]).length) out.push('_No conflicts recorded._');
+        return out.join('\n');
+      },
+      'Readiness Report': function(){
+        var out=['# Readiness Report','','- Canonical statements: '+items.length,'- Validated: '+validated.length,'- Evolving / proposed: '+(items.length-validated.length),'- Open conflicts: '+openConf.length,'','## Coverage by Dimension',''];
+        (snap.dimensions||[]).forEach(function(d){
+          var did=d.id||d.dimension_id;
+          var mine=items.filter(function(i){ return i.dimension_id===did; });
+          out.push('- **'+(dims[did]||did)+'**: '+(d.coverage_status||'discovery')+' \u00b7 '+mine.length+' statements \u00b7 '+mine.filter(function(i){ return i.status==='validated'; }).length+' validated');
+        });
+        return out.join('\n');
+      },
+      'Technical Architecture': function(){
+        return ['# Technical Architecture','', section('Security', items.filter(function(i){ return i.dimension_id==='security'; })), '', section('Permissions', items.filter(function(i){ return i.dimension_id==='permissions'; }))].join('\n');
+      }
+    };
+    var STATUS={
+      'Project Brief': function(){ return 'State Synced \u00b7 '+validated.length+'/'+items.length+' validated'; },
+      'Requirements & Scope': function(){
+        var req=byKind('requirement').concat(byKind('business_rule'));
+        var conf=req.filter(function(i){ return openTopics[i.topic_key]; }).length;
+        return req.filter(function(i){ return i.status==='validated'; }).length+' Validated \u00b7 '+req.filter(function(i){ return i.status!=='validated'; }).length+' Evolving \u00b7 '+conf+' in Conflict';
+      },
+      'Issues & Decisions': function(){ return openConf.length+' Open \u00b7 '+((snap.conflicts||[]).length-openConf.length)+' Resolved'; },
+      'Readiness Report': function(){ return items.length?Math.round(validated.length/items.length*100)+'% Validated':'0% Validated'; }
+    };
+    function download(name, text, type){
+      var url=URL.createObjectURL(new Blob([text],{type:type||'text/markdown'}));
+      var a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+    }
+    function slug(s){ return String(s||'artifact').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+    function showProjection(title, text){
+      var old=document.getElementById('projection-modal'); if(old) old.remove();
+      var overlay=document.createElement('div');
+      overlay.id='projection-modal';
+      overlay.className='fixed inset-0 z-50 flex items-center justify-center p-4';
+      overlay.innerHTML='<div class="absolute inset-0 bg-ink/40" data-pv-close></div>'
+      +'<div role="dialog" aria-modal="true" class="relative w-full max-w-2xl bg-surface border border-quiet-line rounded-xl shadow-lg overflow-hidden">'
+      +'<div class="px-5 py-4 border-b border-quiet-line flex items-start justify-between"><div><h3 class="text-[15px] font-semibold text-ink">'+esc(title)+'</h3><p class="text-[11px] text-muted-ink font-mono mt-1">Compiled live from canonical state \u00b7 '+items.length+' statements</p></div>'
+      +'<button data-pv-close class="p-1 rounded text-muted-ink hover:text-ink hover:bg-canvas" aria-label="Close"><span class="material-symbols-outlined text-[18px]">close</span></button></div>'
+      +'<pre class="p-5 text-[12px] leading-relaxed text-ink whitespace-pre-wrap max-h-[62vh] overflow-y-auto font-mono">'+esc(text)+'</pre></div>';
+      document.body.appendChild(overlay);
+      overlay.querySelectorAll('[data-pv-close]').forEach(function(el){ el.addEventListener('click', function(){ overlay.remove(); }); });
+    }
+    // artifact cards
+    document.querySelectorAll('h3').forEach(function(h){
+      var title=h.textContent.trim();
+      var build=BUILDERS[title]; if(!build) return;
+      var card=h.closest('.bg-surface'); if(!card) return;
+      var badge=STATUS[title];
+      if(badge){
+        var pill=card.querySelector('.inline-flex.items-center.gap-1\\.5.font-mono');
+        if(pill) pill.innerHTML='<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>'+esc(badge());
+      }
+      var buttons=Array.prototype.slice.call(card.querySelectorAll('button'));
+      var viewBtn=buttons.filter(function(b){ return /View Projection/.test(b.textContent||''); })[0];
+      var genBtn=buttons.filter(function(b){ return /Generate/.test(b.textContent||''); })[0];
+      var foot=card.querySelector('.pt-4 .font-mono');
+      if(viewBtn) viewBtn.addEventListener('click', function(){ showProjection(title, build()); });
+      if(genBtn) genBtn.addEventListener('click', function(){
+        download(slug(snap.project.name)+'-'+slug(title)+'.md', build());
+        if(foot) foot.textContent='Generated \u00b7 '+new Date().toLocaleTimeString();
+      });
+      if(foot && /Canonical Records|Revision/.test(foot.textContent||'')) foot.textContent=items.length+' Canonical Records';
+    });
+    // top export buttons -> real backend export
+    async function runExport(format, btn){
+      var original=btn.textContent;
+      try{
+        var r=await fetch(API+'/api/projects/'+encodeURIComponent(pid())+'/export?format='+format,{headers:{'X-Project-Token':tok()}});
+        var data=await r.json().catch(()=>({}));
+        if(r.status===409){
+          btn.textContent='Resolve '+((data.detail||[]).length||'open')+' conflicts first';
+          setTimeout(function(){ btn.textContent=original; }, 2600);
+          return;
+        }
+        if(!r.ok) throw new Error('export failed');
+        download(data.filename||('export.'+(format==='json'?'json':'md')), data.content||'', data.content_type||'text/plain');
+        btn.textContent='Exported \u00b7 '+new Date().toLocaleTimeString();
+        setTimeout(function(){ btn.textContent=original; }, 2600);
+      }catch(e){
+        btn.textContent='Export unavailable';
+        setTimeout(function(){ btn.textContent=original; }, 2600);
+      }
+    }
+    document.querySelectorAll('button').forEach(function(b){
+      var t=(b.textContent||'').trim();
+      if(/Export PDF Package/.test(t)) b.addEventListener('click', function(){ runExport('markdown', b); });
+      if(/^DOCX$/.test(t)) b.addEventListener('click', function(){ runExport('markdown', b); });
+      if(/^Share$/.test(t)) b.addEventListener('click', function(){
+        var label=b.textContent;
+        if(navigator.clipboard) navigator.clipboard.writeText(location.href).catch(function(){});
+        b.textContent='Link copied';
+        setTimeout(function(){ b.textContent=label; }, 2000);
+      });
+    });
+    var erp=document.getElementById('btn-export-erp');
+    if(erp) erp.addEventListener('click', function(ev){ ev.preventDefault(); runExport('json', erp); });
+  });
+})();
+</script>
+
 </body></html>
+<script>
+window.__authReady.then(function(a){
+  if(!a || a.permissions.is_owner) return;
+  document.querySelectorAll('button, a').forEach(function(el){
+    if(/Generate|Export/.test(el.textContent||'')){ el.style.opacity='.55'; el.style.pointerEvents='none'; el.title='Only the project owner can generate or export'; }
+  });
+});
+</script>

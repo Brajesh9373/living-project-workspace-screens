@@ -57,6 +57,9 @@
 [id^="recent-"]::after{content:'';position:absolute;left:11px;top:34px;bottom:-2px;width:1.5px;background:#E6EAF2}
 [id^="recent-"]:last-of-type::after{display:none}
 #recent-balances::before{background:#177245;box-shadow:0 0 0 3px #DDF0E3}
+[id^="recent-live-"]::before{background:#356AE6;box-shadow:0 0 0 3px #E4EBFD}
+[id^="recent-live-"].rv::before{background:#177245;box-shadow:0 0 0 3px #DDF0E3}
+[id^="recent-live-"].rq::before{background:#B98A12;box-shadow:0 0 0 3px #F6EBCB}
 #recent-question::before{background:#B98A12;box-shadow:0 0 0 3px #F6EBCB}
 [id^="recent-"]>div:first-child{align-items:flex-start !important}
 [id^="recent-"] span.text-sm,[id^="recent-"] .text-sm.font-medium{font-size:13.5px !important;font-weight:620;letter-spacing:-.01em;line-height:1.45}
@@ -66,8 +69,10 @@
 .recent-source{display:flex;align-items:center;gap:7px;font-size:10.5px;font-weight:600;color:#68738A;margin-top:5px}
 .recent-source-dot{width:5px;height:5px;border-radius:50%;background:#9DB2D8;flex-shrink:0}
 </style>
+<style>.tg-avatar{width:32px;height:32px;border-radius:9999px;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex-shrink:0}.tg-avatar-sm{width:22px;height:22px;font-size:10px}</style>
 </head>
 <body class="min-h-screen flex flex-col font-sans bg-canvas text-ink antialiased selection:bg-signal-blue selection:text-white">
+<script src="../ws-auth.js"></script>
 <!-- Top Chrome Navigation -->
 <header class="h-13 bg-surface border-b border-line px-6 flex items-center justify-between sticky top-0 z-40">
 <div class="flex items-center gap-6">
@@ -508,24 +513,7 @@
 <!-- Varun -->
 <div class="flex items-center gap-2.5 py-2 border-b border-quiet-line flex-1">
 <div class="relative shrink-0">
-<svg viewBox="0 0 48 48" class="w-8 h-8 rounded-full block" role="img" aria-label="Varun">
-<circle cx="24" cy="24" r="24" fill="#EFF4FE"></circle>
-<path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#356AE6"></path>
-<path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path>
-<circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle>
-<circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle>
-<ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse>
-<path d="M13.3 21.2C12.8 14 17.7 9.4 24 9.4s11.2 4.6 10.7 11.8c-.4-2.6-1.3-4.1-2.6-5.1-2.3 1.9-5.5 2.9-9.4 2.9-3.2 0-5.8-.7-7.4-1.7-1.2 1-1.8 2.4-2 3.9z" fill="#2E2A26"></path>
-<circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle>
-<circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle>
-<path d="M18.4 18.4h3.4M26.2 18.4h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path>
-<path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path>
-<g stroke="#18181B" stroke-width="1.1" fill="none">
-<circle cx="20.3" cy="21.4" r="3.6"></circle>
-<circle cx="27.7" cy="21.4" r="3.6"></circle>
-<path d="M23.9 21.4h.2M16.7 21.2h-3.2M31.3 21.2h3.2" stroke-linecap="round"></path>
-</g>
-</svg>
+<div class="tg-avatar" style="background:#5E7CE2" role="img" aria-label="Varun">V</div>
 <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-success-ink ring-2 ring-surface"></span>
 </div>
 <div class="min-w-0 flex-1">
@@ -541,19 +529,7 @@ Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 <!-- Ankur -->
 <div class="flex items-center gap-2.5 py-2 border-b border-quiet-line flex-1">
 <div class="relative shrink-0">
-<svg viewBox="0 0 48 48" class="w-8 h-8 rounded-full block" role="img" aria-label="Ankur">
-<circle cx="24" cy="24" r="24" fill="#FFFBEB"></circle>
-<path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#B45309"></path>
-<path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#B87B4E"></path>
-<circle cx="13.4" cy="21.6" r="2.3" fill="#C98F62"></circle>
-<circle cx="34.6" cy="21.6" r="2.3" fill="#C98F62"></circle>
-<ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#C98F62"></ellipse>
-<path d="M13.2 21.6c-.7-7.4 4.4-12.2 10.8-12.2s11.5 4.8 10.8 12.2c-1-1.6-1.9-4-2.4-5.9-1.6 1-4 1.6-7.6 1.6-4.6 0-7.6-1-9.6-2.7-.8 1.3-1.4 3.3-2 7z" fill="#1B1917"></path>
-<path d="M17.6 26.4c1.4 3.4 3.7 5.1 6.4 5.1s5-1.7 6.4-5.1c-1.7 1.5-3.9 2.2-6.4 2.2s-4.7-.7-6.4-2.2z" fill="#1B1917"></path>
-<path d="M18.4 18.6h3.5M26.1 18.6h3.5" stroke="#1B1917" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
-<circle cx="20.3" cy="21.5" r="1.4" fill="#1B1917"></circle>
-<circle cx="27.7" cy="21.5" r="1.4" fill="#1B1917"></circle>
-</svg>
+<div class="tg-avatar" style="background:#E8934A" role="img" aria-label="Ankur">A</div>
 <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-success-ink ring-2 ring-surface"></span>
 </div>
 <div class="min-w-0 flex-1">
@@ -569,19 +545,7 @@ Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 <!-- Brajesh -->
 <div class="flex items-center gap-2.5 py-2 border-b border-quiet-line flex-1">
 <div class="relative shrink-0">
-<svg viewBox="0 0 48 48" class="w-8 h-8 rounded-full block" role="img" aria-label="Brajesh">
-<circle cx="24" cy="24" r="24" fill="#F4F4F5"></circle>
-<path d="M5 48c0-9.4 8.5-15 19-15s19 5.6 19 15z" fill="#27272A"></path>
-<path d="M19.5 29.5h9V36a2.5 2.5 0 0 1-2.5 2.5H22A2.5 2.5 0 0 1 19.5 36z" fill="#D9A57C"></path>
-<circle cx="13.4" cy="21.6" r="2.3" fill="#EBC49E"></circle>
-<circle cx="34.6" cy="21.6" r="2.3" fill="#EBC49E"></circle>
-<ellipse cx="24" cy="21" rx="10.6" ry="11.6" fill="#EBC49E"></ellipse>
-<path d="M13.3 21c-.5-7.3 4.4-11.6 10.7-11.6s11.2 4.3 10.7 11.6c-.9-4-2.3-5.6-4.1-6.3-2 1.2-4.4 1.6-7 1.6-3.1 0-5.6-.5-7.6-1.7-1.3.8-2.1 2.6-2.7 6.4z" fill="#3F3F46"></path>
-<circle cx="20.3" cy="21.4" r="1.5" fill="#18181B"></circle>
-<circle cx="27.7" cy="21.4" r="1.5" fill="#18181B"></circle>
-<path d="M18.4 18.5h3.4M26.2 18.5h3.4" stroke="#18181B" stroke-width="1.2" stroke-linecap="round" fill="none"></path>
-<path d="M21 26.2c.9 1.2 2 1.7 3 1.7s2.1-.5 3-1.7" stroke="#18181B" stroke-width="1.3" stroke-linecap="round" fill="none"></path>
-</svg>
+<div class="tg-avatar" style="background:#3AA08D" role="img" aria-label="Brajesh">B</div>
 <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-ink-subtle ring-2 ring-surface"></span>
 </div>
 <div class="min-w-0 flex-1">
@@ -596,7 +560,7 @@ Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 </div>
 <!-- Pending -->
 <div class="flex items-center gap-2.5 py-2 flex-1">
-<div class="w-8 h-8 rounded-full bg-[#0F766E] text-white flex items-center justify-center shrink-0 font-semibold text-[13px]" role="img" aria-label="Omesh">O</div>
+<div class="tg-avatar" style="background:#0F766E" role="img" aria-label="Omesh">O</div>
 <div class="min-w-0 flex-1">
 <div class="flex items-center justify-between gap-2">
 <span class="text-xs font-semibold text-ink truncate">Omesh</span>
@@ -610,6 +574,7 @@ Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 <div class="px-6 py-3.5 border-t border-quiet-line bg-canvas/50 flex flex-col gap-2.5">
 <div class="flex items-center gap-2">
 <span class="text-[10px] uppercase font-mono tracking-wider text-muted-ink font-medium shrink-0">Invite a collaborator</span>
+<select id="invite-dimension" class="h-9 px-2 rounded bg-surface border border-quiet-line text-xs text-ink focus:border-signal-blue focus:ring-1 focus:ring-signal-blue focus:outline-none shrink-0"><option value="security">Security</option><option value="permissions">Permissions</option><option value="workflows" selected>Workflows</option><option value="roles">Roles &amp; profiles</option><option value="delivery">Delivery expectations</option></select>
 <input id="invite-email" type="email" placeholder="name@company.com" class="h-9 flex-1 min-w-0 px-2.5 rounded bg-surface border border-quiet-line text-xs text-ink placeholder:text-ink-subtle focus:border-signal-blue focus:ring-1 focus:ring-signal-blue focus:outline-none transition-colors">
 <button id="invite-send" class="h-9 px-3 rounded bg-signal-blue hover:bg-signal-blue-hover text-white text-[11px] font-medium tracking-tight flex items-center justify-center gap-1.5 transition-all shadow-sm shrink-0">
 <span id="invite-send-label">Send</span>
@@ -639,6 +604,8 @@ Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 <span class="w-3.5 h-3.5 rounded-full border border-dashed border-line shrink-0"></span>
 <span class="text-[10px] font-mono text-ink-subtle">Waiting for an invite to be sent…</span>
 </div>
+<p id="invite-status" class="hidden text-[10px] font-mono text-muted-ink"></p>
+<a id="invite-link" class="hidden text-[10px] font-mono text-signal-blue underline" target="_blank" rel="noreferrer">Open accept link</a>
 <p id="invite-done" class="hidden text-[10px] font-mono text-success-ink flex items-center gap-1.5">
 <span class="material-symbols-outlined text-[13px]">check_circle</span>
 <span class="">Connected — seat 4 of 5</span>
@@ -666,9 +633,12 @@ Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
 (function () {
   var btn = document.getElementById('invite-send');
   var input = document.getElementById('invite-email');
+  var dimSel = document.getElementById('invite-dimension');
   var steps = document.getElementById('invite-steps');
   var idle = document.getElementById('invite-idle');
   var done = document.getElementById('invite-done');
+  var status = document.getElementById('invite-status');
+  var link = document.getElementById('invite-link');
   var label = document.getElementById('invite-send-label');
   var rows = steps ? steps.querySelectorAll('[data-step]') : [];
   var CIRCLE = 'w-3.5 h-3.5 rounded-full border border-line flex items-center justify-center shrink-0';
@@ -677,48 +647,76 @@ Open<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
   var DOT_ON = 'w-1.5 h-1.5 rounded-full bg-signal-blue';
   var TEXT = 'text-[10px] font-mono text-muted-ink';
   var TEXT_ON = 'text-[10px] font-mono text-ink';
-
   if (!btn) return;
-
-function paint(index) {
-rows.forEach(function (row, i) {
-var on = i <= index;
-var circle = row.firstElementChild;
-var dot = circle.firstElementChild;
-var text = row.children[1];
-circle.className = on ? CIRCLE_ON : CIRCLE;
-dot.className = on ? DOT_ON : DOT;
-text.className = on ? TEXT_ON : TEXT;
-});
-}
-
+  var q = new URLSearchParams(location.search);
+  var pid = q.get('projectId');
+  var m = location.hash.match(/pt=([^&]+)/);
+  var tok = m ? decodeURIComponent(m[1]) : ((window.__wsAuth && window.__wsAuth.token) || '');
+  var AV_COLORS = ['#5E7CE2','#E8934A','#3AA08D','#0F766E','#B45309','#7C5CD6','#C2507A'];
+  function avatarColor(name){var s=0;for(var i=0;i<name.length;i++)s=(s*31+name.charCodeAt(i))>>>0;return AV_COLORS[s%AV_COLORS.length];}
+  function initials(name){var parts=String(name||'?').trim().split(/\s+/);return (parts[0][0]+(parts[1]?parts[1][0]:'')).toUpperCase();}
+  window.__tgAvatar = function(name,cls){ return '<span class="tg-avatar '+(cls||'tg-avatar-sm')+'" style="background:'+avatarColor(name)+'">'+initials(name)+'</span>'; };
+  function paint(index) {
+    rows.forEach(function (row, i) {
+      var on = i <= index;
+      row.firstElementChild.className = on ? CIRCLE_ON : CIRCLE;
+      row.firstElementChild.firstElementChild.className = on ? DOT_ON : DOT;
+      row.children[1].className = on ? TEXT_ON : TEXT;
+    });
+  }
+  function showStatus(text, isError) {
+    if (!status) return;
+    status.textContent = text;
+    status.classList.remove('hidden');
+    status.style.color = isError ? '#B3261E' : '';
+  }
   btn.addEventListener('click', function () {
-    if (input && !input.value.trim()) input.value = 'collaborator@company.com';
-
-    btn.disabled = true;
-    btn.classList.add('opacity-70', 'cursor-not-allowed');
-    label.textContent = 'Sending…';
-
-    if (steps) steps.classList.remove('hidden');
-    if (steps) steps.classList.add('flex');
+    var email = (input.value || '').trim();
+    if (!email.includes('@')) { showStatus('Enter a valid team member email.', true); input.focus(); return; }
+    if (!pid || !tok || tok === 'portal-managed') { showStatus('Invites from here need the workspace opened with its project link. Use Project Team to invite.', true); return; }
+    btn.disabled = true; btn.classList.add('opacity-70', 'cursor-not-allowed');
+    label.textContent = 'Sending\u2026';
+    if (steps) { steps.classList.remove('hidden'); steps.classList.add('flex'); }
     if (idle) idle.classList.add('hidden');
     if (done) { done.classList.add('hidden'); done.classList.remove('flex'); }
-    paint(-1);
-
-    rows.forEach(function (_, i) {
-      setTimeout(function () { paint(i); }, 600 * (i + 1));
+    if (link) link.classList.add('hidden');
+    paint(0);
+    fetch('http://127.0.0.1:8020/api/projects/' + encodeURIComponent(pid) + '/invites', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'X-Project-Token': (window.__wsTok || tok)},
+      body: JSON.stringify({email: email, dimension_id: dimSel ? dimSel.value : 'workflows'})
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok) throw new Error(data.detail || 'Invite failed.');
+        paint(1);
+        var dimLabels = {security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+        var el = document.getElementById('ws-invited');
+        if (el) {
+          if (!el.querySelector('[data-invited-list]')) el.innerHTML = '<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin:8px 0 2px">Invited in Project Team</div><div data-invited-list></div>';
+          var row = document.createElement('div');
+          row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #eee;font-size:11px';
+          row.innerHTML = window.__tgAvatar(email) + '<span style="flex:1">' + email.replace(/</g,'&lt;') + '</span><span style="color:#666">' + (dimLabels[dimSel.value] || dimSel.value) + ' \u00b7 invited</span>';
+          el.querySelector('[data-invited-list]').appendChild(row);
+        }
+        if (data.invite_token && link) {
+          link.href = 'http://127.0.0.1:3000/portal/invite/' + encodeURIComponent(data.invite_token);
+          link.textContent = 'Open accept link for ' + email;
+          link.classList.remove('hidden');
+          showStatus('Invite created. Share the accept link with ' + email + ' (email delivery runs from Project Team).');
+        } else {
+          showStatus('Invite created for ' + email + '. It now appears in Project Team.');
+        }
+        paint(3);
+        if (done) { done.classList.remove('hidden'); done.classList.add('flex'); }
+        input.value = '';
+        if (window.__refreshRoster) window.__refreshRoster();
+      });
+    }).catch(function (err) {
+      showStatus(err.message || 'Invite failed.', true);
+    }).finally(function () {
+      btn.disabled = false; btn.classList.remove('opacity-70', 'cursor-not-allowed');
+      label.textContent = 'Send';
     });
-
-    setTimeout(function () {
-      label.textContent = 'Sent';
-      if (done) { done.classList.remove('hidden'); done.classList.add('flex'); }
-      btn.disabled = false;
-      btn.classList.remove('opacity-70', 'cursor-not-allowed');
-      setTimeout(function () {
-        label.textContent = 'Send';
-        if (input) input.value = '';
-      }, 2400);
-    }, 600 * rows.length + 500);
   });
 })();
 </script>
@@ -726,13 +724,427 @@ text.className = on ? TEXT_ON : TEXT;
 <script>
 (()=>{const q=new URLSearchParams(location.search);const p=q.get('project');
 if(p)document.querySelectorAll('[data-project]').forEach(e=>{e.textContent=p;});
-document.querySelectorAll('a[href*="living_project_workspace/index.html"]').forEach(a=>{if(!a.search)a.search=location.search;});
+document.querySelectorAll('a[href*="living_project_workspace/index.html"], a[href*="conflict_chat_room/index.html"]').forEach(a=>{if(!a.search)a.search=location.search;});
 try{const inv=JSON.parse(q.get('invites')||'{}');
 const dim={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
-const rows=Object.entries(inv).flatMap(([d,ms])=>(ms||[]).map(m=>`<div style="display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>${m}</span><span style="color:#666">${dim[d]||d} · invited</span></div>`));
+const rows=Object.entries(inv).flatMap(([d,ms])=>(ms||[]).map(m=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #eee;font-size:11px">${window.__tgAvatar?window.__tgAvatar(m):''}<span style="flex:1">${m}</span><span style="color:#666">${dim[d]||d} · invited</span></div>`));
 const el=document.getElementById('ws-invited');
-if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin:8px 0 2px">Invited in Project Team</div>`+rows.join('');
+if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin:8px 0 2px">Invited in Project Team</div><div data-invited-list>`+rows.join('')+`</div>`;
 }catch(e){}})();
+</script>
+
+<script>
+/* Live project data: when opened with ?projectId= (and #pt= token), replace
+   simulated people/conflicts/counts with the real project snapshot. */
+window.__liveReady=(async()=>{
+ try{
+  const q=new URLSearchParams(location.search); const pid=q.get('projectId'); if(!pid) return null;
+  const m=location.hash.match(/pt=([^&]+)/); const tok=m?decodeURIComponent(m[1]):'';
+  if(m) history.replaceState(null,'',location.pathname+location.search);
+  await window.__authReady;
+  const snap=window.__authSnap||await (async()=>{const r=await fetch('http://127.0.0.1:8020/api/projects/'+encodeURIComponent(pid),{headers:{'X-Project-Token':(window.__wsTok||tok)}}); return r.ok?await r.json():null;})();
+  if(!snap) return null;
+  window.__liveSnap=snap;
+  const first=s=>(s||'Member').split(' ')[0];
+  const names=(snap.members||[]).map(x=>first(x.name||x.email));
+  window.__liveMembers=names;
+  const dc=document.getElementById('discSessions');
+  if(dc&&names.length)dc.innerHTML=names.map((n,i)=>`<span data-member="${i}" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#71717A;border:1px solid #E4E4E7;border-radius:999px;padding:5px 10px"><span class="mdot" style="width:7px;height:7px;border-radius:50%;background:#D4D4D8"></span>${n} \u00b7 with agent</span>`).join('');
+  const ls=document.getElementById('leaveSessions'); if(ls)ls.textContent=`${(snap.sessions||[]).length} live session${(snap.sessions||[]).length===1?'':'s'}`;
+  renderModuleScope(snap);
+  renderTeamResources(snap);
+  renderRecentChanges(snap);
+  renderNeedsAttention(snap);
+  renderBaCard(snap);
+  renderRoster(snap);
+  window.__refreshRoster=async()=>{
+    try{
+      const r=await fetch('http://127.0.0.1:8020/api/projects/'+encodeURIComponent(new URLSearchParams(location.search).get('projectId')),{headers:{'X-Project-Token':(window.__wsTok||'')}});
+      if(r.ok) renderRoster(await r.json());
+    }catch(e){}
+  };
+  setInterval(async()=>{
+    try{
+      const r=await fetch('http://127.0.0.1:8020/api/projects/'+encodeURIComponent(new URLSearchParams(location.search).get('projectId')),{headers:{'X-Project-Token':(window.__wsTok||'')}});
+      if(!r.ok) return;
+      const fresh=await r.json();
+      renderRoster(fresh); renderNeedsAttention(fresh); renderBaCard(fresh);
+    }catch(e){}
+  },45000);
+  const DIMLABEL={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+  function conflictCode(i){ return 'CONF-'+String(i+1).padStart(2,'0'); }
+  function topicLabel(c){ const t=(c.title||'Conflict').replace(/^Conflict:\s*/,'').replace(/[-_]+/g,' '); return t.charAt(0).toUpperCase()+t.slice(1); }
+  function decisionLabel(c){
+    if(!c.decision) return '';
+    if(c.decision.decision_text) return c.decision.decision_text;
+    const chosen=(c.options||[]).find(o=>o.item_id===c.decision.choice_item_id);
+    return chosen?chosen.title:'Resolved';
+  }
+  function openConflicts(snap){ return (snap.conflicts||[]).filter(c=>String(c.status).indexOf('resolved')!==0); }
+  function sortedConflicts(snap){ return (snap.conflicts||[]).slice(); } /* snapshot order: CONF codes stable across Cockpit, room, State */
+  function codeOf(snap, id){ const i=sortedConflicts(snap).findIndex(c=>c.id===id); return i>=0?conflictCode(i):'CONF'; }
+  function renderNeedsAttention(snap){
+    const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const head=[...document.querySelectorAll('h2')].find(x=>x.textContent.trim()==='Needs Attention');
+    const section=head?.closest('section'); if(!section) return;
+    const list=section.querySelector('.flex.flex-col.gap-3.flex-1'); if(!list) return;
+    const conflicts=sortedConflicts(snap);
+    const itemById={}; (snap.state_items||[]).forEach(it=>{ itemById[it.id]=it; });
+    const open=openConflicts(snap).length;
+    const count=document.getElementById('needsCount');
+    if(count) count.textContent=open?`${open} Open Item${open===1?'':'s'}`:(conflicts.length?'All resolved':'0 Open Items');
+    if(!conflicts.length){
+      list.innerHTML='<p id="needsEmpty" class="py-6 text-xs text-muted-ink leading-relaxed">No conflicts yet. If members disagree with each other or with Phase 1, the conflict will appear here.</p>';
+      return;
+    }
+    const room='../conflict_chat_room/index.html'+location.search;
+    list.innerHTML=conflicts.map((c,i)=>{
+      const resolved=String(c.status).indexOf('resolved')===0;
+      const firstOpt=(c.options||[])[0]||{};
+      const chip=((itemById[firstOpt.item_id]||{}).kind||'conflict').toUpperCase().replace('_',' ');
+      const opts=(c.options||[]).map(o=>o.title||'').filter(Boolean).join(' vs ');
+      return `<a href="${room}#${esc(c.id)}" target="_blank" rel="noopener" class="p-3.5 rounded border ${resolved?'border-green-200 bg-[#F4FBF6]':'border-quiet-line bg-canvas'} flex flex-col gap-2 flex-1 hover:border-deep-line transition-colors">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-warn-ink bg-warn-subtle px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-amber-200">${esc(chip)}</span>
+<span class="text-xs font-semibold text-ink">${conflictCode(i)} · ${esc(topicLabel(c))}</span>
+</div>
+<span class="conf-badge text-[11px] font-mono font-semibold shrink-0" style="color:${resolved?'#177245':'inherit'}">${resolved?'Resolved':'Conflict'}</span>
+</div>
+<p class="text-xs text-muted-ink leading-relaxed">${esc(c.question||'')}${opts?` <strong class="text-ink font-medium">${esc(opts)}</strong>`:''}</p>
+${resolved&&decisionLabel(c)?`<p class="text-xs" style="color:#177245">Decision: ${esc(decisionLabel(c))}</p>`:''}
+</a>`;
+    }).join('');
+    const solve=document.getElementById('solveBtn');
+    if(solve){ solve.style.opacity=open?'':' .45'.trim(); solve.style.pointerEvents=open?'':'none'; }
+  }
+  function renderBaCard(snap){
+    const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const head=[...document.querySelectorAll('h2')].find(x=>x.textContent.trim()==='Continue with BA Agent');
+    const section=head?.closest('section'); if(!section) return;
+    const brief=snap.project?.brief||{};
+    const domain=(brief.system_name||snap.project?.name||'Project').replace(/\s+System$/i,'');
+    const ready=[...section.querySelectorAll('div')].find(d=>/^BA Agent ready in/.test(d.textContent.trim())&&d.querySelector('span.text-signal-blue'));
+    if(ready) ready.innerHTML=`BA Agent ready in <span class="text-signal-blue">${esc(domain)} Domain</span>`;
+    const open=openConflicts(snap);
+    const liveMembers=new Set((snap.sessions||[]).map(x=>x.member_id).filter(Boolean)).size;
+    const ctxP=section.querySelector('.p-3.rounded p');
+    if(ctxP){
+      ctxP.textContent=open.length
+        ? `"${liveMembers} member${liveMembers===1?' is':'s are'} live with their agents. ${open.length} conflict${open.length===1?' is':'s are'} open: ${open.map(c=>topicLabel(c).toLowerCase()).join(', ')}."`
+        : `"${liveMembers} member${liveMembers===1?' is':'s are'} live with their agents. No open conflicts \u2014 the project model is consistent."`;
+    }
+    const chipsWrap=section.querySelector('.grid.grid-cols-1');
+    if(chipsWrap){
+      const room='../conflict_chat_room/index.html'+location.search;
+      chipsWrap.innerHTML=open.length?open.slice(0,2).map((c,i)=>`
+<a href="${room}#${esc(c.id)}" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded bg-canvas hover:bg-white hover:border-deep-line border border-quiet-line text-xs text-ink transition-colors flex items-center justify-between group">
+<span class="truncate">${i===0?'Resolve':'Decide'} ${codeOf(snap, c.id)} ${esc(topicLabel(c).toLowerCase())}</span>
+<span class="material-symbols-outlined text-[14px] text-muted-ink group-hover:text-signal-blue group-hover:translate-x-0.5 transition-all">chevron_right</span>
+</a>`).join('')
+      :`<a href="${room}" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded bg-canvas hover:bg-white hover:border-deep-line border border-quiet-line text-xs text-ink transition-colors flex items-center justify-between group">
+<span class="truncate">All conflicts resolved \u2014 review decisions</span>
+<span class="material-symbols-outlined text-[14px] text-muted-ink group-hover:text-signal-blue group-hover:translate-x-0.5 transition-all">chevron_right</span>
+</a>`;
+    }
+  }
+  function renderRoster(snap){
+    const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const head=[...document.querySelectorAll('h2')].find(x=>x.textContent.trim()==='Invite People');
+    const section=head?.closest('section'); if(!section) return;
+    const roster=section.children[1]; if(!roster) return;
+    const dims={}; (snap.dimensions||[]).forEach(d=>{ dims[d.id||d.dimension_id]=(d.label||DIMLABEL[d.id||d.dimension_id]||d.id)+' ('+(d.kind||'')+')'; });
+    const members=(snap.members||[]).filter(m=>m.status!=='removed');
+    const invites=(snap.invites||[]).filter(i=>!['accepted','revoked'].includes(i.status||'pending'));
+    const sessionsByMember={}; (snap.sessions||[]).forEach(x=>{ sessionsByMember[x.member_id]=x; });
+    const seenAgo=m=>{
+      const t=Date.parse(m.last_seen_at||''); if(!t||isNaN(t)) return null;
+      const s=Math.max(0,(Date.now()-t)/1000);
+      if(s<180) return {live:true,label:'Live'};
+      if(s<3600) return {live:false,label:'Active '+Math.max(1,Math.floor(s/60))+'m ago'};
+      if(s<86400) return {live:false,label:'Active '+Math.floor(s/3600)+'h ago'};
+      return {live:false,label:'Active '+Math.floor(s/86400)+'d ago'};
+    };
+    const liveCount=members.filter(m=>seenAgo(m)?.live).length;
+    const AV=['#5E7CE2','#E8934A','#3AA08D','#0F766E','#B45309','#7C5CD6','#C2507A'];
+    const color=n=>{ let h=0; const str=String(n||'?'); for(let i=0;i<str.length;i++)h=(h*31+str.charCodeAt(i))>>>0; return AV[h%AV.length]; };
+    const initials=n=>{ const parts=String(n||'?').trim().split(/\s+/); return ((parts[0][0]||'?')+(parts[1]?parts[1][0]:'')).toUpperCase(); };
+    const rowFor=m=>{
+      const pres=seenAgo(m);
+      const isLive=!!pres?.live;
+      const chip=isLive
+        ? '<span class="text-[9px] font-mono text-valid bg-valid-bg px-1.5 py-0.5 rounded border border-green-200 shrink-0">Live</span>'
+        : (m.role==='owner'
+          ? '<span class="text-[9px] font-mono text-muted-ink bg-canvas px-1.5 py-0.5 rounded border border-quiet-line shrink-0">Owner</span>'
+          : '<span class="text-[9px] font-mono text-muted-ink shrink-0">'+esc(pres?pres.label:'Joined')+'</span>');
+      const dimText=(m.dimension_ids||[]).map(d=>dims[d]||d).join(' · ')||'All dimensions';
+      const sess=sessionsByMember[m.id];
+      const sub=dimText+(sess?' · Session active':' · No session yet');
+      return `<div class="flex items-center gap-2.5 py-2 border-b border-quiet-line">
+<div class="relative shrink-0">
+<div class="tg-avatar" style="background:${color(m.name||m.email)}" role="img" aria-label="${esc(m.name||m.email)}">${esc(initials(m.name||m.email))}</div>
+<span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full ${isLive?'bg-success-ink':'bg-ink-subtle'} ring-2 ring-surface"></span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="text-xs font-semibold text-ink truncate">${esc(m.name||m.email)}</span>
+${chip}
+</div>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">${esc(sub)}</p>
+</div>
+</div>`;
+    };
+    const invRow=inv=>{
+      return `<div class="flex items-center gap-2.5 py-2 border-b border-quiet-line">
+<div class="relative shrink-0">
+<div class="tg-avatar" style="background:${color(inv.email)}" role="img" aria-label="${esc(inv.email)}">${esc(initials(inv.email))}</div>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="text-xs font-semibold text-ink truncate">${esc(inv.email)}</span>
+<span class="text-[9px] font-mono text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200 shrink-0">Invited</span>
+</div>
+<p class="text-[10px] text-muted-ink font-mono mt-0.5 truncate">${esc(dims[inv.dimension_id]||inv.dimension_id)} · invite ${esc(inv.status||'pending')}${inv.delivery_status&&inv.delivery_status!=='pending'?' · '+esc(inv.delivery_status):''}</p>
+</div>
+</div>`;
+    };
+    const others=members.filter(m=>m.role!=='owner');
+    roster.innerHTML=`<div class="flex items-center justify-between pb-2 mb-1">
+<span class="text-[10px] uppercase font-mono tracking-wider text-muted-ink font-medium">Active collaborators</span>
+<span class="text-[10px] font-mono text-muted-ink">${liveCount} live with agents</span></div>`
+      + members.map(rowFor).join('')
+      + invites.map(invRow).join('')
+      + (!others.length && !invites.length ? '<p class="py-3 text-[11px] text-muted-ink leading-relaxed">No collaborators yet — invite your team below, one owner per dimension.</p>' : '');
+    // header: project line + seats
+    const codeLine=head.parentElement?.querySelector('p');
+    if(codeLine) codeLine.textContent=(snap.project?.name||'Project')+' · '+(snap.project?.brief?.system_name||'Workspace');
+    const seatWrap=section.querySelector('[title$="seats used"]');
+    if(seatWrap){
+      const used=Math.min(members.length,5);
+      seatWrap.title=used+' of 5 seats used';
+      const num=seatWrap.querySelector('span');
+      if(num) num.textContent=used+' / 5';
+      const segs=seatWrap.querySelectorAll('.flex.items-center.gap-0\\.5 > span');
+      segs.forEach((seg,i)=>{ seg.className='w-3 h-1.5 rounded-full '+(i<used?'bg-signal-blue':'bg-quiet-line'); });
+    }
+  }
+  function renderRecentChanges(snap){
+    const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const head=[...document.querySelectorAll('h2')].find(x=>x.textContent.trim()==='Recent Changes');
+    const section=head?.closest('section'); if(!section) return;
+    const feed=section.querySelector('.divide-y'); if(!feed) return;
+    const LABEL={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+    const memberByDim={};
+    (snap.members||[]).forEach(m=>{ (m.dimension_ids||[]).forEach(d=>{ if(!memberByDim[d]) memberByDim[d]=m.name||m.email||''; }); });
+    const ago=iso=>{ const t=typeof iso==='number'?iso*1000:Date.parse(iso||''); if(!t||Number.isNaN(t)) return ''; const s=Math.max(0,(Date.now()-t)/1000); if(s<3600) return Math.max(1,Math.floor(s/60))+'m ago'; if(s<86400) return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago'; };
+    const CHIP={decision:['DECISION','text-success-ink bg-success-subtle','border-green-200'],requirement:['REQ','text-signal-blue bg-signal-blue-subtle','border-signal-blue/20'],question:['QUESTION','text-muted-ink bg-canvas','border-quiet-line'],rule:['RULE','text-ink bg-canvas','border-quiet-line'],constraint:['RULE','text-ink bg-canvas','border-quiet-line'],process:['WORKFLOW','text-ink bg-canvas','border-quiet-line']};
+    const entries=[];
+    (snap.state_items||[]).forEach(i=>{
+      const chip=CHIP[i.kind]||[(i.kind||'ITEM').toUpperCase(),'text-ink bg-canvas','border-quiet-line'];
+      entries.push({t:Date.parse(i.updated_at||i.created_at||'')||0, chip:chip, cls:i.status==='validated'?'rv':(i.kind==='question'?'rq':''),
+        title:i.title, body:i.statement,
+        dim:i.dimension_id,
+        note:i.status==='validated'?'Marked <strong class="text-ink font-medium">Validated</strong>.':(i.status==='proposed'?'Proposed \u2014 awaiting validation.':''),
+        source:(memberByDim[i.dimension_id]?memberByDim[i.dimension_id]+'\u2019s BA session':'BA session')+' \u00b7 '+(LABEL[i.dimension_id]||i.dimension_id)});
+    });
+    const EV={'document.shared':e=>['DOC','text-ink bg-canvas','border-quiet-line','Document shared: '+(e.payload?.name||'document'),(e.payload?.name||'A document')+' was added as evidence for '+(LABEL[e.payload?.dimension_id]||'a dimension')+'.'],
+      'member.accepted':e=>['MEMBER','text-ink bg-canvas','border-quiet-line','Member joined',(e.payload?.email||'A member')+' accepted the invite for '+(LABEL[e.payload?.dimension_id]||'their dimension')+'.'],
+      'member.invited':e=>['INVITE','text-ink bg-canvas','border-quiet-line','Invite sent','Invited '+(e.payload?.email||'')+' to own '+(LABEL[e.payload?.dimension_id]||'a dimension')+'.'],
+      'member.removed':e=>['MEMBER','text-ink bg-canvas','border-quiet-line','Member removed','A member was removed from the project.'],
+      'project.created':()=>['START','text-ink bg-canvas','border-quiet-line','Project created','The project was created from the confirmed brief.']};
+    (snap.events||[]).forEach(e=>{
+      const kind=e.type||e.kind;
+      if(kind==='conflict.decided'||kind==='conflict.resolved'){
+        const dec=e.payload?.decision||{};
+        const decText=dec.decision_text||dec.statement||'';
+        entries.push({t:Date.parse(e.timestamp||'')||0, chip:['DECISION','text-success-ink bg-success-subtle','border-green-200'], cls:'rv', dim:e.payload?.dimension_id||null, ownerAction:true,
+          title:'Conflict decided', body:'Decision recorded for '+(e.payload?.topic_key||'a conflict')+(decText?': '+decText:'.'), note:'', source:'Project owner \u00b7 Cockpit'});
+        return;
+      }
+      if(kind==='conflict.opened'){
+        entries.push({t:Date.parse(e.timestamp||'')||0, chip:['CONFLICT','text-warn-ink bg-warn-subtle','border-amber-200'], cls:'', dim:e.payload?.dimension_id||null,
+          title:'Conflict opened', body:'Members describe '+(e.payload?.topic_key||'a topic')+' differently across dimensions'+(e.payload?.reason?': '+e.payload.reason:'')+'.', note:'', source:'Conflict engine \u00b7 Needs Attention'});
+        return;
+      }
+      const make=EV[kind]; if(!make) return;
+      const v=make(e);
+      entries.push({t:Date.parse(e.timestamp||'')||0, chip:[v[0],v[1],v[2]], cls:'', dim:e.payload?.dimension_id||null, ownerAction:kind==='project.created', title:v[3], body:v[4], note:'', source:'Project activity'});
+    });
+    entries.sort((a,b)=>b.t-a.t);
+    const mutations=(snap.state_items||[]).length;
+    const meta=document.getElementById('recentMeta');
+    const stateHref='../state_living_project_workspace/index.html'+location.search;
+    if(meta) meta.innerHTML=`<a href="${stateHref}" class="underline decoration-quiet-line underline-offset-2 hover:text-ink" title="Open the State tab - full detail">${mutations} state mutation${mutations===1?'':'s'}</a>`;
+    const myDims=new Set((snap.permissions&&snap.permissions.dimension_ids)||[]);
+    const isOwner=!!(snap.permissions&&snap.permissions.is_owner);
+    const mine=e=>e.dim?myDims.has(e.dim):(e.ownerAction?isOwner:false);
+    const rowHtml=(e,i)=>`
+<div id="recent-live-${i}" class="${e.cls} py-3.5 first:pt-0 last:pb-0 flex flex-col gap-1.5 flex-1">
+<div class="flex items-center justify-between gap-3">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-[11px] font-semibold ${e.chip[1]} px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border ${e.chip[2]}">${e.chip[0]}</span>
+<span class="text-sm font-medium text-ink">${esc(e.title)}</span>
+</div>
+<span class="text-xs text-muted-ink shrink-0 font-mono">${ago(e.t)}</span>
+</div>
+<p class="text-xs text-muted-ink pl-0 leading-relaxed">${e.note?e.note+' ':''}${esc(e.body||'')}</p>
+<div class="recent-source"><span class="recent-source-dot"></span>${esc(e.source)}</div>
+</div>`;
+    let view='team';
+    function paint(){
+      const list=(view==='me'?entries.filter(mine):entries).slice(0,5);
+      feed.innerHTML=list.length?list.map(rowHtml).join('')
+        :'<p id="recentEmpty" class="py-6 text-xs text-muted-ink leading-relaxed">'+(view==='me'
+          ?'Nothing in your dimensions yet. When you talk with your agent, your changes will appear here.'
+          :'Nothing yet. When members talk with their agents, changes will appear here one by one.')+'</p>';
+    }
+    if(meta&&meta.parentElement&&!meta.parentElement.querySelector('[data-recent-view]')){
+      const toggle=document.createElement('span');
+      toggle.className='inline-flex items-center gap-1 mr-3 align-middle';
+      toggle.innerHTML=['me','team'].map(v=>`<button type="button" data-recent-view="${v}" aria-pressed="${v===view?'true':'false'}" class="px-2 py-1 text-[11px] font-medium rounded ${v===view?'text-ink bg-canvas border border-quiet-line':'text-muted-ink hover:text-ink'}">${v==='me'?'For Me':'My Team'}</button>`).join('');
+      meta.parentElement.insertBefore(toggle,meta);
+      toggle.querySelectorAll('[data-recent-view]').forEach(b=>b.addEventListener('click',()=>{
+        view=b.getAttribute('data-recent-view');
+        toggle.querySelectorAll('[data-recent-view]').forEach(o=>{
+          const on=o===b;
+          o.setAttribute('aria-pressed',on?'true':'false');
+          o.className=`px-2 py-1 text-[11px] font-medium rounded ${on?'text-ink bg-canvas border border-quiet-line':'text-muted-ink hover:text-ink'}`;
+        });
+        paint();
+      }));
+    }
+    paint();
+  }
+  function renderTeamResources(snap){
+    const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const head=[...document.querySelectorAll('h2')].find(x=>x.textContent.includes('Team Resources'));
+    const section=head?.closest('section'); if(!section) return;
+    const LABEL={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+    const GROUP={security:'Technical',permissions:'Technical',workflows:'Functional',roles:'Functional',delivery:'Functional'};
+    const PALETTE=['bg-signal-blue','bg-amber-700','bg-zinc-800','bg-[#0F766E]'];
+    const groups=new Map();
+    (snap.sessions||[]).forEach(s=>{
+      (s.documents||[]).forEach(d=>{
+        const key=s.member_id||s.member_name||'owner';
+        if(!groups.has(key)) groups.set(key,{name:s.member_name||'Project owner',dimension_id:s.dimension_id,docs:[]});
+        groups.get(key).docs.push(d);
+      });
+    });
+    const allDocs=[...groups.values()].flatMap(g=>g.docs);
+    const graph=document.getElementById('graphNodes');
+    if(graph) graph.textContent=`${(snap.state_items||[]).length} nodes active`;
+    const countSpan=[...section.querySelectorAll('span')].find(s=>/documents \u00b7/.test(s.textContent)&&s.closest('div'));
+    if(countSpan) countSpan.textContent=`${allDocs.length} document${allDocs.length===1?'':'s'} \u00b7 ${(snap.members||[]).length} member${(snap.members||[]).length===1?'':'s'} joined`;
+    const chipsRow=section.querySelector('.flex.flex-wrap');
+    if(chipsRow){
+      const kinds={}; allDocs.forEach(d=>{kinds[d.kind]=(kinds[d.kind]||0)+1;});
+      const names={pdf:'PDF',docx:'DOCX',xlsx:'XLSX',text:'TXT'};
+      chipsRow.innerHTML='<span class="text-muted-ink">Uploaded by members who joined with their agents</span><span class="w-px h-3 bg-quiet-line"></span>'
+        +Object.entries(kinds).map(([k,n])=>`<span class="px-2 py-0.5 rounded border border-quiet-line bg-canvas text-muted-ink">${n} ${names[k]||k.toUpperCase()}</span>`).join('');
+    }
+    const grid=section.querySelector('.grid'); if(!grid) return;
+    const ago=ts=>{ if(!ts) return ''; const s=Math.max(0,Math.floor(Date.now()/1000-ts)); if(s<3600) return Math.max(1,Math.floor(s/60))+'m ago'; if(s<86400) return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago'; };
+    const size=d=>{ if(d.size) return d.size>1048576?(d.size/1048576).toFixed(1)+' MB':Math.max(1,Math.round(d.size/1024))+' KB'; return (d.characters||0)+' chars'; };
+    if(!groups.size){
+      grid.innerHTML='<p class="text-xs text-muted-ink py-3">No documents yet \u2014 members can share documents with their agent from the Discover chat (\uD83D\uDCCE Attach), and they will appear here.</p>';
+      return;
+    }
+    grid.innerHTML=[...groups.values()].map((g,i)=>`
+<div class="py-2.5 flex flex-col border-t border-quiet-line first:border-t-0 md:border-t-0 md:[&:nth-child(n+3)]:border-t">
+<div class="flex items-center justify-between gap-2"><span class="flex items-center gap-2"><span class="w-7 h-7 rounded-full ${PALETTE[i%4]} text-white flex items-center justify-center shrink-0 font-semibold text-[12px]" role="img" aria-label="${esc(g.name)}">${esc((g.name||'?').trim()[0].toUpperCase())}</span><span class="text-xs font-semibold text-ink">${esc(g.name)} <span class="font-normal text-muted-ink">\u00b7 ${esc(LABEL[g.dimension_id]||g.dimension_id)} (${GROUP[g.dimension_id]||''}) \u00b7 Session</span></span></span><span class="font-mono text-[10px] text-success-ink">Joined</span></div>
+${g.docs.map(d=>`<div class="flex items-center justify-between gap-3 py-1 pl-[36px]"><span class="min-w-0 flex items-baseline"><span class="text-xs font-medium text-ink truncate">${esc(d.name)}</span><span class="text-[10px] font-mono text-muted-ink ml-2 whitespace-nowrap">${esc((d.kind||'').toUpperCase())} \u00b7 ${size(d)}${d.uploaded_at?' \u00b7 '+ago(d.uploaded_at):''}</span></span><span class="flex gap-1.5 shrink-0"><button type="button" data-doc-preview="${esc(d.id||'')}" class="px-1.5 py-1 rounded hover:bg-canvas text-[11px] font-medium text-signal-blue" ${d.id?'':'disabled title="Uploaded before downloads were supported"'}>Preview</button><button type="button" data-doc-download="${esc(d.id||'')}" data-doc-name="${esc(d.name)}" class="px-2 py-1 rounded bg-ink text-white text-[11px] font-medium" ${d.id?'':'disabled title="Uploaded before downloads were supported"'}>Download</button></span></div>`).join('')}
+</div>`).join('');
+    section.querySelectorAll('[data-doc-preview],[data-doc-download]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const id=btn.getAttribute('data-doc-preview')||btn.getAttribute('data-doc-download');
+        const inline=btn.hasAttribute('data-doc-preview');
+        try{
+          const res=await fetch('http://127.0.0.1:8020/api/projects/'+encodeURIComponent(pid)+'/documents/'+encodeURIComponent(id)+(inline?'?inline=true':''),
+            {headers:{'X-Project-Token':(window.__wsTok||'')}});
+          if(!res.ok) throw new Error('download failed');
+          const url=URL.createObjectURL(await res.blob());
+          if(inline){ window.open(url,'_blank'); }
+          else { const a=document.createElement('a'); a.href=url; a.download=btn.getAttribute('data-doc-name')||'document'; a.click(); }
+          setTimeout(()=>URL.revokeObjectURL(url),4000);
+        }catch(e){ btn.textContent='Unavailable'; setTimeout(()=>{btn.textContent=inline?'Preview':'Download';},1600); }
+      });
+    });
+  }
+  function renderModuleScope(snap){
+    const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const head=[...document.querySelectorAll('h2')].find(x=>x.textContent.trim()==='ERP Module Scope');
+    const section=head?.closest('section'); if(!section) return;
+    const grids=section.querySelectorAll('.grid'); if(grids.length<2) return;
+    const CHARTER={security:'Access, data protection, sign-in rules',permissions:'Who can see and approve what',workflows:'Approvals, states, handoffs, exceptions',roles:'Org structure, roles, reporting lines',delivery:'Scope, timeline, acceptance, go-live readiness'};
+    const LABEL={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+    const BADGE={clear:['Validated','font-mono text-[10px] text-success-ink bg-success-subtle px-1.5 py-0.5 rounded border border-green-200'],
+                 open:['Evolving','font-mono text-[10px] text-warn-ink bg-warn-subtle px-1.5 py-0.5 rounded border border-amber-200'],
+                 discovery:['Proposed / New','font-mono text-[10px] text-signal-blue bg-signal-blue-subtle px-1.5 py-0.5 rounded border border-signal-blue/20']};
+    const PHASE={clear:'Phase: Baseline Locked',open:'Phase: Active Discovery Session',discovery:'Phase: Waiting for discovery'};
+    const PALETTE=['bg-signal-blue','bg-amber-700','bg-zinc-800'];
+    const ownerEmail=(snap.project?.owner_email||'').toLowerCase();
+    const ownerName=snap.project?.owner_name||'Owner';
+    const assigned={};
+    (snap.members||[]).forEach(m=>{ (m.dimension_ids||[]).forEach(d=>{ (assigned[d]=assigned[d]||[]).push(m); }); });
+    const sessionsByDim={};
+    (snap.sessions||[]).forEach(s=>{ sessionsByDim[s.dimension_id]=(sessionsByDim[s.dimension_id]||0)+1; });
+    function summaryText(d){
+      const raw=(d.summary||'').trim();
+      const marks=(raw.match(/\?/g)||[]).length;
+      if(!raw || marks>=12 || (marks>4 && marks/raw.length>0.02)) return CHARTER[d.dimension_id]||'';
+      return raw.length>150?raw.slice(0,150).trimEnd()+'\u2026':raw;
+    }
+    function card(d, technical, idx){
+      const cov=d.coverage_status||'discovery';
+      const badge=BADGE[cov]||BADGE.discovery;
+      const people=(assigned[d.dimension_id]||[]).filter(m=>(m.email||'').toLowerCase()!==ownerEmail);
+      const sess=sessionsByDim[d.dimension_id]||0;
+      let avatars='', peopleText='';
+      if(people.length){
+        avatars=people.slice(0,3).map((m,i)=>`<span class="w-5 h-5 rounded-full ${PALETTE[(idx+i)%3]} text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-canvas" title="${esc(m.name||m.email||'')}">${esc((m.name||m.email||'?').trim()[0].toUpperCase())}</span>`).join('');
+        peopleText=`${people.length} on this module`;
+      } else {
+        avatars=`<span class="w-5 h-5 rounded-full bg-signal-blue text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-canvas" title="${esc(ownerName)}">${esc(ownerName.trim()[0].toUpperCase())}</span>`;
+        peopleText='owner only';
+      }
+      const footText=sess?`${sess} live session${sess===1?'':'s'}`:peopleText;
+      return `<div class="p-4 rounded border border-quiet-line ${technical?'bg-white':'bg-canvas'} flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold text-ink">${esc(LABEL[d.dimension_id]||d.dimension_id)}</span><span class="${badge[1]}">${badge[0]}</span></div>
+<p class="text-xs text-muted-ink mt-1" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${esc(summaryText(d))}</p>
+</div>
+<div class="text-[11px] font-mono ${cov==='open'?'text-signal-blue font-medium':'text-muted-ink'} border-t border-quiet-line pt-2">${PHASE[cov]||PHASE.discovery}</div>
+<div class="flex items-center gap-2"><span class="flex -space-x-1.5">${avatars}</span><span class="text-[10px] font-mono text-muted-ink">${footText}</span></div>
+</div>`;
+    }
+    const dims=snap.dimensions||[];
+    const byId={}; dims.forEach(d=>{byId[d.dimension_id]=d;});
+    const functional=['workflows','roles','delivery'].map(id=>byId[id]).filter(Boolean);
+    const technical=['security','permissions'].map(id=>byId[id]).filter(Boolean);
+    grids[0].innerHTML=functional.map((d,i)=>card(d,false,i)).join('');
+    grids[1].innerHTML=technical.map((d,i)=>card(d,true,i)).join('');
+  }
+  const gn=document.getElementById('graphNodes'); if(gn)gn.textContent=`${(snap.state_items||[]).length} nodes active`;
+  let assertTicks=0;
+  const assertTimer=setInterval(()=>{
+    assertTicks++;
+    renderNeedsAttention(snap);
+    const open=openConflicts(snap).length;
+    const dt=document.getElementById('discText'), dtitle=document.getElementById('discTitle');
+    if(dtitle) dtitle.textContent='Project model is live';
+    if(dt) dt.textContent=open?`${open} conflict${open===1?'':'s'} need your decisions. Solve them with your BA agent.`:'No open conflicts. The project model is consistent.';
+    if(assertTicks>=14) clearInterval(assertTimer);
+  },1500);
+  const confs=snap.conflicts||[];
+  document.querySelectorAll('[data-conf]').forEach((card,i)=>{
+    const c=confs[i]; if(!c)return;
+    const title=card.querySelector('.text-xs.font-semibold'); if(title)title.textContent=`${c.code&&c.code!=='CONF'?c.code:'CONF-0'+(i+1)} \u00b7 ${c.title||''}`;
+    const para=card.querySelector('p'); if(para&&c.question)para.textContent=c.question;
+    if(c.status==='resolved')card.dataset.liveResolved='1';
+  });
+  return snap;
+ }catch(e){return null;}
+})();
 </script>
 
 <script>
@@ -751,7 +1163,7 @@ function lightMember(i){const el=document.querySelector(`[data-member="${i}"] .m
 const STAGES=[{total:2,V:2,E:0,P:0,U:0,nodes:38},{total:4,V:2,E:2,P:0,U:0,nodes:74},{total:6,V:3,E:2,P:1,U:0,nodes:103},{total:7,V:3,E:2,P:1,U:1,nodes:121}];
 function showStmt(id){const el=$(id); if(el&&el.style.display==='none'){el.style.display=''; el.classList.add('seq-in');} const e=$('stmtEmpty'); if(e) e.style.display='none';}
 function applyStage(i){const s=STAGES[i]; if(!s) return;
- const gn=$('graphNodes'); if(gn) gn.textContent=`${s.nodes} nodes active`;
+ const gn=$('graphNodes'); if(gn) gn.textContent=window.__liveSnap?`${(window.__liveSnap.state_items||[]).length} nodes active`:`${s.nodes} nodes active`;
  if(i>=1){ showStmt('stmt-req002'); const lp=$('leavePhase'); if(lp) lp.textContent='Phase: Active Discovery Session'; }
  if(i>=2) showStmt('stmt-req003');
  if(i>=3) showStmt('stmt-q003');
@@ -762,10 +1174,10 @@ function applyStage(i){const s=STAGES[i]; if(!s) return;
    confIds.forEach(cid=>{
      const card=document.querySelector(`[data-conf="${cid}"]`); if(!card||card.style.display==='none') return;
      const badge=card.querySelector('.conf-badge');
-     if(d[cid]){ resolved++;
+     if(d[cid]||card.dataset.liveResolved){ resolved++;
        if(badge){badge.textContent='Resolved'; badge.style.color='#177245';}
        card.style.borderColor='#BFE6CC'; card.style.background='#F4FBF6';
-       if(!card.querySelector('.decision-line')){const p=document.createElement('p'); p.className='decision-line'; p.style.cssText='font-size:11.5px;color:#177245'; p.textContent='Decision: '+d[cid]; card.appendChild(p);}
+       if(d[cid]&&!card.querySelector('.decision-line')){const p=document.createElement('p'); p.className='decision-line'; p.style.cssText='font-size:11.5px;color:#177245'; p.textContent='Decision: '+d[cid]; card.appendChild(p);}
      } else if(badge){ badge.textContent='Conflict'; badge.style.color=''; }
    });
    const open=confShown-resolved;
@@ -773,10 +1185,11 @@ function applyStage(i){const s=STAGES[i]; if(!s) return;
    return resolved;
  }
  function reveal(id,isConf,animate){
+   if(!isConf && window.__liveSnap) return; /* Recent Changes is live-rendered */
    const el=$(id)||document.querySelector(`[data-conf="${id}"]`); if(!el||el.style.display!=='none') return;
    el.style.display=''; if(animate!==false) el.classList.add('seq-in');
-   if(isConf){confShown++; $('needsEmpty').style.display='none';} else {recentShown++; $('recentEmpty').style.display='none';}
-   $('recentMeta').textContent=`${recentShown} state mutation${recentShown===1?'':'s'}`;
+   if(isConf){confShown++; $('needsEmpty').style.display='none';} else {recentShown++; $('recentEmpty').style.display='none';
+   $('recentMeta').textContent=`${recentShown} state mutation${recentShown===1?'':'s'}`;}
    applyDecisions();
  }
  function finishDiscovery(){
@@ -804,3 +1217,20 @@ function applyStage(i){const s=STAGES[i]; if(!s) return;
 </script>
 </body>
 </html>
+
+<script>
+window.__authReady.then(function(a){
+  if(!a) return;
+  var meta=document.createElement('div');
+  meta.style.cssText='position:fixed;top:10px;right:12px;z-index:60;background:#fff;border:1px solid #E4E4E7;border-radius:999px;padding:5px 11px;font-size:11px;color:#444;display:flex;gap:7px;align-items:center';
+  meta.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:#1F9D55"></span>' + ((a.member&&a.member.name)||'Member') + ' · ' + (a.permissions.is_owner?'Owner':'Member');
+  document.body.appendChild(meta);
+  if(a.permissions.is_owner) return;
+  var btn=document.getElementById('invite-send'), inp=document.getElementById('invite-email'), sel=document.getElementById('invite-dimension');
+  [btn,inp,sel].forEach(function(el){ if(el){el.disabled=true; el.style.opacity='.55';} });
+  var st=document.getElementById('invite-status');
+  if(st){ st.textContent='Only the project owner can invite collaborators.'; st.classList.remove('hidden'); }
+  var solve=document.getElementById('solveBtn');
+  if(solve){ solve.style.opacity='.55'; solve.style.pointerEvents='none'; solve.title='Only the project owner can resolve conflicts'; }
+});
+</script>

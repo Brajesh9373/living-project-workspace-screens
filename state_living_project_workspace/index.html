@@ -68,6 +68,7 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col font-sans bg-canvas text-ink antialiased selection:bg-signal-blue/10 selection:text-signal-blue">
+<script src="../ws-auth.js"></script>
 <!-- Top Chrome Navigation -->
 <header class="h-13 bg-surface border-b border-line px-6 flex items-center justify-between sticky top-0 z-40">
 <div class="flex items-center gap-6">
@@ -1049,4 +1050,398 @@ const el=document.getElementById('ws-invited');
 if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin:8px 0 2px">Invited in Project Team</div>`+rows.join('');
 }catch(e){}})();
 </script>
+
+
+
+<script>
+(function(){
+  function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  var API='http://127.0.0.1:8020';
+  var CAT={requirement:'requirements',business_rule:'business-rules',rule:'business-rules',decision:'decisions',question:'questions',assumption:'assumptions',stakeholder:'stakeholders',risk:'risks',dependency:'dependencies',process:'dependencies',constraint:'business-rules',module:'dependencies'};
+  var PREFIX={requirement:'REQ',business_rule:'BR',rule:'RULE',decision:'ADR',question:'Q',assumption:'ASM',stakeholder:'STK',risk:'RSK',dependency:'DEP',process:'FLOW',constraint:'CON',module:'MOD'};
+  var FALLBACK={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+  var KINDLABEL={requirement:'Requirement',business_rule:'Business Rule',question:'Question',assumption:'Assumption',decision:'Decision',dependency:'Dependency',risk:'Risk',stakeholder:'Stakeholder'};
+  var CL={validated:'bg-status-validated-bg text-status-validated-text',evolving:'bg-zinc-100 text-zinc-600',conflict:'bg-[#eaf3ff] text-[#1d6fd1] ring-1 ring-inset ring-[#9cc4f5]'};
+  var S={snap:null,perm:{},cat:'all',status:'all',query:'',selectedId:null,hash:''};
+
+  function tok(){ return window.__wsTok || (window.__wsAuth && window.__wsAuth.token) || ''; }
+  function pid(){ return new URLSearchParams(location.search).get('projectId'); }
+  async function fetchSnap(){
+    var r=await fetch(API+'/api/projects/'+encodeURIComponent(pid()),{headers:{'X-Project-Token':tok()}});
+    if(!r.ok) return null;
+    return await r.json();
+  }
+  function ago(iso){ var t=Date.parse(iso||''); if(!t||isNaN(t)) return ''; var s=Math.max(0,(Date.now()-t)/1000); if(s<90) return 'JUST NOW'; if(s<3600) return Math.max(1,Math.floor(s/60))+'M AGO'; if(s<86400) return Math.floor(s/3600)+'H AGO'; return Math.floor(s/86400)+'D AGO'; }
+  function dims(){ var d={}; ((S.snap&&S.snap.dimensions)||[]).forEach(function(x){ d[x.id||x.dimension_id]=x.label||FALLBACK[x.id||x.dimension_id]||x.id; }); return d; }
+  function items(){ return ((S.snap&&S.snap.state_items)||[]).slice(); }
+  function codes(){
+    var list=items().sort(function(a,b){ return String(a.created_at||'').localeCompare(String(b.created_at||'')) || String(a.id).localeCompare(String(b.id)); });
+    var counters={}, map={};
+    list.forEach(function(it){ var p=PREFIX[String(it.kind||'requirement').toLowerCase()]||'REQ'; counters[p]=(counters[p]||0)+1; map[it.id]=p+'-'+String(counters[p]).padStart(3,'0'); });
+    return map;
+  }
+  function openTopics(){ var m={}; ((S.snap&&S.snap.conflicts)||[]).filter(function(c){ return String(c.status).indexOf('resolved')!==0; }).forEach(function(c){ m[c.topic_key]=c; }); return m; }
+  function badgeOf(it, ot){
+    var status=String(it.status||'proposed').toLowerCase();
+    if(status==='superseded') return ['SUPERSEDED', CL.evolving];
+    if(status==='validated') return ['VALIDATED', CL.validated];
+    if(ot[it.topic_key]) return ['CONFLICT \u00b7 UNRESOLVED', CL.conflict];
+    return ['EVOLVING', CL.evolving];
+  }
+  function sortedItems(){
+    return items().sort(function(x,y){ return String(y.updated_at||y.created_at||'').localeCompare(String(x.updated_at||x.created_at||'')); });
+  }
+
+  function renderFeed(){
+    var feed=document.querySelector('.flex.flex-col.gap-2\\.5'); if(!feed) return;
+    var cmap=codes(), ot=openTopics(), dmap=dims();
+    var list=sortedItems();
+    if(!list.length){
+      feed.innerHTML='<div class="bg-surface border border-quiet-line rounded-xl p-6 text-center"><span class="material-symbols-outlined text-[28px] text-muted-ink">inventory_2</span><p class="text-sm text-ink mt-2">No canonical state yet</p><p class="text-xs text-muted-ink mt-1">Statements captured from dimension discussions will appear here in detail.</p></div>';
+      return;
+    }
+    feed.innerHTML=list.map(function(it){
+      var kind=String(it.kind||'requirement').toLowerCase();
+      var cat=CAT[kind]||'requirements';
+      var badge=badgeOf(it, ot);
+      var ev=Array.isArray(it.evidence)?it.evidence:[];
+      var when=String(it.updated_at||it.created_at||'').replace('T',' ').slice(0,16);
+      var title=it.title||String(it.statement||'').split(/[.!?]/)[0].slice(0,90)||cmap[it.id];
+      var sel=S.selectedId===it.id;
+      return '<div data-cat="'+cat+'" data-item-id="'+esc(it.id)+'" data-state-text="'+esc((cmap[it.id]+' '+(it.title||'')+' '+(it.statement||'')+' '+(it.topic_key||'')).toLowerCase())+'" class="group bg-surface border '+(sel?'border-signal-blue ring-1 ring-signal-blue/40':'border-quiet-line hover:border-deep-line')+' rounded-xl p-3.5 transition-all cursor-pointer shadow-xs">'
+      +'<div class="flex items-start justify-between gap-3"><div class="flex flex-col gap-1 min-w-0">'
+      +'<div class="flex items-center gap-2 flex-wrap"><span class="font-mono text-xs font-semibold text-ink">'+cmap[it.id]+'</span>'
+      +'<span class="text-xs font-medium text-ink">'+esc(title)+'</span></div>'
+      +'<p class="text-xs text-muted-ink">'+esc(it.statement||'')+'</p></div>'
+      +'<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide uppercase shrink-0 '+badge[1]+'">'+badge[0]+'</span></div>'
+      +'<div class="flex items-center gap-3 mt-2.5 pt-2 border-t border-quiet-line/60 text-[11px] text-muted-ink flex-wrap">'
+      +'<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px] text-zinc-400">subdirectory_arrow_right</span>'+ev.length+' evidence</span>'
+      +'<span>\u2022</span><span>'+esc(dmap[it.dimension_id]||'Project')+'</span>'
+      +'<span>\u2022</span><span class="font-mono text-[10px] text-zinc-500">'+esc(it.topic_key||kind)+'</span>'
+      +(when?'<span>\u2022</span><span class="font-mono text-[10px] text-zinc-500">'+esc(when)+'</span>':'')
+      +'</div></div>';
+    }).join('');
+    feed.querySelectorAll('[data-item-id]').forEach(function(card){
+      card.addEventListener('click', function(){ S.selectedId=card.getAttribute('data-item-id'); renderFeed(); applyFilters(); renderInspector(); });
+    });
+  }
+
+  function applyFilters(){
+    var feed=document.querySelector('.flex.flex-col.gap-2\\.5'); if(!feed) return;
+    var cards=Array.prototype.slice.call(feed.querySelectorAll('[data-cat]'));
+    var shown=0;
+    cards.forEach(function(card){
+      var badge=card.querySelector('span.uppercase');
+      var t=badge?badge.textContent.trim().toUpperCase():'';
+      var group=t.indexOf('VALIDATED')===0?'validated':'unresolved';
+      var okStatus=S.status==='all'||group===S.status;
+      var okCat=S.cat==='all'||card.getAttribute('data-cat')===S.cat;
+      var okText=!S.query||(card.getAttribute('data-state-text')||'').indexOf(S.query)>=0;
+      var ok=okStatus&&okCat&&okText;
+      card.classList.toggle('hidden',!ok);
+      if(ok) shown++;
+    });
+    var count=document.querySelector('[data-result-count]');
+    if(count) count.textContent=(S.status==='all'?'':(S.status==='validated'?'Validated':'Unresolved')+' \u00b7 ')+shown+' of '+cards.length+' in snapshot';
+  }
+
+  function renderChips(){
+    var counts={}; items().forEach(function(it){ var c=CAT[String(it.kind||'requirement').toLowerCase()]||'requirements'; counts[c]=(counts[c]||0)+1; });
+    Object.keys(CAT).length; // noop
+    ['requirements','questions','assumptions','decisions','business-rules','stakeholders','dependencies','risks'].forEach(function(key){
+      var el=document.querySelector('[data-cat-total="'+key+'"]');
+      if(el) el.textContent=counts[key]||0;
+    });
+    var total=document.querySelector('[data-graph-total]');
+    if(total) total.textContent=items().length;
+    // header "PROJECT UPDATED" freshness
+    var all=[].concat(items().map(function(i){return i.updated_at||i.created_at;}), ((S.snap&&S.snap.events)||[]).map(function(e){return e.timestamp||e.created_at;}));
+    var latest=all.filter(Boolean).sort().pop();
+    document.querySelectorAll('span,div').forEach(function(el){
+      if(el.children.length===0 && /PROJECT UPDATED/.test(el.textContent||'')){ el.innerHTML='<span class="text-signal-blue">\u25cf</span> PROJECT UPDATED \u00b7 '+(latest?ago(latest):'JUST NOW'); }
+    });
+  }
+
+  function sessionFor(dimId){
+    return ((S.snap&&S.snap.sessions)||[]).filter(function(s){ return s.dimension_id===dimId; })[0]||null;
+  }
+
+  function renderInspector(){
+    var aside=document.querySelector('aside'); if(!aside||!S.snap) return;
+    var list=sortedItems(); if(!list.length) return;
+    var it=list.filter(function(x){ return x.id===S.selectedId; })[0]||list[0];
+    S.selectedId=it.id;
+    var cmap=codes(), ot=openTopics(), dmap=dims();
+    var badge=badgeOf(it, ot);
+    var code=cmap[it.id];
+    var kind=String(it.kind||'requirement').toLowerCase();
+    var sess=sessionFor(it.dimension_id);
+    var isOwner=!!S.perm.is_owner;
+    // header
+    var codeEl=aside.querySelector('.font-mono.text-xs.font-bold.text-signal-blue');
+    if(codeEl) codeEl.textContent=code;
+    var pill=codeEl&&codeEl.parentElement?codeEl.parentElement.querySelector('span:nth-child(2)'):null;
+    if(pill){ pill.textContent=badge[0].split(' \u00b7')[0]; pill.className='text-[11px] px-2 py-0.5 rounded font-medium border '+(String(it.status).toLowerCase()==='validated'?'bg-status-validated-bg text-status-validated-text border-green-200':'bg-blue-50 text-signal-blue border-blue-200'); }
+    var h2=aside.querySelector('h2'); if(h2) h2.textContent=it.title||code;
+    var sub=aside.querySelector('.flex.flex-col.gap-1 > span.text-\\[11px\\]');
+    if(sub) sub.textContent='From '+(dmap[it.dimension_id]||'Project')+' \u00b7 '+(sess?(sess.member_name||'Member')+' session':'Discover analysis')+' \u00b7 '+(KINDLABEL[kind]||kind);
+    // relationship chain
+    var chainBox=Array.prototype.slice.call(aside.querySelectorAll('div')).filter(function(d){ return /Relationship Chain/.test(d.textContent||'') && d.querySelector('.flex.flex-col.gap-1\\.5'); })[0];
+    var steps=chainBox?chainBox.querySelector('.flex.flex-col.gap-1\\.5.pt-1'):null;
+    if(steps){
+      var conflict=ot[it.topic_key]||((S.snap.conflicts||[]).filter(function(c){ return c.topic_key===it.topic_key; })[0]);
+      var qItem=items().filter(function(x){ return x.topic_key===it.topic_key && String(x.kind).toLowerCase()==='question'; })[0];
+      var arrow='<div class="pl-2.5 text-zinc-300 -my-1"><span class="material-symbols-outlined text-[14px]">arrow_downward</span></div>';
+      var nodes=(sess&&sess.flow_nodes)||[];
+      steps.innerHTML=
+        '<div class="flex items-center gap-2 text-xs"><span class="w-5 h-5 rounded-full bg-white border border-quiet-line flex items-center justify-center text-muted-ink shrink-0"><span class="material-symbols-outlined text-[12px]">forum</span></span><span class="text-muted-ink">Conversation:</span><a class="font-medium text-ink hover:text-signal-blue underline decoration-dotted" href="../discover_living_project_workspace/index.html'+esc(location.search)+'&dimension='+esc(it.dimension_id)+'">'+esc(sess?((sess.member_name||'Member')+' \u00b7 '+(dmap[it.dimension_id]||'')+' (Discovery)'):'Discover (Discovery)')+'</a></div>'+arrow
+        +(qItem?'<div class="flex items-center gap-2 text-xs"><span class="w-5 h-5 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 shrink-0"><span class="material-symbols-outlined text-[12px]">help</span></span><span class="text-muted-ink">Question:</span><span class="font-mono text-[11px] font-medium text-amber-800 bg-amber-100/60 px-1.5 py-0.2 rounded">'+esc(cmap[qItem.id])+'</span><span class="text-ink truncate text-[11px] max-w-[190px]">'+esc(qItem.title||qItem.statement||'')+'</span></div>'+arrow:'')
+        +(conflict?'<div class="flex items-center gap-2 text-xs"><span class="w-5 h-5 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-signal-blue shrink-0"><span class="material-symbols-outlined text-[12px]">lightbulb</span></span><span class="text-muted-ink">'+(String(conflict.status).indexOf('resolved')===0?'Decision:':'Clarification needed:')+'</span><span class="italic text-ink font-serif text-[11px]">'+esc((conflict.decision&&(conflict.decision.decision_text||''))||((conflict.options||[]).map(function(o){return o.title||'';}).filter(Boolean).join(' vs ')||conflict.topic_key))+'</span></div>'+arrow:'')
+        +'<div class="flex items-center gap-2 text-xs bg-white p-1.5 rounded border border-signal-blue/40 shadow-xs"><span class="w-5 h-5 rounded-full bg-signal-blue text-white flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[12px]">check</span></span><span class="font-semibold text-signal-blue">'+(KINDLABEL[kind]||'Statement')+':</span><span class="font-mono text-[11px] font-bold text-signal-blue">'+esc(code)+'</span><span class="text-[11px] text-ink font-medium">'+esc(it.title||'')+'</span></div>'+arrow
+        +'<div class="flex items-center gap-2 text-xs"><span class="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0"><span class="material-symbols-outlined text-[12px]">account_tree</span></span><span class="text-muted-ink">Target Flow:</span><span class="text-emerald-800 font-medium text-[11px]">BA Flow: '+nodes.length+' node'+(nodes.length===1?'':'s')+' \u00b7 '+esc(dmap[it.dimension_id]||'Project')+'</span></div>';
+    }
+    // statement definition
+    var defP=Array.prototype.slice.call(aside.querySelectorAll('p')).filter(function(p){ return p.className.indexOf('bg-canvas/60')>=0; })[0];
+    if(defP) defP.textContent=it.statement||'';
+    // evidence (owner only)
+    var evWrap=Array.prototype.slice.call(aside.querySelectorAll('div.flex.flex-col.gap-2')).filter(function(d){ return /Evidence from Transcript/.test(d.textContent||''); })[0];
+    if(evWrap){
+      Array.prototype.slice.call(evWrap.querySelectorAll('.bg-amber-50\\/40')).forEach(function(b){ b.remove(); });
+      var note=Array.prototype.slice.call(evWrap.querySelectorAll('div')).filter(function(d){ return /Restricted to workspace admins/.test(d.textContent||''); })[0];
+      if(note) note.style.display=isOwner?'':'none';
+      if(!isOwner){
+        var locked=document.createElement('p');
+        locked.className='text-[11px] text-muted-ink';
+        locked.textContent='Transcript evidence is restricted to the project owner.';
+        evWrap.appendChild(locked);
+      } else {
+        var ev=Array.isArray(it.evidence)?it.evidence:[];
+        if(!ev.length){
+          var none=document.createElement('p'); none.className='text-[11px] text-muted-ink';
+          none.textContent='No transcript evidence attached yet \u2014 quotes from the dimension discussion will appear here.';
+          evWrap.appendChild(none);
+        }
+        ev.forEach(function(quote, idx){
+          var block=document.createElement('div');
+          block.className='bg-amber-50/40 border-l-2 border-amber-400/70 rounded-r-lg overflow-hidden';
+          var who=sess?(sess.member_name||'Member'):'Member';
+          block.innerHTML='<button type="button" data-ev-toggle class="w-full flex items-center gap-2 px-2.5 py-2 text-left hover:bg-amber-50/70 transition-colors" aria-expanded="false">'
+            +'<span class="inline-flex items-center gap-1 font-mono text-[10px] font-medium text-ink bg-white/70 border border-quiet-line rounded px-1.5 py-0.5 shrink-0"><span class="material-symbols-outlined text-[12px] text-muted-ink">person</span>'+esc(dmap[it.dimension_id]||'Session')+'</span>'
+            +'<span class="text-[11px] text-muted-ink truncate flex-1 min-w-0">\u201c'+esc(String(quote).slice(0,60))+'\u2026\u201d</span>'
+            +'<span class="material-symbols-outlined text-[16px] text-muted-ink transition-transform shrink-0">expand_more</span></button>'
+            +'<div class="hidden px-2.5 pb-2.5"><p class="text-xs text-ink italic leading-snug pt-2 border-t border-amber-200/60">\u201c'+esc(quote)+'\u201d</p>'
+            +'<p class="text-[11px] font-medium text-muted-ink mt-1">\u2014 From <strong class="text-ink">'+esc(who)+'</strong> \u00b7 '+(esc(dmap[it.dimension_id]||''))+' session with BA Agent</p>'
+            +'<div class="flex items-center gap-2 mt-2"><button type="button" data-ev-view class="inline-flex items-center gap-1 px-2 py-1 rounded border border-quiet-line bg-surface text-[11px] font-medium text-ink hover:bg-canvas transition-colors"><span class="material-symbols-outlined text-[13px] text-muted-ink">visibility</span>View transcript</button>'
+            +'<button type="button" data-ev-dl class="inline-flex items-center gap-1 px-2 py-1 rounded border border-quiet-line bg-surface text-[11px] font-medium text-ink hover:bg-canvas transition-colors"><span class="material-symbols-outlined text-[13px] text-muted-ink">download</span>Download .txt</button>'
+            +'<span class="ml-auto inline-flex items-center gap-1 text-[10px] font-mono text-muted-ink"><span class="material-symbols-outlined text-[12px]">lock</span>admin only</span></div>'
+            +'<div data-ev-transcript class="hidden mt-2 rounded border border-quiet-line bg-surface divide-y divide-quiet-line/60"></div></div>';
+          evWrap.appendChild(block);
+          var body=block.querySelector('[data-ev-transcript]').parentElement;
+          block.querySelector('[data-ev-toggle]').addEventListener('click', function(){
+            var hidden=body.classList.toggle('hidden');
+            block.querySelector('[data-ev-toggle]').setAttribute('aria-expanded', hidden?'false':'true');
+          });
+          function transcriptText(){
+            var msgs=(sess&&sess.messages)||[];
+            var head=(dmap[it.dimension_id]||'Dimension')+' session \u00b7 '+(sess?(sess.member_name||''):'')+' \u00b7 '+msgs.length+' messages';
+            return {head:head, msgs:msgs};
+          }
+          block.querySelector('[data-ev-view]').addEventListener('click', function(){
+            var box=block.querySelector('[data-ev-transcript]');
+            var t=transcriptText();
+            if(box.classList.contains('hidden')){
+              box.innerHTML='<div class="px-2.5 py-1.5 bg-canvas/60 border-b border-quiet-line/60"><div class="text-[11px] font-semibold text-ink">'+esc(t.head)+'</div><div class="text-[10px] font-mono text-muted-ink">Source: '+esc(code)+' evidence (admin only)</div></div>'
+                +(t.msgs.length?t.msgs.map(function(m){
+                    var who=m.role==='assistant'?'BA Agent':(m.role==='system'?'System':who);
+                    return '<div class="px-2.5 py-1.5 flex items-start gap-2"><span class="text-[11px] font-semibold text-ink shrink-0 w-[58px]">'+esc(who)+'</span><span class="text-[11px] text-ink leading-snug flex-1">'+esc(m.content||'')+'</span></div>';
+                  }).join(''):'<div class="px-2.5 py-2 text-[11px] text-muted-ink">No messages in this session yet.</div>');
+            }
+            box.classList.toggle('hidden');
+          });
+          block.querySelector('[data-ev-dl]').addEventListener('click', function(){
+            var t=transcriptText();
+            var body2=[t.head,'Source: '+code+' evidence (admin only)',''].concat(t.msgs.map(function(m){ return (m.role==='assistant'?'BA Agent':(m.role==='system'?'System':who))+': '+(m.content||''); })).join('\n');
+            var url=URL.createObjectURL(new Blob([body2],{type:'text/plain'}));
+            var a=document.createElement('a'); a.href=url; a.download=(code||'transcript').toLowerCase()+'-transcript.txt';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+          });
+        });
+      }
+    }
+    // conflicting lines on this statement
+    var confWrap=Array.prototype.slice.call(aside.querySelectorAll('div.flex.flex-col.gap-1\\.5')).filter(function(d){ return /Conflicting Lines On This Statement/.test(d.textContent||''); })[0];
+    if(confWrap){
+      var conflict=((S.snap.conflicts)||[]).filter(function(c){ return c.topic_key===it.topic_key; })[0];
+      if(!conflict){ confWrap.style.display='none'; }
+      else {
+        confWrap.style.display='';
+        var countEl=confWrap.querySelector('.font-mono.text-\\[10px\\].text-rose-600');
+        if(countEl) countEl.textContent=(String(conflict.status).indexOf('resolved')===0?'resolved':'1 conflict')+' \u00b7 '+(conflict.options||[]).length+' statements';
+        var listBox=confWrap.querySelector('.rounded-lg.border.border-rose-200');
+        if(listBox){
+          listBox.innerHTML=(conflict.options||[]).map(function(o){
+            return '<div class="flex items-start gap-2 px-2.5 py-2"><div class="min-w-0"><div class="flex items-center gap-1.5"><span class="text-[11px] font-semibold text-ink">'+esc(o.title||'Statement')+'</span><span class="text-[9px] font-mono uppercase tracking-wide px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 border border-rose-200">'+esc(o.status||'')+'</span></div><p class="text-[12px] text-ink italic leading-snug mt-0.5">'+esc(o.label||'')+'</p></div></div>';
+          }).join('')||'<div class="px-2.5 py-2 text-[11px] text-muted-ink">No option statements recorded.</div>';
+        }
+        var noteP=confWrap.querySelector('p.text-\\[11px\\].text-muted-ink');
+        if(noteP) noteP.innerHTML=String(conflict.status).indexOf('resolved')===0
+          ? 'Decision recorded: <span class="font-mono text-ink">'+esc((conflict.decision&&(conflict.decision.decision_text||''))||'Resolved')+'</span>'
+          : 'Open conflict on <span class="font-mono text-ink">'+esc(code)+'</span> \u2014 the project owner decides it from the Cockpit (Needs Attention \u2192 Solve Conflicts).';
+      }
+    }
+    // related doctype -> dimension + topic
+    var code2=aside.querySelector('code');
+    if(code2) code2.textContent=it.topic_key||'';
+    var dtName=code2?code2.closest('.flex.items-center.justify-between') : null;
+    if(dtName){ var nm=dtName.querySelector('.font-mono.font-medium'); if(nm) nm.textContent=(dmap[it.dimension_id]||'Project'); }
+    // actions
+    var vBtn=Array.prototype.slice.call(aside.querySelectorAll('button')).filter(function(b){ return /Validate/.test(b.textContent||''); })[0];
+    if(vBtn){
+      var validated=String(it.status).toLowerCase()==='validated';
+      if(!isOwner){ vBtn.style.display='none'; }
+      else {
+        vBtn.style.display='';
+        vBtn.disabled=validated;
+        vBtn.classList.toggle('opacity-60', validated);
+        vBtn.querySelector('span:last-child').textContent=validated?'Validated':'Validate '+(KINDLABEL[kind]||'Statement');
+        vBtn.onclick=async function(){
+          vBtn.disabled=true;
+          try{
+            var r=await fetch(API+'/api/projects/'+encodeURIComponent(pid())+'/items/'+encodeURIComponent(it.id)+'/validate',{method:'POST',headers:{'X-Project-Token':tok()}});
+            if(!r.ok) throw new Error('validate failed');
+            var fresh=await fetchSnap(); if(fresh){ S.snap=fresh; renderAll(false); }
+          }catch(e){ vBtn.disabled=false; }
+        };
+      }
+    }
+    var disc=aside.querySelector('a[href*="discover_living_project_workspace"]');
+    if(disc) disc.href='../discover_living_project_workspace/index.html'+location.search+'&dimension='+encodeURIComponent(it.dimension_id);
+  }
+
+  function renderRail(){
+    var aside=document.querySelector('aside'); if(!aside||!S.snap) return;
+    var old=document.getElementById('live-detail-rail'); if(old) old.remove();
+    var dmap=dims();
+    var conflicts=S.snap.conflicts||[];
+    var docs=[];
+    (S.snap.sessions||[]).forEach(function(s){ (s.documents||[]).forEach(function(doc){ docs.push({name:doc.name||'Document',kind:doc.kind||'',dim:s.dimension_id,by:s.member_name||''}); }); });
+    var box=document.createElement('div');
+    box.id='live-detail-rail';
+    box.className='mt-4 flex flex-col gap-3';
+    var open=conflicts.filter(function(c){ return String(c.status).indexOf('resolved')!==0; });
+    var ch='<div class="bg-surface border border-quiet-line rounded-xl p-3.5"><div class="flex items-center justify-between"><span class="text-xs font-semibold text-ink">Conflicts</span><span class="font-mono text-[10px] text-muted-ink">'+conflicts.length+' total \u00b7 '+open.length+' open \u00b7 '+(conflicts.length-open.length)+' resolved</span></div>';
+    if(!conflicts.length) ch+='<p class="text-[11px] text-muted-ink mt-2">No conflicts recorded.</p>';
+    ch+=conflicts.map(function(c){
+      var isOpen=String(c.status).indexOf('resolved')!==0;
+      return '<div class="mt-2 pt-2 border-t border-quiet-line/60"><div class="flex items-center justify-between gap-2"><span class="text-[11px] font-medium text-ink">'+esc(c.title||c.topic_key||'Conflict')+'</span><span class="font-mono text-[9px] uppercase '+(isOpen?'text-[#1d6fd1]':'text-status-validated-text')+'">'+(isOpen?'OPEN':'RESOLVED')+'</span></div>'
+      +'<p class="text-[11px] text-muted-ink mt-0.5">'+esc((c.options||[]).map(function(o){return o.title||'';}).filter(Boolean).join(' \u00b7 '))+'</p>'
+      +(c.decision?'<p class="text-[11px] text-ink mt-0.5">Decision: '+esc(c.decision.decision_text||'Resolved')+'</p>':'')+'</div>';
+    }).join('')+'</div>';
+    var dh='<div class="bg-surface border border-quiet-line rounded-xl p-3.5"><div class="flex items-center justify-between"><span class="text-xs font-semibold text-ink">Project Documents</span><span class="font-mono text-[10px] text-muted-ink">'+docs.length+' files</span></div>';
+    if(!docs.length) dh+='<p class="text-[11px] text-muted-ink mt-2">No documents uploaded yet.</p>';
+    dh+=docs.map(function(doc){
+      return '<div class="mt-2 pt-2 border-t border-quiet-line/60 flex items-center justify-between gap-2"><span class="text-[11px] font-medium text-ink truncate">'+esc(doc.name)+'</span><span class="font-mono text-[9px] uppercase text-muted-ink shrink-0">'+esc(doc.kind||'')+' \u00b7 '+esc(dmap[doc.dim]||'')+'</span></div>';
+    }).join('')+'</div>';
+    box.innerHTML=ch+dh;
+    aside.appendChild(box);
+  }
+
+  function renderAll(resetSelection){
+    if(resetSelection) S.selectedId=null;
+    renderChips(); renderFeed(); applyFilters(); renderInspector(); renderRail();
+  }
+
+  function wireControls(){
+    document.querySelectorAll('[data-state-filter]').forEach(function(b){
+      var nb=b.cloneNode(true); b.parentNode.replaceChild(nb,b);
+      nb.addEventListener('click', function(){
+        S.status=nb.getAttribute('data-state-filter');
+        document.querySelectorAll('[data-state-filter]').forEach(function(o){
+          var on=o===nb;
+          o.setAttribute('aria-pressed',on?'true':'false');
+          o.classList.toggle('bg-canvas',on); o.classList.toggle('text-ink',on); o.classList.toggle('text-muted-ink',!on);
+        });
+        applyFilters();
+      });
+    });
+    document.querySelectorAll('[data-info]').forEach(function(b){
+      var nb=b.cloneNode(true); b.parentNode.replaceChild(nb,b);
+      nb.addEventListener('click', function(){
+        S.cat=nb.getAttribute('data-info')||'all';
+        document.querySelectorAll('[data-info]').forEach(function(o){
+          var on=o===nb;
+          o.classList.toggle('bg-canvas',on); o.classList.toggle('text-ink',on); o.classList.toggle('border-quiet-line',on); o.classList.toggle('bg-surface',on);
+        });
+        applyFilters();
+      });
+    });
+    var input=document.querySelector('input[placeholder*="Filter canonical"]');
+    if(input) input.addEventListener('input', function(){ S.query=input.value.trim().toLowerCase(); applyFilters(); });
+  }
+
+  function wireAddStatement(){
+    var btn=Array.prototype.slice.call(document.querySelectorAll('button')).filter(function(b){ return /Add Statement/.test(b.textContent||''); })[0];
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var existing=document.getElementById('add-statement-modal'); if(existing){ existing.remove(); }
+      var myDims=S.perm.is_owner?['security','permissions','workflows','roles','delivery']:(S.perm.dimension_ids||[]);
+      var dmap=dims();
+      var overlay=document.createElement('div');
+      overlay.id='add-statement-modal';
+      overlay.className='fixed inset-0 z-50 flex items-center justify-center p-4';
+      overlay.innerHTML='<div class="absolute inset-0 bg-ink/40" data-as-close></div>'
+      +'<div role="dialog" aria-modal="true" class="relative w-full max-w-lg bg-surface border border-quiet-line rounded-xl shadow-lg overflow-hidden">'
+      +'<div class="px-5 py-4 border-b border-quiet-line flex items-start justify-between"><div><h3 class="text-[15px] font-semibold text-ink">Add Statement</h3><p class="text-[11px] text-muted-ink font-mono mt-1">Adds canonical state to this project \u00b7 shared with every dimension agent</p></div>'
+      +'<button data-as-close class="p-1 rounded text-muted-ink hover:text-ink hover:bg-canvas" aria-label="Close"><span class="material-symbols-outlined text-[18px]">close</span></button></div>'
+      +'<div class="p-5 flex flex-col gap-3">'
+      +'<label class="flex flex-col gap-1"><span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono">Dimension</span><select id="as-dim" class="h-9 px-2 text-xs bg-surface border border-quiet-line rounded-lg text-ink">'+myDims.map(function(d){ return '<option value="'+esc(d)+'">'+esc(dmap[d]||d)+'</option>'; }).join('')+'</select></label>'
+      +'<label class="flex flex-col gap-1"><span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono">Type</span><select id="as-kind" class="h-9 px-2 text-xs bg-surface border border-quiet-line rounded-lg text-ink">'+Object.keys(KINDLABEL).map(function(k){ return '<option value="'+k+'">'+KINDLABEL[k]+'</option>'; }).join('')+'</select></label>'
+      +'<label class="flex flex-col gap-1"><span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono">Title</span><input id="as-title" class="h-9 px-2 text-xs bg-surface border border-quiet-line rounded-lg text-ink" maxlength="160" placeholder="Short title"/></label>'
+      +'<label class="flex flex-col gap-1"><span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono">Statement</span><textarea id="as-statement" rows="4" maxlength="1200" class="px-2 py-2 text-xs bg-surface border border-quiet-line rounded-lg text-ink" placeholder="The full statement, in detail"></textarea></label>'
+      +'<label class="flex flex-col gap-1"><span class="text-[11px] font-semibold uppercase tracking-wider text-muted-ink font-mono">Topic (optional)</span><input id="as-topic" class="h-9 px-2 text-xs bg-surface border border-quiet-line rounded-lg text-ink" maxlength="120" placeholder="e.g. approval-override — reuse a topic to align dimensions; different views open a conflict"/></label>'
+      +'<p id="as-error" class="hidden text-[11px] text-rose-600"></p>'
+      +'</div>'
+      +'<div class="px-5 py-3 border-t border-quiet-line bg-canvas/50 flex items-center justify-end gap-2"><button data-as-close class="h-8 px-3 rounded-lg border border-quiet-line text-xs font-medium text-ink">Cancel</button><button id="as-submit" class="h-8 px-3 rounded-lg bg-signal-blue hover:bg-signal-blue-hover text-white text-xs font-medium">Add Statement</button></div></div>';
+      document.body.appendChild(overlay);
+      overlay.querySelectorAll('[data-as-close]').forEach(function(el){ el.addEventListener('click', function(){ overlay.remove(); }); });
+      overlay.querySelector('#as-submit').addEventListener('click', async function(){
+        var err=overlay.querySelector('#as-error');
+        var topicVal=overlay.querySelector('#as-topic').value.trim().toLowerCase().replace(/\s+/g,'-');
+        var payload={dimension_id:overlay.querySelector('#as-dim').value, kind:overlay.querySelector('#as-kind').value,
+          title:overlay.querySelector('#as-title').value.trim(), statement:overlay.querySelector('#as-statement').value.trim()};
+        if(topicVal) payload.topic_key=topicVal;
+        if(!payload.title||!payload.statement){ err.textContent='Title and statement are required.'; err.classList.remove('hidden'); return; }
+        try{
+          var r=await fetch(API+'/api/projects/'+encodeURIComponent(pid())+'/state-items',{method:'POST',headers:{'X-Project-Token':tok(),'Content-Type':'application/json'},body:JSON.stringify(payload)});
+          if(!r.ok){ var d=await r.json().catch(function(){return{};}); throw new Error(d.detail||'Could not add the statement.'); }
+          var data=await r.json();
+          overlay.remove();
+          var fresh=await fetchSnap(); if(fresh){ S.snap=fresh; S.selectedId=data.item&&data.item.id; renderAll(false); if(S.selectedId){ renderFeed(); applyFilters(); renderInspector(); } }
+        }catch(e){ err.textContent=e.message||'Could not add the statement.'; err.classList.remove('hidden'); }
+      });
+    });
+  }
+
+  window.__authReady.then(async function(a){
+    if(!a) return;
+    S.perm=(a.snap&&a.snap.permissions)||a.permissions||{};
+    S.snap=a.snap||await fetchSnap();
+    if(!S.snap) return;
+    wireControls(); wireAddStatement(); renderAll(true);
+    setInterval(async function(){
+      var fresh=await fetchSnap(); if(!fresh) return;
+      var h=JSON.stringify([fresh.state_items, fresh.conflicts, (fresh.events||[]).length]);
+      if(h!==S.hash){ S.hash=h; S.snap=fresh; renderAll(false); }
+    }, 20000);
+    S.hash=JSON.stringify([S.snap.state_items, S.snap.conflicts, (S.snap.events||[]).length]);
+  });
+})();
+</script>
+
 </body></html>
+<script>
+window.__authReady.then(function(a){
+  if(!a || a.permissions.is_owner) return;
+  document.querySelectorAll('[data-view]').forEach(function(b){ b.remove(); });
+});
+</script>

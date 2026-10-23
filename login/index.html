@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign in — WorkSimplified Workspace</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--canvas:#F7F7F5;--surface:#fff;--ink:#18181B;--muted:#5F5F66;--faint:#8B8B93;--line:#E4E4E7;--line-strong:#D4D4D8;--blue:#356AE6;--blue-hover:#2553C7;--blue-subtle:#EFF4FE;--err:#B3261E;--err-bg:#FDECEA;--ok:#177245;--ok-bg:#EEF9F1}
+*{box-sizing:border-box} html,body{margin:0}
+body{font-family:"Geist",system-ui,sans-serif;background:var(--canvas);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+.top{height:54px;background:var(--surface);border-bottom:1px solid var(--line);padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.02em}
+.top span{font-size:12px;color:var(--muted)}
+main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:44px 18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;width:100%;max-width:400px;padding:26px 26px 22px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card h1{font-size:19px;font-weight:650;letter-spacing:-.02em;margin:0 0 5px}
+.card .sub{font-size:12.5px;color:var(--muted);line-height:1.65;margin:0 0 18px}
+.tabs{display:flex;background:#F1F1F4;border-radius:9px;padding:3px;margin-bottom:18px}
+.tabs button{flex:1;border:0;background:transparent;font:inherit;font-size:12.5px;font-weight:600;color:var(--muted);padding:7px 0;border-radius:7px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(16,24,40,.11)}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:12px;font-weight:600;margin-bottom:5px}
+.field input{width:100%;font:inherit;font-size:13.5px;padding:9px 11px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;color:var(--ink)}
+.field input:focus{outline:2px solid var(--blue-subtle);border-color:var(--blue)}
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:64px}
+.pw-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;font:inherit;font-size:11.5px;font-weight:600;color:var(--blue);cursor:pointer;padding:4px 6px}
+.f-err{display:none;font-size:11.5px;color:var(--err);margin-top:5px}
+.f-err.show{display:block}
+.form-err{display:none;background:var(--err-bg);color:var(--err);border-radius:8px;font-size:12.5px;line-height:1.55;padding:9px 11px;margin-bottom:13px}
+.form-err.show{display:block}
+.primary{width:100%;border:0;border-radius:8px;background:var(--blue);color:#fff;font:inherit;font-size:13.5px;font-weight:600;padding:10px 0;cursor:pointer}
+.primary:hover{background:var(--blue-hover)}
+.primary:disabled{opacity:.6;cursor:default}
+.switch{font-size:12.5px;color:var(--muted);text-align:center;margin-top:14px}
+.switch button{border:0;background:none;font:inherit;color:var(--blue);font-weight:600;cursor:pointer;padding:0}
+#projects{display:none}
+.proj{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:12px 13px;margin-bottom:9px;text-decoration:none;color:inherit}
+.proj:hover{border-color:var(--blue)}
+.proj b{font-size:13.5px;display:block}
+.proj span{font-size:11.5px;color:var(--muted)}
+.proj .role{font-family:"Geist Mono",monospace;font-size:10.5px;color:var(--blue);background:var(--blue-subtle);border-radius:99px;padding:3px 8px;white-space:nowrap}
+.empty{font-size:12.5px;color:var(--muted);line-height:1.7;background:#FBFBFC;border:1px dashed var(--line-strong);border-radius:10px;padding:13px}
+.who{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;font-size:12px;color:var(--muted)}
+.who button{border:0;background:none;font:inherit;font-size:12px;color:var(--blue);font-weight:600;cursor:pointer}
+.hidden{display:none!important}
+footer{padding:14px;text-align:center;font-size:11px;color:var(--faint)}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand">WorkSimplified <span style="color:var(--muted);font-weight:500">Workspace</span></div><span>Stitch workspace screens</span></header>
+<main>
+  <div class="card">
+    <section id="authView">
+      <h1 id="authTitle">Welcome back</h1>
+      <p class="sub" id="authSub">Sign in to open your project workspace.</p>
+      <div class="tabs" role="tablist">
+        <button type="button" id="tabIn" role="tab" aria-selected="true">Sign in</button>
+        <button type="button" id="tabUp" role="tab" aria-selected="false">Create account</button>
+      </div>
+      <div class="form-err" id="formErr" role="alert"></div>
+      <form id="authForm" novalidate>
+        <div class="field hidden" id="fName">
+          <label for="inName">Full name</label>
+          <input id="inName" type="text" autocomplete="name" placeholder="Your name"/>
+          <p class="f-err" id="eName">Please enter your name.</p>
+        </div>
+        <div class="field">
+          <label for="inEmail">Work email</label>
+          <input id="inEmail" type="email" autocomplete="email" placeholder="you@company.com"/>
+          <p class="f-err" id="eEmail">Enter a valid email address.</p>
+        </div>
+        <div class="field hidden" id="fPhone">
+          <label for="inPhone">Mobile number</label>
+          <input id="inPhone" type="tel" autocomplete="tel" placeholder="+91 …"/>
+          <p class="f-err" id="ePhone">Enter a valid phone number.</p>
+        </div>
+        <div class="field">
+          <label for="inPassword">Password</label>
+          <div class="pw-wrap">
+            <input id="inPassword" type="password" autocomplete="current-password" placeholder="••••••••••"/>
+            <button type="button" class="pw-toggle" id="pwToggle">Show</button>
+          </div>
+          <p class="f-err" id="ePassword">Password is required.</p>
+        </div>
+        <button class="primary" type="submit" id="submitBtn">Sign in</button>
+      </form>
+      <p class="switch" id="switchLine">New to WorkSimplified? <button type="button" id="switchBtn">Create an account</button></p>
+    </section>
+    <section id="projects">
+      <div class="who"><span id="whoText"></span><button type="button" id="signOut">Sign out</button></div>
+      <h1>Your projects</h1>
+      <p class="sub">Pick a project to open its workspace.</p>
+      <div id="projList"></div>
+      <div class="empty hidden" id="noProj">No projects yet. If a project owner invited you, open the invite link in your email — accepting it adds the project here. You can also start from the <a href="http://127.0.0.1:3000/portal">portal</a>.</div>
+    </section>
+  </div>
+</main>
+<footer>© 2026 WorkSimplified Platform</footer>
+<script>
+(function(){
+  var PORTAL='http://127.0.0.1:3000';
+  var q=new URLSearchParams(location.search);
+  var wantProject=q.get('projectId')||'';
+  var next=q.get('next')||'cockpit_living_project_workspace';
+  var mode='in';
+  var $=function(id){return document.getElementById(id);};
+  function fieldErr(id,msgId,bad){ $(id).style.borderColor=bad?'var(--err)':''; $(msgId).classList.toggle('show',bad); return !bad; }
+  function formErr(msg){ var e=$('formErr'); e.textContent=msg||''; e.classList.toggle('show',!!msg); }
+  function setMode(m){
+    mode=m;
+    $('tabIn').setAttribute('aria-selected', m==='in'?'true':'false');
+    $('tabUp').setAttribute('aria-selected', m==='up'?'true':'false');
+    $('fName').classList.toggle('hidden', m==='in');
+    $('fPhone').classList.toggle('hidden', m==='in');
+    $('inPassword').setAttribute('autocomplete', m==='in'?'current-password':'new-password');
+    $('authTitle').textContent = m==='in' ? 'Welcome back' : 'Create your account';
+    $('authSub').textContent = m==='in' ? 'Sign in to open your project workspace.' : 'Register once, then accept invites and open your workspace.';
+    $('submitBtn').textContent = m==='in' ? 'Sign in' : 'Create account';
+    $('switchLine').innerHTML = m==='in'
+      ? 'New to WorkSimplified? <button type="button" id="switchBtn">Create an account</button>'
+      : 'Already registered? <button type="button" id="switchBtn">Sign in</button>';
+    $('switchBtn').addEventListener('click', function(){ setMode(m==='in'?'up':'in'); formErr(''); });
+    formErr('');
+  }
+  $('tabIn').addEventListener('click', function(){ setMode('in'); });
+  $('tabUp').addEventListener('click', function(){ setMode('up'); });
+  $('switchBtn').addEventListener('click', function(){ setMode('up'); });
+  $('pwToggle').addEventListener('click', function(){
+    var i=$('inPassword'); var show=i.type==='password'; i.type=show?'text':'password'; this.textContent=show?'Hide':'Show';
+  });
+
+  async function api(path, options){
+    var res=await fetch(PORTAL+path, Object.assign({credentials:'include'}, options||{}));
+    var data={}; try{ data=await res.json(); }catch(e){}
+    return {ok:res.ok, status:res.status, data:data};
+  }
+  function validate(){
+    var ok=true;
+    var email=$('inEmail').value.trim();
+    ok = fieldErr('inEmail','eEmail', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) && ok;
+    var pw=$('inPassword').value;
+    var pwBad = mode==='in' ? !pw : pw.length<8;
+    $('ePassword').textContent = mode==='in' ? 'Password is required.' : 'Choose a password of at least 8 characters.';
+    ok = fieldErr('inPassword','ePassword', pwBad) && ok;
+    if(mode==='up'){
+      ok = fieldErr('inName','eName', $('inName').value.trim().length<2) && ok;
+      ok = fieldErr('inPhone','ePhone', $('inPhone').value.replace(/\D/g,'').length<7) && ok;
+    }
+    return ok;
+  }
+  $('authForm').addEventListener('submit', async function(ev){
+    ev.preventDefault(); formErr('');
+    if(!validate()) return;
+    var btn=$('submitBtn'); btn.disabled=true; btn.textContent='Please wait…';
+    try{
+      var body = mode==='in'
+        ? {email:$('inEmail').value.trim(), password:$('inPassword').value}
+        : {name:$('inName').value.trim(), email:$('inEmail').value.trim(), phone:$('inPhone').value.trim(), password:$('inPassword').value};
+      var r=await api(mode==='in'?'/api/portal/login':'/api/portal/signup', {
+        method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)
+      });
+      if(!r.ok){
+        if(mode==='up' && r.status===409){ setMode('in'); formErr('This email is already registered. Sign in instead.'); }
+        else formErr(r.data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+      await showProjects();
+    }catch(e){ formErr('Could not reach the sign-in service. Please try again.'); }
+    finally{ btn.disabled=false; btn.textContent = mode==='in'?'Sign in':'Create account'; }
+  });
+
+  async function mintAndOpen(p){
+    var r=await api('/builder/api/projects/'+encodeURIComponent(p.id)+'/screen-session', {method:'POST'});
+    if(!r.ok || !r.data.screen_token){ formErr('Could not open that workspace. Please try again.'); return; }
+    var label=encodeURIComponent(p.name||'Project');
+    location.href='../'+next+'/index.html?project='+label+'&projectId='+encodeURIComponent(p.id)+'#pt='+encodeURIComponent(r.data.screen_token);
+  }
+  async function showProjects(){
+    var me=await api('/api/portal/me');
+    if(!me.ok){ setMode('in'); return; }
+    $('authView').style.display='none';
+    $('projects').style.display='block';
+    $('whoText').textContent='Signed in as '+(me.data.name||me.data.email||'');
+    var r=await api('/builder/api/projects/mine');
+    var list=(r.data && r.data.projects) || [];
+    var host=$('projList'); host.innerHTML='';
+    if(!list.length){ $('noProj').classList.remove('hidden'); return; }
+    if(wantProject){
+      var wanted=list.find(function(p){ return p.id===wantProject; });
+      if(wanted){ await mintAndOpen(wanted); return; }
+    }
+    list.forEach(function(p){
+      var a=document.createElement('a'); a.className='proj'; a.href='#';
+      var role=p.is_owner?'Owner':'Member';
+      var dims=(p.dimension_ids||[]).join(', ');
+      a.innerHTML='<span><b></b><span class="dims"></span></span><span class="role"></span>';
+      a.querySelector('b').textContent=p.name||'Project';
+      a.querySelector('.dims').textContent = dims ? ('Your dimensions: '+dims) : 'Open workspace';
+      a.querySelector('.role').textContent=role;
+      a.addEventListener('click', function(ev){ ev.preventDefault(); mintAndOpen(p); });
+      host.appendChild(a);
+    });
+  }
+  $('signOut').addEventListener('click', async function(){
+    try{ await api('/api/portal/me', {method:'DELETE'}); }catch(e){}
+    $('projects').style.display='none'; $('authView').style.display='block'; setMode('in');
+  });
+  // Already signed in? Skip straight to the project list.
+  showProjects();
+})();
+</script>
+</body>
+</html>

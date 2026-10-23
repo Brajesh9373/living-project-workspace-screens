@@ -96,6 +96,7 @@ main{max-width:1180px;width:100%;margin:0 auto;padding:30px 24px 44px;flex:1}
 </style>
 </head>
 <body>
+<script src="../ws-auth.js"></script>
 <header class="top">
   <div class="top-left">
     <span class="brand">WorkSimplified</span><span class="divider">|</span>
@@ -151,40 +152,33 @@ main{max-width:1180px;width:100%;margin:0 auto;padding:30px 24px 44px;flex:1}
 
 <footer class="foot"><span>WorkSimplified · Conflict Chat Room</span><span><span data-project>LeaveFlow</span> · Leave Management</span></footer>
 <script>
-const CONFLICTS=[
- {id:'conf-01',code:'CONF-01',title:'Half-day leave',from:'Varun · Workflows',against:'Phase 1 agreement',impact:'Blocks REQ-001 validation',
-  question:'Varun proposed half-day leave in his session. Phase 1 agreed full-day only, to keep balance maths simple. Which should LeaveFlow keep?',
-  options:[['Keep full-day only','Stays with the Phase 1 agreement. Varun\u2019s agent drops the half-day node.'],['Allow half-day leave','Adds a half-day leave type. Balances are tracked in half-day units.']],
-  decided:d=>`Decided: ${d}. REQ-001 is updated and Varun\u2019s agent has been notified.`},
- {id:'conf-02',code:'CONF-02',title:'Who can approve',from:'Ankur · Permissions vs Brajesh · Roles & profiles',against:'Approval authority',impact:'Blocks the approval workflow build',
-  question:'Ankur made approval manager-only. Brajesh added an HR override when the manager is unavailable for 48 hours. Both cannot be true. Your call?',
-  options:[['Manager only','Requests wait for the reporting manager. No HR override.'],['HR override after 48h','Manager approves first; HR can override after 48 hours of no response.']],
-  decided:d=>`Decided: ${d}. The approval workflow and permissions are synced for Ankur and Brajesh.`},
- {id:'conf-03',code:'CONF-03',title:'Earned Leave carry-forward',from:'Omesh · Delivery expectations',against:'Phase 1 agreement',impact:'Blocks the delivery plan sign-off',
-  question:'Omesh recorded that the client expects unused Earned Leave to carry forward. Phase 1 agreed no carry-forward. What should delivery promise?',
-  options:[['No carry-forward','Unused leave lapses on 31 December, as agreed in Phase 1.'],['Carry forward Earned Leave','Unused Earned Leave moves to next year. Delivery plan and balances change.']],
-  decided:d=>`Decided: ${d}. Omesh\u2019s delivery plan and the leave policy are updated.`},
-];
-let idx=0; const done={};
+const API='http://127.0.0.1:8020';
+const DIMLABEL={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
+let CONFLICTS=[], idx=0; const done={};
 const log=document.getElementById('chatLog'), list=document.getElementById('conflictList'),
  prog=document.getElementById('progressLabel'), fill=document.getElementById('progressFill'),
  state=document.getElementById('sessionState'), summary=document.getElementById('summary');
-const startAt=CONFLICTS.findIndex(c=>('#'+c.id)===location.hash);
-if(startAt>0) idx=startAt;
-function esc(s){return s.replace(/</g,'&lt;');}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function tok(){ return window.__wsTok || (window.__wsAuth && window.__wsAuth.token) || ''; }
+function pid(){ return new URLSearchParams(location.search).get('projectId'); }
+let IS_OWNER=false;
 function renderQueue(){
- list.innerHTML=CONFLICTS.map((c,i)=>`
+ const total=CONFLICTS.length;
+ list.innerHTML=total?CONFLICTS.map((c,i)=>`
   <li><button type="button" class="qitem ${done[c.id]?'resolved':i===idx?'current':''}" data-open="${i}" aria-current="${i===idx&&!done[c.id]}">
     <span class="qdot">${done[c.id]?'✓':i+1}</span>
-    <span class="qcard"><span class="qtop"><strong>${c.code} · ${c.title}</strong><span class="qstate">${done[c.id]?'RESOLVED':i===idx?'CURRENT':'OPEN'}</span></span>
-    <span class="qfrom">${c.from}</span>
-    <span class="qimpact">${c.impact} · against ${c.against.toLowerCase()}.</span>
+    <span class="qcard"><span class="qtop"><strong>${c.code} · ${esc(c.label)}</strong><span class="qstate">${done[c.id]?'RESOLVED':i===idx?'CURRENT':'OPEN'}</span></span>
+    <span class="qfrom">${esc(c.from)}</span>
+    <span class="qimpact">${esc(c.impact)}</span>
     ${done[c.id]?`<span class="qdecision">Decision: ${esc(done[c.id])}</span>`:''}
-    </span></button></li>`).join('');
+    </span></button></li>`).join('')
+  :'<li><p style="font-size:12px;color:#71717A;padding:8px 4px">No conflicts in this project.</p></li>';
  list.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.open; if(!done[CONFLICTS[i].id]&&i!==idx){idx=i; present();}}));
  const n=Object.keys(done).length;
- prog.textContent=`${n} of 3 resolved`; fill.style.width=(n/3*100)+'%';
- state.innerHTML = n===3 ? 'ALL RESOLVED' : `${3-n} OPEN<br>CONFLICT ${Math.min(idx+1,3)} OF 3`;
+ if(prog) prog.textContent=`${n} of ${total} resolved`;
+ if(fill) fill.style.width=(total?(n/total*100):100)+'%';
+ const open=total-n;
+ state.innerHTML = total===0 ? 'NO CONFLICTS' : open===0 ? 'ALL RESOLVED' : `${open} OPEN<br>CONFLICT ${Math.min(idx+1,total)} OF ${total}`;
 }
 function msg(who,text,me){
  const row=document.createElement('div'); row.className='msg'+(me?' me':'');
@@ -193,45 +187,123 @@ function msg(who,text,me){
 }
 function present(){
  renderQueue();
- const c=CONFLICTS[idx];
- msg('BA Agent',`<strong>${c.code} — ${c.title}.</strong> ${c.question}`);
+ const c=CONFLICTS[idx]; if(!c) return;
+ msg('BA Agent',`<strong>${c.code} — ${esc(c.label)}.</strong> ${esc(c.question)}`);
  const card=document.createElement('div'); card.className='decision';
- card.innerHTML=`<h3>YOUR DECISION · ${c.code}</h3><div class="opts">${c.options.map(([l,n])=>`<button type="button" class="opt" data-choice="${l}"><b>${l}</b><span>${n}</span></button>`).join('')}</div>`;
+ card.innerHTML=`<h3>YOUR DECISION · ${c.code}</h3><div class="opts">${c.options.map(o=>`<button type="button" class="opt" data-item="${esc(o.item_id)}"><b>${esc(o.title||'Option')}</b><span>${esc(o.label||'')}</span></button>`).join('')}</div>`;
  log.appendChild(card); log.scrollTop=log.scrollHeight;
- card.querySelectorAll('[data-choice]').forEach(b=>b.addEventListener('click',()=>{card.remove(); decide(b.dataset.choice);}));
+ card.querySelectorAll('[data-item]').forEach(b=>b.addEventListener('click',()=>{ if(!IS_OWNER) return; card.remove(); decideOption(c, b.dataset.item); }));
 }
-function decide(label){
- const c=CONFLICTS[idx];
- msg('You',esc(label),true);
- done[c.id]=label; try{localStorage.setItem('leaveflow_decisions',JSON.stringify(done));}catch(e){}
- setTimeout(()=>{
-   msg('BA Agent',c.decided(label));
+async function postDecision(c, payload){
+ const res=await fetch(`${API}/api/projects/${encodeURIComponent(pid())}/conflicts/${encodeURIComponent(c.id)}/decide`,{
+   method:'POST', headers:{'Content-Type':'application/json','X-Project-Token':tok()}, body:JSON.stringify(payload)});
+ const data=await res.json().catch(()=>({}));
+ if(!res.ok) throw new Error(typeof data.detail==='string'?data.detail:'Could not record the decision.');
+ return data;
+}
+function finishIfDone(){
+ const next=CONFLICTS.findIndex(x=>!done[x.id]);
+ if(next===-1){
+   setTimeout(()=>{
+     msg('BA Agent','<strong>All conflicts resolved.</strong> The project model is consistent again — the build is unpaused.');
+     document.getElementById('summaryTable').innerHTML=CONFLICTS.map(c=>`<tr><td>${c.code}</td><td><b>${esc(c.label)}</b></td><td>${esc(done[c.id])}</td></tr>`).join('');
+     summary.classList.add('show'); renderQueue();
+   },500);
+ } else { idx=next; setTimeout(present,700); }
+ renderQueue();
+}
+async function decideOption(c, itemId){
+ const opt=c.options.find(o=>o.item_id===itemId)||{};
+ msg('You',esc(opt.title||'Option chosen'),true);
+ try{
+   await postDecision(c,{choice_item_id:itemId});
+   done[c.id]=opt.title||'Resolved';
+   msg('BA Agent',`Decided: ${esc(done[c.id])}. The canonical state is updated and the members' agents have been notified.`);
    const receipt=document.createElement('div'); receipt.className='receipt';
-   receipt.textContent=`Decision recorded for ${c.code}: ${label}. Cockpit and State are updated; the members' agents have been notified.`;
+   receipt.textContent=`Decision recorded for ${c.code}: ${done[c.id]}. Cockpit and State are updated; the members' agents have been notified.`;
    log.appendChild(receipt); log.scrollTop=log.scrollHeight;
-   const next=CONFLICTS.findIndex(x=>!done[x.id]);
-   if(next===-1){
-     setTimeout(()=>{
-       msg('BA Agent','<strong>All conflicts resolved.</strong> The project model is consistent again — the build is unpaused.');
-       document.getElementById('summaryTable').innerHTML=CONFLICTS.map(c=>`<tr><td>${c.code}</td><td><b>${c.title}</b></td><td>${esc(done[c.id])}</td></tr>`).join('');
-       summary.classList.add('show'); renderQueue();
-     },500);
-   } else { idx=next; setTimeout(present,700); }
-   renderQueue();
- },420);
+   finishIfDone();
+ }catch(e){ msg('BA Agent',esc(e.message||'Could not record the decision.')); renderQueue(); }
+}
+async function decideText(c, text){
+ msg('You',esc(text),true);
+ try{
+   await postDecision(c,{decision_text:text});
+   done[c.id]=text;
+   msg('BA Agent',`Decided: ${esc(text)}. The canonical state is updated and the members' agents have been notified.`);
+   const receipt=document.createElement('div'); receipt.className='receipt';
+   receipt.textContent=`Decision recorded for ${c.code}: ${text}. Cockpit and State are updated; the members' agents have been notified.`;
+   log.appendChild(receipt); log.scrollTop=log.scrollHeight;
+   finishIfDone();
+ }catch(e){ msg('BA Agent',esc(e.message||'Could not record the decision.')); renderQueue(); }
 }
 document.getElementById('chatForm').addEventListener('submit',e=>{
  e.preventDefault();
  const input=document.getElementById('chatInput'); const v=input.value.trim(); if(!v) return;
- input.value=''; msg('You',esc(v),true);
- setTimeout(()=>msg('BA Agent','Noted. To lock this in, choose one of the two options in the decision card above — that is what updates the model.'),350);
+ input.value='';
+ const c=CONFLICTS[idx];
+ if(!IS_OWNER){ msg('You',esc(v),true); setTimeout(()=>msg('BA Agent','Only the project owner can decide conflicts. You can review them here.'),350); return; }
+ if(!c||done[c.id]){ msg('You',esc(v),true); setTimeout(()=>msg('BA Agent','All conflicts in the queue are resolved. Decisions sync to Cockpit and State.'),350); return; }
+ decideText(c, v);
 });
-msg('BA Agent','Hi, I am your BA agent. Your team raised <strong>3 conflicts</strong> across their sessions. Let\u2019s solve them one by one — each decision updates LeaveFlow immediately.');
-setTimeout(present,450);
+window.__authReady.then(function(a){
+ if(!a) return;
+ IS_OWNER=!!(a.permissions&&a.permissions.is_owner);
+ const snap=a.snap||{};
+ document.querySelectorAll('a[href*="cockpit_living_project_workspace"], a[href*="state_living_project_workspace"]').forEach(x=>{ if(!x.search) x.search=location.search; });
+ const raw=snap.conflicts||[];
+ CONFLICTS=raw.map((c,i)=>{
+   const label=(c.title||'Conflict').replace(/^Conflict:\s*/,'').replace(/[-_]+/g,' ');
+   const dims=[...new Set((c.options||[]).map(o=>DIMLABEL[o.dimension_id]||o.dimension_id))];
+   return { id:c.id, code:'CONF-'+String(i+1).padStart(2,'0'), label:label.charAt(0).toUpperCase()+label.slice(1),
+     question:c.question||'Which statement should the project follow?',
+     from:dims.join(' vs ')||(DIMLABEL[c.dimension_id]||'Project'),
+     impact:'Blocks '+(DIMLABEL[c.dimension_id]||'dimension')+' validation',
+     options:c.options||[], status:c.status, decision:c.decision };
+ });
+ CONFLICTS.forEach(c=>{
+   if(String(c.status).indexOf('resolved')===0){
+     const d=c.decision||{};
+     const chosen=(c.options||[]).find(o=>o.item_id===(d.choice_item_id||''));
+     done[c.id]=d.decision_text||(chosen?chosen.title:'Resolved');
+   }
+ });
+ const firstOpen=CONFLICTS.findIndex(c=>!done[c.id]);
+ idx=firstOpen>=0?firstOpen:0;
+ const want=(location.hash||'').replace('#','');
+ if(want){
+   let wi=CONFLICTS.findIndex(c=>c.id===want);
+   if(wi<0){ const m=want.match(/conf-(\d+)/i); if(m) wi=Math.min(CONFLICTS.length-1, parseInt(m[1],10)-1); }
+   if(wi>=0&&!done[CONFLICTS[wi].id]) idx=wi;
+ }
+ const open=CONFLICTS.length-Object.keys(done).length;
+ msg('BA Agent', CONFLICTS.length
+   ? `Hi, I am your BA agent. Your team raised <strong>${CONFLICTS.length} conflict${CONFLICTS.length===1?'':'s'}</strong> across their sessions. Let’s solve them one by one — each decision updates the project immediately.`
+   : 'Hi, I am your BA agent. There are no conflicts in this project right now — the model is consistent.');
+ if(!IS_OWNER){
+   const input=document.getElementById('chatInput');
+   if(input){ input.disabled=true; input.placeholder='Only the project owner can decide conflicts'; }
+ }
+ if(firstOpen>=0) setTimeout(present,450);
+ else { renderQueue(); if(CONFLICTS.length) finishIfDone(); }
+});
 </script>
+
 <script>
 (()=>{const q=new URLSearchParams(location.search);const p=q.get('project');
 if(p)document.querySelectorAll('[data-project]').forEach(e=>{e.textContent=p;});
 document.querySelectorAll('a[href*="living_project_workspace/index.html"]').forEach(a=>{if(!a.search)a.search=location.search;});})();
 </script>
 </body></html>
+
+<script>
+window.__authReady.then(function(a){
+  if(!a || a.permissions.is_owner) return;
+  var st=document.createElement('style'); st.textContent='.opts{pointer-events:none;opacity:.55}';
+  document.head.appendChild(st);
+  var note=document.createElement('p');
+  note.style.cssText='font-size:12px;color:#B3261E;margin:8px 0';
+  note.textContent='Only the project owner can decide conflicts. You can review them here.';
+  var row=document.getElementById('chatLog'); if(row&&row.parentNode) row.parentNode.insertBefore(note,row);
+});
+</script>

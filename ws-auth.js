@@ -3,6 +3,30 @@
    The raw token is exchanged once for a short-lived screen token (ws1.*);
    only the screen token is kept (tab session). Every screen must pass this
    gate: no valid project membership -> access screen, no demo content. */
+/* Channel badge (frontend demo of multi-channel messaging): each member
+   message shows the platform it arrived from in a small circle below it.
+   Assignment is a stable hash of the message text, so a message keeps its
+   channel across re-renders. When real channel metadata exists, callers
+   pass x.channel and it wins. */
+window.__wsChanBadge = function (content, channel) {
+  var CHANNELS = [
+    { id: 'worksimplified', label: 'WorkSimplified', bg: '#18181B', svg: '<text x="10" y="14" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#fff">W</text>' },
+    { id: 'whatsapp', label: 'WhatsApp', bg: '#25D366', svg: '<path fill="#fff" d="M10 2a7.9 7.9 0 0 0-6.8 12.2L2 18l3.9-1.1A8 8 0 1 0 10 2zm3.6 11.1c-.2.5-1.1 1-1.6 1-.4.1-1 .2-3.2-.7-2.7-1.1-4.4-3.8-4.5-4-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.2c.2-.3.5-.3.6-.3h.5c.1 0 .4 0 .6.4l.8 2c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.6.3.1.5.1.7-.1l.9-1c.2-.3.4-.2.7-.1l2 .9c.3.2.5.3.6.4 0 .1 0 .6-.2 1.1z"/>' },
+    { id: 'telegram', label: 'Telegram', bg: '#229ED9', svg: '<path fill="#fff" d="M17.9 3.1L2.7 9.2c-.7.3-.6 1.2.1 1.4l3.7 1.2 1.4 4.3c.2.6.9.8 1.4.4l2.2-1.7 4.1 3c.6.4 1.4.1 1.6-.6l2.3-12.5c.1-.8-.6-1.4-1.3-1.1zM7.5 11.3l8.6-5.4c.2-.1.3.1.2.2l-7.2 6.6-.3 3-1.3-4.4z"/>' },
+    { id: 'slack', label: 'Slack', bg: '#4A154B', svg: '<path fill="#fff" d="M7.2 3.5L6 8.1H8.3L9.5 3.5H7.2zm5.6 12.9l1.2-4.6H11.7l-1.2 4.6h2.3zM3.6 7L8.2 5.8 7.7 3.7 3.1 4.9 3.6 7zm12.7 5.9l-4.6 1.2.5 2.1 4.6-1.2-.5-2.1zM3 12.8l4.6-1.2L7.1 9.5 2.5 10.7 3 12.8zM17 7.1L12.4 8.3 12.9 10.4 17.5 9.2 17 7.1z"/>' }
+  ];
+  var pick = null;
+  if (channel) pick = CHANNELS.filter(function (c) { return c.id === channel; })[0];
+  if (!pick) {
+    var h = 0, s = String(content || '');
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+    pick = CHANNELS[h % CHANNELS.length];
+  }
+  return '<span title="Received via ' + pick.label + '" aria-label="Received via ' + pick.label + '" '
+    + 'style="display:inline-flex;width:20px;height:20px;border-radius:50%;background:' + pick.bg + ';align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.18)">'
+    + '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">' + pick.svg + '</svg></span>';
+};
+
 (function () {
   var q = new URLSearchParams(location.search);
   var pid = q.get('projectId');

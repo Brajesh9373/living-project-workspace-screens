@@ -965,7 +965,7 @@ if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:upper
     chat.innerHTML=msgs.map(x=>x.role==='system'
       ? `<div class="space-y-1.5"><div class="bg-signal-blue-subtle border border-signal-blue/20 rounded-lg p-3 text-[12px] leading-relaxed text-ink"><span class="font-mono font-medium">Project update</span> · ${esc(x.content)}</div></div>`
       : x.role==='user'
-      ? `<div class="space-y-1.5 pl-6"><div class="flex items-center justify-end gap-2"><span class="text-[11px] font-mono font-medium text-ink">${esc(first)}</span></div><div class="bg-surface border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink text-left">${esc(x.content)}</div></div>`
+      ? `<div class="space-y-1.5 pl-6"><div class="flex items-center justify-end gap-2"><span class="text-[11px] font-mono font-medium text-ink">${esc(first)}</span></div><div class="bg-surface border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink text-left">${esc(x.content)}</div><div class="flex justify-end">${window.__wsChanBadge?window.__wsChanBadge(x.content,x.channel):''}</div></div>`
       : `<div class="space-y-1.5"><div class="flex items-center gap-2"><span class="text-[11px] font-mono font-medium text-ink">BA Agent</span></div><div class="bg-canvas border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink">${esc(x.content)}</div></div>`).join('');
   }
   if(ownSession&&!PANELS[ownSession.dimension_id]){
@@ -990,7 +990,7 @@ if(el&&rows.length)el.innerHTML=`<div style="font-size:10px;text-transform:upper
     chat.innerHTML=msgs.map(x=>x.role==='system'
       ? `<div class="space-y-1.5"><div class="bg-signal-blue-subtle border border-signal-blue/20 rounded-lg p-3 text-[12px] leading-relaxed text-ink"><span class="font-mono font-medium">Project update</span> · ${esc(x.content)}</div></div>`
       : x.role==='user'
-      ? `<div class="space-y-1.5 pl-6"><div class="flex items-center justify-end gap-2"><span class="text-[11px] font-mono font-medium text-ink">${esc(first)}</span></div><div class="bg-surface border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink text-left">${esc(x.content)}</div></div>`
+      ? `<div class="space-y-1.5 pl-6"><div class="flex items-center justify-end gap-2"><span class="text-[11px] font-mono font-medium text-ink">${esc(first)}</span></div><div class="bg-surface border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink text-left">${esc(x.content)}</div><div class="flex justify-end">${window.__wsChanBadge?window.__wsChanBadge(x.content,x.channel):''}</div></div>`
       : `<div class="space-y-1.5"><div class="flex items-center gap-2"><span class="text-[11px] font-mono font-medium text-ink">BA Agent</span></div><div class="bg-canvas border border-line rounded-lg p-3 text-[13px] leading-relaxed text-ink">${esc(x.content)}</div></div>`).join('')
       + '<div data-typing class="space-y-1.5" style="display:none"><div class="flex items-center gap-2"><span class="text-[11px] font-mono font-medium text-ink">BA Agent</span><span class="text-[11px] font-mono text-ink-subtle">is typing\u2026</span></div></div>';
     chat.scrollTop=chat.scrollHeight;

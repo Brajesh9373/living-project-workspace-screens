@@ -272,6 +272,19 @@
 <div class="flex items-center gap-2"><span class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-signal-blue text-white text-[8px] font-bold flex items-center justify-center ring-2 ring-white" title="Varun · Lead Architect">V</span></span><span class="text-[10px] font-mono text-muted-ink">owner only</span></div>
 </div>
 </div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-quiet-line pt-4" id="scopeActions">
+<span class="text-[11px] font-mono text-muted-ink" id="scopeReadiness">Complete every dimension to unlock exports</span>
+<div class="flex flex-wrap items-center gap-2.5 shrink-0">
+<button type="button" id="scope-export-pdf" class="h-[38px] px-3.5 bg-surface hover:bg-canvas text-ink border border-quiet-line text-[13px] font-medium rounded-md transition-colors flex items-center gap-1.5 shadow-sm disabled:opacity-45 disabled:cursor-not-allowed disabled:hover:bg-surface" disabled>
+<span class="material-symbols-outlined text-[17px] text-muted-ink">picture_as_pdf</span>
+<span>Export PDF Package</span>
+</button>
+<button type="button" id="scope-continue-app" class="h-[38px] px-4 bg-signal-blue hover:bg-signal-blue-hover text-white text-[13px] font-semibold rounded-md transition-all flex items-center gap-2 shadow-sm disabled:opacity-45 disabled:cursor-not-allowed disabled:hover:bg-signal-blue" disabled>
+<span>Continue creating application</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
 </section>
 <!-- Team Resources (documents uploaded by joined members) -->
 <section class="bg-surface rounded-lg border border-quiet-line px-5 py-4 flex flex-col gap-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
@@ -322,7 +335,7 @@
 <div class="flex items-center justify-between border-b border-quiet-line pb-3.5">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-muted-ink text-[18px]">history_toggle_off</span>
-<h2 class="text-sm font-semibold tracking-tight text-ink">Recent Changes</h2>
+<h2 class="text-sm font-semibold tracking-tight text-ink">Recent Change Insight</h2>
 </div>
 <span class="font-mono text-xs text-muted-ink" id="recentMeta">0 state mutations</span>
 </div>
@@ -768,7 +781,7 @@ window.__liveReady=(async()=>{
       const r=await fetch('http://127.0.0.1:8020/api/projects/'+encodeURIComponent(new URLSearchParams(location.search).get('projectId')),{headers:{'X-Project-Token':(window.__wsTok||'')}});
       if(!r.ok) return;
       const fresh=await r.json();
-      renderRoster(fresh); renderNeedsAttention(fresh); renderBaCard(fresh);
+      renderRoster(fresh); renderNeedsAttention(fresh); renderBaCard(fresh); paintScopeActions(fresh);
     }catch(e){}
   },45000);
   const DIMLABEL={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
@@ -788,35 +801,62 @@ window.__liveReady=(async()=>{
     const head=[...document.querySelectorAll('h2')].find(x=>x.textContent.trim()==='Needs Attention');
     const section=head?.closest('section'); if(!section) return;
     const list=section.querySelector('.flex.flex-col.gap-3.flex-1'); if(!list) return;
-    const conflicts=sortedConflicts(snap);
+    const allConflicts=sortedConflicts(snap);
     const itemById={}; (snap.state_items||[]).forEach(it=>{ itemById[it.id]=it; });
-    const open=openConflicts(snap).length;
+    const myDims=new Set((snap.permissions&&snap.permissions.dimension_ids)||[]);
+    const involvedDims=c=>{ const d=new Set(); if(c.dimension_id) d.add(c.dimension_id); (c.options||[]).forEach(o=>{ const it=itemById[o.item_id]; if(it&&it.dimension_id) d.add(it.dimension_id); }); return d; };
+    const mine=c=>{ const d=involvedDims(c); if(!d.size) return false; return [...d].some(x=>myDims.has(x)); };
     const count=document.getElementById('needsCount');
-    if(count) count.textContent=open?`${open} Open Item${open===1?'':'s'}`:(conflicts.length?'All resolved':'0 Open Items');
-    if(!conflicts.length){
-      list.innerHTML='<p id="needsEmpty" class="py-6 text-xs text-muted-ink leading-relaxed">No conflicts yet. If members disagree with each other or with Phase 1, the conflict will appear here.</p>';
-      return;
-    }
     const room='../conflict_chat_room/index.html'+location.search;
-    list.innerHTML=conflicts.map((c,i)=>{
-      const resolved=String(c.status).indexOf('resolved')===0;
-      const firstOpt=(c.options||[])[0]||{};
-      const chip=((itemById[firstOpt.item_id]||{}).kind||'conflict').toUpperCase().replace('_',' ');
-      const opts=(c.options||[]).map(o=>o.title||'').filter(Boolean).join(' vs ');
-      return `<a href="${room}#${esc(c.id)}" target="_blank" rel="noopener" class="p-3.5 rounded border ${resolved?'border-green-200 bg-[#F4FBF6]':'border-quiet-line bg-canvas'} flex flex-col gap-2 flex-1 hover:border-deep-line transition-colors">
+    const isResolved=c=>String(c.status).indexOf('resolved')===0;
+    let view='team';
+    function paint(){
+      const conflicts=(view==='me'?allConflicts.filter(mine):allConflicts);
+      const open=conflicts.filter(c=>!isResolved(c)).length;
+      if(count) count.textContent=open?`${open} Open Item${open===1?'':'s'}`:(conflicts.length?'All resolved':'0 Open Items');
+      if(!conflicts.length){
+        list.innerHTML='<p id="needsEmpty" class="py-6 text-xs text-muted-ink leading-relaxed">'+(view==='me'
+          ?'Nothing in your dimensions needs a decision right now.'
+          :'No conflicts yet. If members disagree with each other or with Phase 1, the conflict will appear here.')+'</p>';
+      } else {
+        list.innerHTML=conflicts.map(c=>{
+          const resolved=isResolved(c);
+          const firstOpt=(c.options||[])[0]||{};
+          const chip=((itemById[firstOpt.item_id]||{}).kind||'conflict').toUpperCase().replace('_',' ');
+          const opts=(c.options||[]).map(o=>o.title||'').filter(Boolean).join(' vs ');
+          return `<a href="${room}#${esc(c.id)}" target="_blank" rel="noopener" class="p-3.5 rounded border ${resolved?'border-green-200 bg-[#F4FBF6]':'border-quiet-line bg-canvas'} flex flex-col gap-2 flex-1 hover:border-deep-line transition-colors">
 <div class="flex items-start justify-between gap-3">
 <div class="flex items-center gap-2">
 <span class="font-mono text-[11px] font-semibold text-warn-ink bg-warn-subtle px-1.5 py-0.5 shrink-0 whitespace-nowrap rounded border border-amber-200">${esc(chip)}</span>
-<span class="text-xs font-semibold text-ink">${conflictCode(i)} · ${esc(topicLabel(c))}</span>
+<span class="text-xs font-semibold text-ink">${codeOf(snap,c.id)} · ${esc(topicLabel(c))}</span>
 </div>
 <span class="conf-badge text-[11px] font-mono font-semibold shrink-0" style="color:${resolved?'#177245':'inherit'}">${resolved?'Resolved':'Conflict'}</span>
 </div>
 <p class="text-xs text-muted-ink leading-relaxed">${esc(c.question||'')}${opts?` <strong class="text-ink font-medium">${esc(opts)}</strong>`:''}</p>
 ${resolved&&decisionLabel(c)?`<p class="text-xs" style="color:#177245">Decision: ${esc(decisionLabel(c))}</p>`:''}
 </a>`;
-    }).join('');
-    const solve=document.getElementById('solveBtn');
-    if(solve){ solve.style.opacity=open?'':' .45'.trim(); solve.style.pointerEvents=open?'':'none'; }
+        }).join('');
+      }
+      const totalOpen=openConflicts(snap).length;
+      const solve=document.getElementById('solveBtn');
+      if(solve){ solve.style.opacity=totalOpen?'':' .45'.trim(); solve.style.pointerEvents=totalOpen?'':'none'; }
+    }
+    if(count&&count.parentElement&&!count.parentElement.querySelector('[data-needs-view]')){
+      const toggle=document.createElement('span');
+      toggle.className='inline-flex items-center gap-1 mr-3 align-middle';
+      toggle.innerHTML=['me','team'].map(v=>`<button type="button" data-needs-view="${v}" aria-pressed="${v===view?'true':'false'}" class="px-2 py-1 text-[11px] font-medium rounded ${v===view?'text-ink bg-canvas border border-quiet-line':'text-muted-ink hover:text-ink'}">${v==='me'?'For Me':'My Team'}</button>`).join('');
+      count.parentElement.insertBefore(toggle,count);
+      toggle.querySelectorAll('[data-needs-view]').forEach(b=>b.addEventListener('click',()=>{
+        view=b.getAttribute('data-needs-view');
+        toggle.querySelectorAll('[data-needs-view]').forEach(o=>{
+          const on=o===b;
+          o.setAttribute('aria-pressed',on?'true':'false');
+          o.className=`px-2 py-1 text-[11px] font-medium rounded ${on?'text-ink bg-canvas border border-quiet-line':'text-muted-ink hover:text-ink'}`;
+        });
+        paint();
+      }));
+    }
+    paint();
   }
   function renderBaCard(snap){
     const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -930,7 +970,7 @@ ${chip}
   }
   function renderRecentChanges(snap){
     const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const head=[...document.querySelectorAll('h2')].find(x=>x.textContent.trim()==='Recent Changes');
+    const head=[...document.querySelectorAll('h2')].find(x=>x.textContent.trim()==='Recent Change Insight');
     const section=head?.closest('section'); if(!section) return;
     const feed=section.querySelector('.divide-y'); if(!feed) return;
     const LABEL={security:'Security',permissions:'Permissions',workflows:'Workflows',roles:'Roles & profiles',delivery:'Delivery expectations'};
@@ -975,9 +1015,6 @@ ${chip}
     const meta=document.getElementById('recentMeta');
     const stateHref='../state_living_project_workspace/index.html'+location.search;
     if(meta) meta.innerHTML=`<a href="${stateHref}" class="underline decoration-quiet-line underline-offset-2 hover:text-ink" title="Open the State tab - full detail">${mutations} state mutation${mutations===1?'':'s'}</a>`;
-    const myDims=new Set((snap.permissions&&snap.permissions.dimension_ids)||[]);
-    const isOwner=!!(snap.permissions&&snap.permissions.is_owner);
-    const mine=e=>e.dim?myDims.has(e.dim):(e.ownerAction?isOwner:false);
     const rowHtml=(e,i)=>`
 <div id="recent-live-${i}" class="${e.cls} py-3.5 first:pt-0 last:pb-0 flex flex-col gap-1.5 flex-1">
 <div class="flex items-center justify-between gap-3">
@@ -990,30 +1027,9 @@ ${chip}
 <p class="text-xs text-muted-ink pl-0 leading-relaxed">${e.note?e.note+' ':''}${esc(e.body||'')}</p>
 <div class="recent-source"><span class="recent-source-dot"></span>${esc(e.source)}</div>
 </div>`;
-    let view='team';
-    function paint(){
-      const list=(view==='me'?entries.filter(mine):entries).slice(0,5);
-      feed.innerHTML=list.length?list.map(rowHtml).join('')
-        :'<p id="recentEmpty" class="py-6 text-xs text-muted-ink leading-relaxed">'+(view==='me'
-          ?'Nothing in your dimensions yet. When you talk with your agent, your changes will appear here.'
-          :'Nothing yet. When members talk with their agents, changes will appear here one by one.')+'</p>';
-    }
-    if(meta&&meta.parentElement&&!meta.parentElement.querySelector('[data-recent-view]')){
-      const toggle=document.createElement('span');
-      toggle.className='inline-flex items-center gap-1 mr-3 align-middle';
-      toggle.innerHTML=['me','team'].map(v=>`<button type="button" data-recent-view="${v}" aria-pressed="${v===view?'true':'false'}" class="px-2 py-1 text-[11px] font-medium rounded ${v===view?'text-ink bg-canvas border border-quiet-line':'text-muted-ink hover:text-ink'}">${v==='me'?'For Me':'My Team'}</button>`).join('');
-      meta.parentElement.insertBefore(toggle,meta);
-      toggle.querySelectorAll('[data-recent-view]').forEach(b=>b.addEventListener('click',()=>{
-        view=b.getAttribute('data-recent-view');
-        toggle.querySelectorAll('[data-recent-view]').forEach(o=>{
-          const on=o===b;
-          o.setAttribute('aria-pressed',on?'true':'false');
-          o.className=`px-2 py-1 text-[11px] font-medium rounded ${on?'text-ink bg-canvas border border-quiet-line':'text-muted-ink hover:text-ink'}`;
-        });
-        paint();
-      }));
-    }
-    paint();
+    const list=entries.slice(0,5);
+    feed.innerHTML=list.length?list.map(rowHtml).join('')
+      :'<p id="recentEmpty" class="py-6 text-xs text-muted-ink leading-relaxed">Nothing yet. When members talk with their agents, changes will appear here one by one.</p>';
   }
   function renderTeamResources(snap){
     const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1123,6 +1139,57 @@ ${g.docs.map(d=>`<div class="flex items-center justify-between gap-3 py-1 pl-[36
     const technical=['security','permissions'].map(id=>byId[id]).filter(Boolean);
     grids[0].innerHTML=functional.map((d,i)=>card(d,false,i)).join('');
     grids[1].innerHTML=technical.map((d,i)=>card(d,true,i)).join('');
+    paintScopeActions(snap);
+  }
+  function paintScopeActions(snap){
+    /* Exports unlock only when every dimension's open states are completed:
+       at least one state item, zero non-validated items, zero open conflicts. */
+    const pdf=document.getElementById('scope-export-pdf');
+    const cont=document.getElementById('scope-continue-app');
+    const note=document.getElementById('scopeReadiness');
+    if(!pdf||!cont) return;
+    const items=(snap.state_items||[]).filter(i=>i.status!=='superseded');
+    const openStates=items.filter(i=>i.status!=='validated').length;
+    const openConf=openConflicts(snap).length;
+    const isOwner=!!(snap.permissions&&snap.permissions.is_owner);
+    const ready=items.length>0&&openStates===0&&openConf===0;
+    const ownerOk=isOwner&&ready;
+    [[pdf,'markdown'],[cont,'json']].forEach(([btn,format])=>{
+      btn.disabled=!ownerOk;
+      btn.title=!isOwner?'Only the project owner can export'
+        :!ready?`${openStates} open state${openStates===1?'':'s'} · ${openConf} open conflict${openConf===1?'':'s'} — validate everything to unlock`
+        :'';
+      if(!btn.dataset.bound){
+        btn.dataset.bound='1';
+        btn.addEventListener('click',()=>runScopeExport(format,btn));
+      }
+    });
+    if(note) note.textContent=!isOwner?'Exports unlock for the project owner once every dimension is complete'
+      :ready?`All dimensions complete · ${items.length} validated states — ready to export`
+      :`${openStates} open state${openStates===1?'':'s'} · ${openConf} open conflict${openConf===1?'':'s'} — validate everything to unlock exports`;
+  }
+  window.__paintScopeActions=paintScopeActions;
+  async function runScopeExport(format, btn){
+    const label=btn.textContent;
+    try{
+      const pid=new URLSearchParams(location.search).get('projectId');
+      const r=await fetch('http://127.0.0.1:8020/api/projects/'+encodeURIComponent(pid)+'/export?format='+format,{headers:{'X-Project-Token':(window.__wsTok||'')}});
+      const data=await r.json().catch(()=>({}));
+      if(r.status===409){
+        btn.textContent='Resolve '+((data.detail||[]).length||'open')+' conflicts first';
+        setTimeout(()=>{ btn.textContent=label; },2600);
+        return;
+      }
+      if(!r.ok) throw new Error('export failed');
+      const url=URL.createObjectURL(new Blob([data.content||''],{type:data.content_type||'text/plain'}));
+      const a=document.createElement('a'); a.href=url; a.download=data.filename||('export.'+(format==='json'?'json':'md')); document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+      btn.textContent='Exported · '+new Date().toLocaleTimeString();
+      setTimeout(()=>{ btn.textContent=label; },2600);
+    }catch(e){
+      btn.textContent='Export unavailable';
+      setTimeout(()=>{ btn.textContent=label; },2600);
+    }
   }
   const gn=document.getElementById('graphNodes'); if(gn)gn.textContent=`${(snap.state_items||[]).length} nodes active`;
   let assertTicks=0;
@@ -1185,7 +1252,7 @@ function applyStage(i){const s=STAGES[i]; if(!s) return;
    return resolved;
  }
  function reveal(id,isConf,animate){
-   if(!isConf && window.__liveSnap) return; /* Recent Changes is live-rendered */
+   if(!isConf && window.__liveSnap) return; /* Recent Change Insight is live-rendered */
    const el=$(id)||document.querySelector(`[data-conf="${id}"]`); if(!el||el.style.display!=='none') return;
    el.style.display=''; if(animate!==false) el.classList.add('seq-in');
    if(isConf){confShown++; $('needsEmpty').style.display='none';} else {recentShown++; $('recentEmpty').style.display='none';

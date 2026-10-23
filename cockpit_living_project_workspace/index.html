@@ -303,6 +303,17 @@
 <span class="px-2 py-0.5 rounded border border-quiet-line bg-canvas text-muted-ink">2 DOCX</span>
 <span class="px-2 py-0.5 rounded border border-quiet-line bg-canvas text-muted-ink">2 XLSX</span>
 </div>
+<div class="flex flex-col gap-2 rounded border border-quiet-line bg-canvas px-3.5 py-3" id="docSyncBar">
+<div class="flex flex-col sm:flex-row sm:items-center gap-2.5">
+<span class="flex items-center gap-2 shrink-0">
+<span class="material-symbols-outlined text-muted-ink text-[18px]">folder_open</span>
+<span class="text-xs font-semibold text-ink">Agent document folder</span>
+</span>
+<input type="text" id="docSyncPath" placeholder="/home/user/documents/leaveflow" spellcheck="false" class="flex-1 min-w-0 h-[34px] px-2.5 rounded border border-quiet-line bg-surface text-xs font-mono text-ink placeholder:text-muted-ink/70 focus:outline-none focus:border-signal-blue">
+<button type="button" id="docSyncSave" class="h-[34px] px-3.5 rounded bg-ink text-white text-[12px] font-medium shrink-0 hover:opacity-90">Connect folder</button>
+</div>
+<p class="text-[11px] text-muted-ink leading-relaxed m-0" id="docSyncStatus">Point this to the folder where your local agent stores documents — new files are fetched into the system every night at 12:00 AM.</p>
+</div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">
 <div class="py-2.5 flex flex-col border-t border-quiet-line first:border-t-0 md:border-t-0 md:[&:nth-child(n+3)]:border-t">
 <div class="flex items-center justify-between gap-2"><span class="flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-signal-blue text-white flex items-center justify-center shrink-0 font-semibold text-[12px]" role="img" aria-label="Varun">V</span><span class="text-xs font-semibold text-ink">Varun <span class="font-normal text-muted-ink">· Workflows (Functional) · Session #14</span></span></span><span class="font-mono text-[10px] text-success-ink">Joined</span></div>
@@ -1280,6 +1291,48 @@ function applyStage(i){const s=STAGES[i]; if(!s) return;
  } else { plan.forEach(([t,fn])=>setTimeout(fn,t)); }
  window.addEventListener('focus',applyDecisions);
  window.addEventListener('storage',e=>{if(e.key==='leaveflow_decisions') applyDecisions();});
+})();
+</script>
+
+<script>
+/* Agent document folder sync (frontend only): remembers the member's local
+   folder path per project. Nightly fetch is server-side work, not wired yet. */
+(function(){
+  var pid=new URLSearchParams(location.search).get('projectId')||'default';
+  var key='ws_docsync_path_'+pid;
+  var input=document.getElementById('docSyncPath');
+  var btn=document.getElementById('docSyncSave');
+  var status=document.getElementById('docSyncStatus');
+  if(!input||!btn||!status) return;
+  function paint(){
+    var saved=null;
+    try{ saved=localStorage.getItem(key)||''; }catch(e){}
+    if(saved){
+      input.value=saved;
+      input.disabled=true;
+      btn.textContent='Disconnect';
+      status.innerHTML='Syncing nightly at <strong class="text-ink font-medium">12:00 AM</strong> from <span class="font-mono text-ink"></span>';
+      status.querySelector('span').textContent=saved;
+    }else{
+      input.disabled=false;
+      btn.textContent='Connect folder';
+      status.textContent='Point this to the folder where your local agent stores documents \u2014 new files are fetched into the system every night at 12:00 AM.';
+    }
+  }
+  btn.addEventListener('click', function(){
+    var saved=null;
+    try{ saved=localStorage.getItem(key)||''; }catch(e){}
+    if(saved){
+      try{ localStorage.removeItem(key); }catch(e){}
+      input.value='';
+    }else{
+      var v=input.value.trim();
+      if(!v){ input.focus(); return; }
+      try{ localStorage.setItem(key, v); }catch(e){}
+    }
+    paint();
+  });
+  paint();
 })();
 </script>
 </body>
